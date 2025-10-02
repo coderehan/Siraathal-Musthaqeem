@@ -4,12 +4,22 @@ plugins {
 }
 
 android {
-    namespace = "com.islamicapp.siraathalmusthaqeem.model"
+    namespace = "com.islamicapp.siraathalmusthaqeem.data"
     compileSdk = 36
 
     defaultConfig {
         minSdk = 24
-        consumerProguardFiles("consumer-rules.pro")
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            // ProGuard settings
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
     }
 
     // Proper replacement for library DSL
@@ -41,10 +51,30 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+    // Import core module to use all its features/files
+    implementation(project(":core"))
+
+    // Keep those dependencies which are needed in data module
+    // In data module, retrofit and koin is mostly used
+
+    // Retrofit & OkHttp
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
+
+    // Gson
+    implementation(libs.gson)
+
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+
+    // Koin (DI)
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+
+    // Unit testing
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+
 }

@@ -23,3 +23,4 @@ rootProject.name = "Siraathal Musthaqeem"
 include(":app")
 include(":domain:siraathalmusthaqeem")
 include(":data:siraathalmusthaqeem")
+include(":core:siraathalmusthaqeem")
