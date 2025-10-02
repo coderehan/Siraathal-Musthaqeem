@@ -17,6 +17,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
+        // Only :app module should have applicationId
         applicationId = "com.islamicapp.siraathalmusthaqeem"
         minSdk = 24
         targetSdk = 36

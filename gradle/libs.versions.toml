@@ -50,6 +50,9 @@ coil = "2.7.0"                           # Image loading with Coil
 # Media3 (ExoPlayer)
 media3 = "1.8.0"                         # Media3 ExoPlayer library
 
+appcompat = "1.7.1"
+material = "1.13.0"
+
 # ==============================
 # Libraries
 # ==============================
@@ -128,6 +131,9 @@ datastore-preferences = { group = "androidx.datastore", name = "datastore-prefer
 # Coil for Image Loading
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
 
 # ==============================
 # Plugin References
@@ -135,6 +141,7 @@ coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coi
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }           # Android app plugin
+android-library = { id = "com.android.library" }                                        # Android library plugin
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }        # Kotlin Android plugin
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" } # Jetpack Compose plugin
 ksp = { id = "com.google.devtools.ksp", version = "1.9.25-1.0.20" }                     # Kotlin Symbol Processing
