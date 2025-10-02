@@ -70,6 +70,10 @@ dependencies {
     // Compose BOM (Bill of Materials to align Compose versions)
     implementation(platform(libs.androidx.compose.bom))
 
+    // Compose Material Icons
+    implementation(libs.androidx.compose.material.icons.core)
+    implementation(libs.androidx.compose.material.icons.extended)
+
     // Jetpack Compose UI & Graphics
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
@@ -143,4 +147,9 @@ dependencies {
     // ExoPlayer for video and audio playback
     implementation(libs.exoplayer.core)
     implementation(libs.exoplayer.ui)
+
+    // Accompanist Pager & Indicators
+    implementation(libs.accompanist.pager)
+    implementation(libs.accompanist.pager.indicators)
+
 }
