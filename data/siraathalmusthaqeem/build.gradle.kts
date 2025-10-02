@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.islamicapp.siraathalmusthaqeem.data"
+    namespace = "com.islamicapp.siraathalmusthaqeem.model"
     compileSdk = 36
 
     defaultConfig {
