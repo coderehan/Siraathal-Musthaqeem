@@ -52,7 +52,8 @@ android {
 
 dependencies {
     // Import core module to use all its features/files
-    implementation(project(":core"))
+    implementation(project(":core:siraathalmusthaqeem"))
+    implementation(project(":domain:siraathalmusthaqeem"))
 
     // Keep those dependencies which are needed in data module
     // In data module, retrofit and koin is mostly used
@@ -70,9 +71,10 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
-    // Koin (DI)
+    // Koin for Dependency Injection
     implementation(libs.koin.core)
     implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
 
     // Unit testing
     testImplementation(libs.junit)

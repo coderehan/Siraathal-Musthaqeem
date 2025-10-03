@@ -58,6 +58,11 @@ android {
 }
 
 dependencies {
+    // Import core, domain & data modules to use all there features/files
+    implementation(project(":core:siraathalmusthaqeem"))
+    implementation(project(":data:siraathalmusthaqeem"))
+    implementation(project(":domain:siraathalmusthaqeem"))
+
     // Core KTX extensions
     implementation(libs.androidx.core.ktx)
 
