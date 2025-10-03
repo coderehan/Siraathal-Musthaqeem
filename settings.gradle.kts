@@ -21,6 +21,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "Siraathal Musthaqeem"
 include(":app")
-include(":domain:siraathalmusthaqeem")
-include(":data:siraathalmusthaqeem")
-include(":core:siraathalmusthaqeem")
+// use 'include' keyword to add/show core, domain and data modules in Android view
+include(":domain")
+include(":data")
+include(":core")

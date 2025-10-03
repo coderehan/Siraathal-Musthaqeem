@@ -58,10 +58,10 @@ android {
 }
 
 dependencies {
-    // Import core, domain & data modules to use all there features/files
-    implementation(project(":core:siraathalmusthaqeem"))
-    implementation(project(":data:siraathalmusthaqeem"))
-    implementation(project(":domain:siraathalmusthaqeem"))
+    // App Module can depend on all three i.e. core, domain, data modules
+    implementation(project(":core"))
+    implementation(project(":domain"))
+    implementation(project(":data"))
 
     // Core KTX extensions
     implementation(libs.androidx.core.ktx)

@@ -2,8 +2,8 @@ package com.islamicapp.siraathalmusthaqeem.screen.allah99names
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.islamicapp.siraathalmusthaqeem.allah99names.model.Allah99Names
-import com.islamicapp.siraathalmusthaqeem.allah99names.usecase.GetAllah99NamesUseCase
+import com.islamicapp.domain.allah99names.model.Allah99Names
+import com.islamicapp.domain.allah99names.usecase.GetAllah99NamesUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

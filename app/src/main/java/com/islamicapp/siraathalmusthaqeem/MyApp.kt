@@ -1,26 +1,25 @@
 package com.islamicapp.siraathalmusthaqeem
 
 import android.app.Application
-import com.islamicapp.siraathalmusthaqeem.di.makeApiModule
-import com.islamicapp.siraathalmusthaqeem.di.makeAppModule
-import com.islamicapp.siraathalmusthaqeem.di.makeDataSourceModule
-import com.islamicapp.siraathalmusthaqeem.di.makeDomainModule
-import com.islamicapp.siraathalmusthaqeem.di.makeRepositoryModule
+import com.islamicapp.data.di.dataModule
+import com.islamicapp.domain.di.domainModule
+import com.islamicapp.siraathalmusthaqeem.di.appModule
 import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 
 class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
         startKoin {
             androidContext(this@MyApp)
+            androidLogger(Level.ERROR)
             modules(
-                    makeApiModule(),
-                    makeDataSourceModule(),
-                    makeRepositoryModule(),
-                    makeDomainModule(),
-                    makeAppModule()
-                )
+                dataModule,
+                domainModule,
+                appModule
+            )
         }
     }
 }
