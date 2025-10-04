@@ -29,18 +29,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.islamicapp.siraathalmusthaqeem.R
+import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.islamicapp.siraathalmusthaqeem.screen.navigation.NavigationItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavHostController) {
+fun HomeScreen(navController: NavHostController, preferencesManager: PreferencesManager) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+
+    // Collect name from DataStore
+    val userName by preferencesManager.userNameFlow.collectAsState(initial = "")
 
     // Selected bottom nav item (simple state for preview/demo)
     var selectedBottom by remember { mutableStateOf<BottomNavItem>(BottomNavItem.Home) }
@@ -77,7 +80,10 @@ fun HomeScreen(navController: NavHostController) {
 
                 // Drawer menu items
                 DrawerMenuItem("Theme", R.drawable.ic_android) { scope.launch { drawerState.close() } }
-                DrawerMenuItem("Edit Profile", R.drawable.ic_android) { scope.launch { drawerState.close() } }
+                DrawerMenuItem("Edit Profile", R.drawable.ic_android) {
+                    scope.launch { drawerState.close() }
+                    navController.navigate(NavigationItem.Profile.route)
+                }
                 DrawerMenuItem("Request a feature", R.drawable.ic_android) { scope.launch { drawerState.close() } }
                 DrawerMenuItem("Report a bug/issue", R.drawable.ic_android) { scope.launch { drawerState.close() } }
                 DrawerMenuItem("Rate the App", R.drawable.ic_android) { scope.launch { drawerState.close() } }
@@ -97,7 +103,12 @@ fun HomeScreen(navController: NavHostController) {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text(text = "Assalamu Alaikum, Rehan!", style = MaterialTheme.typography.titleMedium) },
+                    title = {
+                        Text(
+                            text = "Assalamu Alaikum, ${if (userName.isNotEmpty()) userName else "Believer"}!",
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    },
                     navigationIcon = {
                         IconButton(onClick = { scope.launch { drawerState.open() } }) {
                             Icon(imageVector = Icons.Filled.Menu, contentDescription = "Open drawer")
@@ -118,7 +129,7 @@ fun HomeScreen(navController: NavHostController) {
                             onClick = {
                                 selectedBottom = item
                                 navController.navigate(item.route) {
-                                    popUpTo(BottomNavItem.Home.route) { saveState = true } // ✅ fixed here
+                                    popUpTo(BottomNavItem.Home.route) { saveState = true }
                                     launchSingleTop = true
                                     restoreState = true
                                 }
@@ -303,7 +314,11 @@ fun DailySlider() {
 }
 
 @Composable
-private fun DrawerMenuItem(label: String, iconRes: Int, onClick: () -> Unit) {
+private fun DrawerMenuItem(
+    label: String,
+    iconRes: Int,
+    onClick: () -> Unit
+) {
     NavigationDrawerItem(
         label = { Text(text = label) },
         selected = false,
@@ -312,6 +327,7 @@ private fun DrawerMenuItem(label: String, iconRes: Int, onClick: () -> Unit) {
         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
     )
 }
+
 
 data class Feature(
     val title: String,
@@ -325,10 +341,4 @@ sealed class BottomNavItem(val title: String, val icon: Int,  val route: String)
     object Quran : BottomNavItem("Quran", R.drawable.ic_android, "quran")
     object Dua : BottomNavItem("Dua", R.drawable.ic_android, "dua")
     object Tasbeeh : BottomNavItem("Tasbeeh", R.drawable.ic_android, "tasbeeh")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    HomeScreen(navController = rememberNavController())
 }

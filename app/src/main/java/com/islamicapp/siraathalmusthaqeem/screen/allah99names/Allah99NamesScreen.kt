@@ -1,63 +1,37 @@
 package com.islamicapp.siraathalmusthaqeem.screen.allah99names
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.islamicapp.siraathalmusthaqeem.screen.allah99names.components.NameCard
+import com.islamicapp.siraathalmusthaqeem.utils.CommonActionBar
+import com.islamicapp.siraathalmusthaqeem.utils.UIState
 import org.koin.androidx.compose.koinViewModel
 
-// --- Screen ---
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Allah99NamesScreen(
     navController: NavController,
     viewModel: Allah99NamesViewModel = koinViewModel()
 ) {
-    val names by viewModel.allahNames.collectAsState()
-    val loading by viewModel.isLoading.collectAsState()
-    val error by viewModel.error.collectAsState()
+    // Collect the UIState (Loading / Success / Empty / Failure) from viewmodel
+    val uiState by viewModel.uiState.collectAsState()
 
-    // Load API when Composable enters composition
+    // Trigger data loading only once when screen opens
     LaunchedEffect(Unit) {
         viewModel.loadAllah99Names()
     }
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "Allah 99 Names",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { /* Handle back navigation */ }) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.White,
-                    titleContentColor = Color(0xFF1F2937)
-                )
-            )
+            CommonActionBar(title = "Allah 99 Names", navController = navController)
         }
     ) { paddingValues ->
         Box(
@@ -66,20 +40,17 @@ fun Allah99NamesScreen(
                 .background(Color(0xFFF9FAFB))
                 .padding(paddingValues)
         ) {
-            when {
-                loading -> {
-                    CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center)
-                    )
+            // Handle each UI state cleanly using a when() block
+            when (uiState) {
+
+                // Show a loading spinner while data is being fetched
+                is UIState.Loading -> {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
-                error != null -> {
-                    Text(
-                        text = "Error: $error",
-                        color = Color.Red,
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
-                else -> {
+
+                // Show list when data is successfully loaded
+                is UIState.Success -> {
+                    val names = (uiState as UIState.Success).data
                     LazyColumn(
                         contentPadding = PaddingValues(16.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -94,73 +65,26 @@ fun Allah99NamesScreen(
                         }
                     }
                 }
+
+                // Show message when data is successfully fetched but empty
+                is UIState.Empty -> {
+                    Text(
+                        text = "No data available",
+                        modifier = Modifier.align(Alignment.Center),
+                        color = Color.Gray
+                    )
+                }
+
+                // Show an error message when something goes wrong
+                is UIState.Failure -> {
+                    val errorMessage = (uiState as UIState.Failure).throwable.message
+                    Text(
+                        text = errorMessage ?: "Error occurred",
+                        color = Color.Red,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
             }
-        }
-    }
-}
-
-// --- Reusable Card ---
-@Composable
-fun NameCard(
-    number: Int,
-    arabic: String,
-    transliteration: String,
-    meaning: String
-) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        ),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 2.dp
-        ),
-        border = BorderStroke(1.dp, Color(0xFFE5E7EB))
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            // Number
-            Text(
-                text = number.toString(),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
-                color = Color(0xFF6B7280)
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            // Arabic Name
-            Text(
-                text = arabic,
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Normal,
-                color = Color(0xFF111827)
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Transliteration
-            Text(
-                text = transliteration,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Medium,
-                color = Color(0xFF374151)
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            // Meaning
-            Text(
-                text = meaning,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Normal,
-                color = Color(0xFF6B7280)
-            )
         }
     }
 }

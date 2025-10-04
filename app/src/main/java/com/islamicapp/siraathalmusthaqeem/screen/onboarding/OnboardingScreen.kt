@@ -20,21 +20,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 import com.islamicapp.siraathalmusthaqeem.screen.navigation.NavigationItem
+import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
-fun OnboardingScreen(navController: NavHostController) {
+fun OnboardingScreen(navController: NavHostController, preferencesManager: PreferencesManager) {
     val pagerState = rememberPagerState()
     val scope = rememberCoroutineScope()
 
@@ -76,7 +73,9 @@ fun OnboardingScreen(navController: NavHostController) {
                             pagerState.animateScrollToPage(pagerState.currentPage + 1)
                         }
                     } else {
-                        // Last page -> Go to Home
+                        scope.launch {
+                            preferencesManager.setOnboardingCompleted(true)
+                        }
                         navController.navigate(NavigationItem.Profile.route) {
                             popUpTo(NavigationItem.Onboarding.route) { inclusive = true }
                         }
@@ -127,8 +126,3 @@ fun OnboardingPageItem(onboardingPage: OnboardingPage) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun OnboardingPreview() {
-    OnboardingScreen(navController = rememberNavController())
-}

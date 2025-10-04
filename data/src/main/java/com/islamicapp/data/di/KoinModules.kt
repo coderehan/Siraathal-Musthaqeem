@@ -11,6 +11,10 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Constants used to distinguish different Retrofit instances.
+ * Each feature has its own base URL and Retrofit binding.
+ */
 const val PRAYER_TIMES_RETROFIT = "PRAYER_TIMES_RETROFIT"
 const val QIBLA_RETROFIT = "QIBLA_RETROFIT"
 const val ALLAH_99_NAMES_RETROFIT = "ALLAH_99_NAMES_RETROFIT"
@@ -27,6 +31,11 @@ const val HIJRI_CALENDAR_BASE_RETROFIT = "HIJRI_CALENDAR_BASE_RETROFIT"
 // As 'API interfaces', 'Network Data Source', 'Data Source Impl' comes under 'Data Module', it should be declared in 'Data Module' level
 val dataModule = module {
 
+    /**
+     * Provide Retrofit instances for each feature API.
+     * - Named bindings allow multiple Retrofit clients in the app.
+     * - Each Retrofit uses its respective BASE_URL from Constants.
+     */
 // PRAYER_TIMES_RETROFIT instance
     single(named(PRAYER_TIMES_RETROFIT)) {
         Retrofit.Builder()
@@ -123,7 +132,10 @@ val dataModule = module {
             .build()
     }
 
-    // Register all API interfaces
+    /**
+     * Register API interfaces using respective Retrofit clients.
+     * Example: Allah99NamesApi uses ALLAH_99_NAMES_RETROFIT instance.
+     */
 //    single { get<Retrofit>(named(PRAYER_TIMES_RETROFIT)).create(PrayerTimesApi::class.java) }
 //    single { get<Retrofit>(named(QIBLA_RETROFIT)).create(QiblaApi::class.java) }
     single { get<Retrofit>(named(ALLAH_99_NAMES_RETROFIT)).create(Allah99NamesApi::class.java) }
@@ -138,7 +150,10 @@ val dataModule = module {
 //    single { get<Retrofit>(named(HIJRI_CALENDAR_BASE_RETROFIT)).create(HijriCalendarApi::class.java) }
 
 
-    // Register all Network Data Source
+    /**
+     * Register Network Data Source (API → Mapper → Domain model).
+     * - Provides data from API.
+     */
 //    factory { PrayerTimesNetworkDataSource(prayerApi = get()) }
 //    factory { QiblaNetworkDataSource(qiblaApi = get()) }
     factory<Allah99NamesDataSource> {
@@ -149,7 +164,11 @@ val dataModule = module {
 //    factory { HijriCalendarNetworkDataSource(hijriCalendarApi = get()) }
 
 
-    // Register all Data Source Impl
+    /**
+     * Register Repository implementation.
+     * - Bridges data layer with domain layer.
+     * - Domain layer only depends on repository interface, not data source.
+     */
 //    factory<PrayerTimesRepository> {
 //        PrayerTimesRepositoryImpl(prayerTimesNetworkDataSource = get())
 //    }

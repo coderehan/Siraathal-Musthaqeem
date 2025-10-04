@@ -5,6 +5,13 @@ import org.koin.dsl.module
 
 // As 'UseCase' comes under 'Domain Module', it should come under 'Domain Module' level
 val domainModule = module {
+    /**
+     * Factory binding for GetAllah99NamesUseCase
+     *
+     * - Why factory? → Each time it's requested, a new instance is created.
+     *   Use cases are lightweight and stateless, so factory is fine.
+     * - Depends on: Allah99NamesRepository (provided by data module).
+     */
     factory { GetAllah99NamesUseCase(get()) }
 
 }

@@ -9,17 +9,26 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.islamicapp.siraathalmusthaqeem.screen.navigation.Navigation
 import com.islamicapp.siraathalmusthaqeem.ui.theme.SiraathalMusthaqeemTheme
+import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var preferencesManager: PreferencesManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        // Initialize PreferencesManager with applicationContext
+        preferencesManager = PreferencesManager(applicationContext)
+
         setContent {
             SiraathalMusthaqeemTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    Navigation()
+                    // Pass PreferencesManager into Navigation
+                    Navigation(preferencesManager)
                 }
             }
         }

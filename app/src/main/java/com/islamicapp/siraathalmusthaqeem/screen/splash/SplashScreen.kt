@@ -17,21 +17,41 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.islamicapp.siraathalmusthaqeem.R
 import com.islamicapp.siraathalmusthaqeem.screen.navigation.NavigationItem
+import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavHostController) {
-    // Full screen box with centered content
+fun SplashScreen(navController: NavHostController, preferencesManager: PreferencesManager) {
+    LaunchedEffect(Unit) {
+        delay(3000) // simulate splash delay
+
+        val onboardingDone = preferencesManager.isOnboardingCompleted()
+        val profileDone = preferencesManager.isProfileCompleted()
+
+        if (!onboardingDone) {
+            // First time → go to onboarding
+            navController.navigate(NavigationItem.Onboarding.route) {
+                popUpTo(NavigationItem.Splash.route) { inclusive = true }
+            }
+        } else if (!profileDone) {
+            // Onboarding done but no profile
+            navController.navigate(NavigationItem.Profile.route) {
+                popUpTo(NavigationItem.Splash.route) { inclusive = true }
+            }
+        } else {
+            // Already installed + profile done
+            navController.navigate(NavigationItem.Home.route) {
+                popUpTo(NavigationItem.Splash.route) { inclusive = true }
+            }
+        }
+    }
+
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White),
+        modifier = Modifier.fillMaxSize().background(Color.White),
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -50,20 +70,6 @@ fun SplashScreen(navController: NavHostController) {
             )
         }
     }
-
-    // Auto navigate after 2 seconds
-    LaunchedEffect(Unit) {
-        delay(2000)
-        navController.navigate(NavigationItem.Onboarding.route) {
-            popUpTo(NavigationItem.Splash.route) { inclusive = true }
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SplashScreenPreview() {
-    SplashScreen(navController = rememberNavController())
 }
 
 

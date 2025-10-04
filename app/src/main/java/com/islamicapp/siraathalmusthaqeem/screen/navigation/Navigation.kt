@@ -21,35 +21,36 @@ import com.islamicapp.siraathalmusthaqeem.screen.quran.QuranScreen
 import com.islamicapp.siraathalmusthaqeem.screen.seerah.SeerahScreen
 import com.islamicapp.siraathalmusthaqeem.screen.tasbeeh.TasbeehScreen
 import com.islamicapp.siraathalmusthaqeem.screen.zakath.ZakathScreen
+import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
 
 @Composable
-fun Navigation() {
+fun Navigation(preferencesManager: PreferencesManager) {
+    // NavController manages navigation between different screens in the app
     val navController: NavHostController = rememberNavController()
 
-    // Navigation host where we define all routes/screens
+    // NavHost holds the navigation graph
     NavHost(
         navController = navController,
-        startDestination = NavigationItem.Splash.route // First screen is Splash
+        startDestination = NavigationItem.Splash.route
     ) {
-
-        // Splash Screen
+        // Splash
         composable(NavigationItem.Splash.route) {
-            SplashScreen(navController = navController)
+            SplashScreen(navController = navController, preferencesManager = preferencesManager)
         }
 
-        // Onboarding Screens
+        // Onboarding
         composable(NavigationItem.Onboarding.route) {
-            OnboardingScreen(navController = navController)
+            OnboardingScreen(navController = navController, preferencesManager = preferencesManager)
         }
 
-        // Profile Screen
+        // Profile
         composable(NavigationItem.Profile.route) {
-            ProfileScreen(navController = navController)
+            ProfileScreen(navController = navController, preferencesManager = preferencesManager)
         }
 
-        // Home Screen
+        // Home
         composable(NavigationItem.Home.route) {
-            HomeScreen(navController = navController)
+            HomeScreen(navController = navController, preferencesManager = preferencesManager)
         }
 
         // Prayer Times
@@ -111,6 +112,5 @@ fun Navigation() {
         composable(NavigationItem.Tasbeeh.route) {
             TasbeehScreen(navController = navController)
         }
-
     }
 }

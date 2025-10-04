@@ -1,6 +1,10 @@
 package com.islamicapp.data.allah99names.model
 
-// API response model
+/**
+ * API response model for the 99 Names of Allah.
+ * This directly matches the JSON structure returned by the backend.
+ */
+
 data class Allah99NamesResponse(
     val code: Int,
     val data: List<AllahName>,
