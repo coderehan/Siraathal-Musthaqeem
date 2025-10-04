@@ -6,7 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,8 +16,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
@@ -26,19 +23,22 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.islamicapp.siraathalmusthaqeem.R
 import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
-import kotlinx.coroutines.delay
+import com.islamicapp.siraathalmusthaqeem.screen.hijricalendar.HijriCalendarScreen
+import com.islamicapp.siraathalmusthaqeem.screen.home.components.DailySlider
 import kotlinx.coroutines.launch
 import com.islamicapp.siraathalmusthaqeem.screen.navigation.NavigationItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavHostController, preferencesManager: PreferencesManager) {
+fun HomeScreen(
+    navController: NavHostController,
+    preferencesManager: PreferencesManager
+) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
@@ -59,7 +59,6 @@ fun HomeScreen(navController: NavHostController, preferencesManager: Preferences
         Feature("Seerah", R.drawable.ic_android, "seerah"),
         Feature("Prophets", R.drawable.ic_android, "prophets"),
     )
-
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -150,40 +149,33 @@ fun HomeScreen(navController: NavHostController, preferencesManager: Preferences
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(innerPadding)
-                        .verticalScroll(rememberScrollState()) // whole screen scrolls
+                        .verticalScroll(rememberScrollState())
                         .padding(horizontal = 16.dp)
                 ) {
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    // Date Row
+
+                    // Date Row with Hijri Calendar and Speaker Icon
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Column(
-                            verticalArrangement = Arrangement.Center,
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            Text(
-                                text = "4 Dhul-Hijjah 1446 AH",
-                                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Medium)
-                            )
-                            Text(
-                                text = "1 June 2025, Sunday",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
+                        // Hijri Calendar Component
+                        Box(modifier = Modifier.weight(1f)) {
+                            HijriCalendarScreen()
                         }
 
+                        // Speaker Icon
                         IconButton(
                             onClick = { /* TODO: play daily reminder */ },
-                            modifier = Modifier.size(40.dp)
+                            modifier = Modifier.size(48.dp)
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_android),
-                                contentDescription = "Speaker"
+                                contentDescription = "Play daily reminder",
+                                modifier = Modifier.size(24.dp)
                             )
                         }
                     }
@@ -208,14 +200,14 @@ fun HomeScreen(navController: NavHostController, preferencesManager: Preferences
                                 Column(
                                     horizontalAlignment = Alignment.CenterHorizontally,
                                     modifier = Modifier
-                                        .width(itemWidth) // auto-calculated width
+                                        .width(itemWidth)
                                         .clickable { navController.navigate(feature.route) }
                                 ) {
                                     Surface(
                                         tonalElevation = 1.dp,
                                         shape = MaterialTheme.shapes.medium,
                                         modifier = Modifier
-                                            .size(itemWidth * 0.7f) // proportional size
+                                            .size(itemWidth * 0.7f)
                                     ) {
                                         Box(contentAlignment = Alignment.Center) {
                                             Image(
@@ -249,71 +241,6 @@ fun HomeScreen(navController: NavHostController, preferencesManager: Preferences
 }
 
 @Composable
-fun DailySlider() {
-    val items = listOf("Daily Hadith", "Daily Aayah", "Daily Dua")
-    val pagerState = rememberPagerState(initialPage = 0, pageCount = { items.size })
-    val scope = rememberCoroutineScope()
-
-    // Auto-scroll every 3 seconds
-    LaunchedEffect(pagerState.currentPage) {
-        delay(3000)
-        val nextPage = (pagerState.currentPage + 1) % items.size
-        scope.launch { pagerState.animateScrollToPage(nextPage) }
-    }
-
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        HorizontalPager(
-            state = pagerState,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(300.dp)
-                .padding(16.dp)
-        ) { page ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(text = items[page], style = MaterialTheme.typography.titleMedium)
-                Spacer(modifier = Modifier.height(12.dp))
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.surfaceVariant)
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Dots indicator
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            repeat(items.size) { index ->
-                val selected = pagerState.currentPage == index
-                Box(
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .size(if (selected) 12.dp else 10.dp)
-                        .background(
-                            if (selected) MaterialTheme.colorScheme.primary
-                            else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
-                            shape = MaterialTheme.shapes.small
-                        )
-                )
-            }
-        }
-    }
-}
-
-@Composable
 private fun DrawerMenuItem(
     label: String,
     iconRes: Int,
@@ -328,15 +255,13 @@ private fun DrawerMenuItem(
     )
 }
 
-
 data class Feature(
     val title: String,
     val imageRes: Int,
-    val route: String // navigation route
+    val route: String
 )
 
-
-sealed class BottomNavItem(val title: String, val icon: Int,  val route: String) {
+sealed class BottomNavItem(val title: String, val icon: Int, val route: String) {
     object Home : BottomNavItem("Home", R.drawable.ic_android, "home")
     object Quran : BottomNavItem("Quran", R.drawable.ic_android, "quran")
     object Dua : BottomNavItem("Dua", R.drawable.ic_android, "dua")

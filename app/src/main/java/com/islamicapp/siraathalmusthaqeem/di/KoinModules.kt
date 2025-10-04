@@ -1,6 +1,7 @@
 package com.islamicapp.siraathalmusthaqeem.di
 
 import com.islamicapp.siraathalmusthaqeem.screen.allah99names.Allah99NamesViewModel
+import com.islamicapp.siraathalmusthaqeem.screen.hijricalendar.HijriCalendarViewModel
 import org.koin.dsl.module
 import org.koin.core.module.dsl.viewModel
 
@@ -12,4 +13,5 @@ val appModule = module {
      * - Koin injects the GetAllah99NamesUseCase automatically.
      */
     viewModel { Allah99NamesViewModel(get()) }
+    viewModel { HijriCalendarViewModel(get()) }
 }

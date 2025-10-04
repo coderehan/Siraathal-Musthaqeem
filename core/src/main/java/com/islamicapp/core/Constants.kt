@@ -13,6 +13,6 @@ object Constants {
     const val QURAN_SURAH_BASE_URL = ""
     const val QURAN_JUZ_BASE_URL = ""
     const val QURAN_AUDIO_BASE_URL = ""
-    const val HIJRI_CALENDAR_BASE_URL = ""
+    const val HIJRI_CALENDAR_BASE_URL = "https://api.aladhan.com"
 
 }

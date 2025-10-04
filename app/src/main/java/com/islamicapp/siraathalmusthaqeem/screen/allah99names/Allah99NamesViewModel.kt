@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.islamicapp.data.common.model.BaseErrorResponse
 import com.islamicapp.domain.allah99names.model.Allah99Names
-import com.islamicapp.domain.allah99names.usecase.GetAllah99NamesUseCase
+import com.islamicapp.domain.allah99names.usecase.Allah99NamesUseCase
 import com.islamicapp.siraathalmusthaqeem.utils.UIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,7 +21,7 @@ import retrofit2.HttpException
  * - Handle error parsing (convert API error response into user-friendly text).
  */
 class Allah99NamesViewModel(
-    private val getAllah99NamesUseCase: GetAllah99NamesUseCase
+    private val getAllah99NamesUseCase: Allah99NamesUseCase
 ) : ViewModel() {
 
     // Internal state flow that holds the current UI state

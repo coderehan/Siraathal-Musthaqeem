@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.islamicapp.siraathalmusthaqeem.screen.allah99names.Allah99NamesScreen
 import com.islamicapp.siraathalmusthaqeem.screen.dua.DuaScreen
 import com.islamicapp.siraathalmusthaqeem.screen.hadith.HadithScreen
+import com.islamicapp.siraathalmusthaqeem.screen.hijricalendar.HijriCalendarViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.home.HomeScreen
 import com.islamicapp.siraathalmusthaqeem.screen.masjid.MasjidScreen
 import com.islamicapp.siraathalmusthaqeem.screen.splash.SplashScreen
@@ -22,6 +23,7 @@ import com.islamicapp.siraathalmusthaqeem.screen.seerah.SeerahScreen
 import com.islamicapp.siraathalmusthaqeem.screen.tasbeeh.TasbeehScreen
 import com.islamicapp.siraathalmusthaqeem.screen.zakath.ZakathScreen
 import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun Navigation(preferencesManager: PreferencesManager) {

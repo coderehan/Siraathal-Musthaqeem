@@ -1,6 +1,7 @@
 package com.islamicapp.domain.di
 
-import com.islamicapp.domain.allah99names.usecase.GetAllah99NamesUseCase
+import com.islamicapp.domain.allah99names.usecase.Allah99NamesUseCase
+import com.islamicapp.domain.hijricalendar.usecase.HijriCalendarUseCase
 import org.koin.dsl.module
 
 // As 'UseCase' comes under 'Domain Module', it should come under 'Domain Module' level
@@ -12,6 +13,7 @@ val domainModule = module {
      *   Use cases are lightweight and stateless, so factory is fine.
      * - Depends on: Allah99NamesRepository (provided by data module).
      */
-    factory { GetAllah99NamesUseCase(get()) }
+    factory { Allah99NamesUseCase(get()) }
+    factory { HijriCalendarUseCase(get()) }
 
 }
