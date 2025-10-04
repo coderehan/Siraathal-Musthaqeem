@@ -157,4 +157,7 @@ dependencies {
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicators)
 
+    // Spinkit Progressbar
+    implementation(libs.spinkit)
+
 }

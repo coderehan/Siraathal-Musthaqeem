@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.islamicapp.siraathalmusthaqeem.screen.allah99names.components.NameCard
 import com.islamicapp.siraathalmusthaqeem.utils.CommonActionBar
+import com.islamicapp.siraathalmusthaqeem.utils.SpinKitLoader
 import com.islamicapp.siraathalmusthaqeem.utils.UIState
 import org.koin.androidx.compose.koinViewModel
 
@@ -45,7 +46,12 @@ fun Allah99NamesScreen(
 
                 // Show a loading spinner while data is being fetched
                 is UIState.Loading -> {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        SpinKitLoader()
+                    }
                 }
 
                 // Show list when data is successfully loaded

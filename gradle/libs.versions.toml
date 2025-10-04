@@ -57,6 +57,9 @@ accompanistPager = "0.36.0"
 # Accompanist Pager Indicators
 accompanistPagerIndicators = "0.36.0"
 
+# SpinKit - Progressbar
+spinkit = "1.4.0"
+
 appcompat = "1.7.1"
 
 # ==============================
@@ -143,6 +146,9 @@ datastore-preferences = { group = "androidx.datastore", name = "datastore-prefer
 
 # Coil for Image Loading
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+
+# Spinkit for Progressbar
+spinkit = { module = "com.github.ybq:Android-SpinKit", version.ref = "spinkit" }
 
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 
