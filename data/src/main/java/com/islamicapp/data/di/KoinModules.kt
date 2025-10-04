@@ -5,7 +5,12 @@ import com.islamicapp.data.allah99names.source.Allah99NamesDataSource
 import com.islamicapp.data.allah99names.source.Allah99NamesDataSourceImpl
 import com.islamicapp.data.allah99names.source.network.Allah99NamesApi
 import com.islamicapp.data.allah99names.source.network.Allah99NamesNetworkDataSource
+import com.islamicapp.data.hijricalendar.source.HijriCalendarDataSource
+import com.islamicapp.data.hijricalendar.source.HijriCalendarDataSourceImpl
+import com.islamicapp.data.hijricalendar.source.network.HijriCalendarApi
+import com.islamicapp.data.hijricalendar.source.network.HijriCalendarNetworkDataSource
 import com.islamicapp.domain.allah99names.repository.Allah99NamesRepository
+import com.islamicapp.domain.hijricalendar.repository.HijriCalendarRepository
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -147,7 +152,7 @@ val dataModule = module {
 //    single { get<Retrofit>(named(QURAN_SURAH_BASE_RETROFIT)).create(QuranApi::class.java) }
 //    single { get<Retrofit>(named(QURAN_JUZ_BASE_RETROFIT)).create(QuranApi::class.java) }
 //    single { get<Retrofit>(named(QURAN_AUDIO_BASE_RETROFIT)).create(QuranApi::class.java) }
-//    single { get<Retrofit>(named(HIJRI_CALENDAR_BASE_RETROFIT)).create(HijriCalendarApi::class.java) }
+    single { get<Retrofit>(named(HIJRI_CALENDAR_BASE_RETROFIT)).create(HijriCalendarApi::class.java) }
 
 
     /**
@@ -161,7 +166,9 @@ val dataModule = module {
     }
 //    factory { HadithNetworkDataSource(hadithApi = get()) }
 //    factory { QuranNetworkDataSource(quranApi = get()) }
-//    factory { HijriCalendarNetworkDataSource(hijriCalendarApi = get()) }
+    factory<HijriCalendarDataSource> {
+        HijriCalendarNetworkDataSource(get())
+    }
 
 
     /**
@@ -184,9 +191,9 @@ val dataModule = module {
 //    factory<QuranRepository> {
 //        QuranRepositoryImpl(quranNetworkDataSource = get())
 //    }
-//    factory<HijriCalendarRepository> {
-//        HijriCalendarRepositoryImpl(hijriCalendarNetworkDataSource = get())
-//    }
+    factory<HijriCalendarRepository> {
+        HijriCalendarDataSourceImpl(get())
+    }
 
 }
 

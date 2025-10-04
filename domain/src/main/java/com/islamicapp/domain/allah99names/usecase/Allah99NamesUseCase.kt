@@ -11,7 +11,7 @@ import com.islamicapp.domain.allah99names.repository.Allah99NamesRepository
  * - The repository fetches from the correct data source (API/DB).
  */
 
-class GetAllah99NamesUseCase(
+class Allah99NamesUseCase(
     private val repository: Allah99NamesRepository
 ) {
     suspend operator fun invoke(): List<Allah99Names> {
