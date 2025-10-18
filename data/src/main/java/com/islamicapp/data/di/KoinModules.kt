@@ -142,7 +142,6 @@ val dataModule = module {
      * Example: Allah99NamesApi uses ALLAH_99_NAMES_RETROFIT instance.
      */
 //    single { get<Retrofit>(named(PRAYER_TIMES_RETROFIT)).create(PrayerTimesApi::class.java) }
-//    single { get<Retrofit>(named(QIBLA_RETROFIT)).create(QiblaApi::class.java) }
     single { get<Retrofit>(named(ALLAH_99_NAMES_RETROFIT)).create(Allah99NamesApi::class.java) }
 //    single { get<Retrofit>(named(SAHIH_AL_BUKHARI_RETROFIT)).create(HadithApi::class.java) }
 //    single { get<Retrofit>(named(SAHIH_MUSLIM_RETROFIT)).create(HadithApi::class.java) }
@@ -160,7 +159,6 @@ val dataModule = module {
      * - Provides data from API.
      */
 //    factory { PrayerTimesNetworkDataSource(prayerApi = get()) }
-//    factory { QiblaNetworkDataSource(qiblaApi = get()) }
     factory<Allah99NamesDataSource> {
         Allah99NamesNetworkDataSource(get())
     }
@@ -178,9 +176,6 @@ val dataModule = module {
      */
 //    factory<PrayerTimesRepository> {
 //        PrayerTimesRepositoryImpl(prayerTimesNetworkDataSource = get())
-//    }
-//    factory<QiblaRepository> {
-//        QiblaRepositoryImpl(qiblaNetworkDataSource = get())
 //    }
     factory<Allah99NamesRepository> {
         Allah99NamesDataSourceImpl(get())
