@@ -160,4 +160,8 @@ dependencies {
     // Spinkit Progressbar
     implementation(libs.spinkit)
 
+    // Compose Foundation
+    implementation(libs.foundation)
+
+
 }

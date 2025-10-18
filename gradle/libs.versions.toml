@@ -19,19 +19,19 @@ espressoCore = "3.7.0"                   # UI testing with Espresso
 # Lifecycle & Compose
 lifecycleRuntimeKtx = "2.9.4"            # Lifecycle-aware components
 activityCompose = "1.11.0"               # Compose support for Activity
-composeBom = "2025.09.01"                # Compose Bill of Materials
+composeBom = "2025.10.00"                # Compose Bill of Materials
 composeIcons = "1.7.8"                   # match your compose version
 
 # Dependency Injection - Koin
 koin = "4.1.1"                           # Koin for DI
 
 # Room Database
-room = "2.8.1"                           # Room persistence library
+room = "2.8.2"                           # Room persistence library
 
 # Network - Retrofit + OkHttp
 retrofit = "3.0.0"                       # Retrofit for REST API
-okhttp = "5.1.0"                         # OkHttp client
-loggingInterceptor = "5.1.0"             # Logging for OkHttp
+okhttp = "5.2.1"                         # OkHttp client
+loggingInterceptor = "5.2.1"             # Logging for OkHttp
 
 # ViewModel, LiveData, etc.
 lifecycle = "2.9.4"                      # ViewModel, LiveData, etc.
@@ -60,6 +60,9 @@ accompanistPagerIndicators = "0.36.0"
 # SpinKit - Progressbar
 spinkit = "1.4.0"
 
+material3 = "1.2.1"
+foundation = "1.9.3"
+
 appcompat = "1.7.1"
 
 # ==============================
@@ -87,7 +90,7 @@ androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 
 # Compose Material Icons
 androidx-compose-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core", version.ref = "composeIcons" }
@@ -149,6 +152,8 @@ coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coi
 
 # Spinkit for Progressbar
 spinkit = { module = "com.github.ybq:Android-SpinKit", version.ref = "spinkit" }
+
+foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
 
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 
