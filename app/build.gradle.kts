@@ -167,5 +167,8 @@ dependencies {
     // Spinkit Progressbar
     implementation(libs.spinkit)
 
+    // Daily Slider
+    implementation(libs.quranVerses)
+
 
 }

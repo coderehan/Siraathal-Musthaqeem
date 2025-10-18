@@ -1,6 +1,7 @@
 package com.islamicapp.siraathalmusthaqeem.screen.home.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,10 +10,16 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,52 +27,93 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun DailySlider() {
-    val items = listOf("Daily Hadith", "Daily Aayah", "Daily Dua")
+    val items = listOf("Hadith of the Day", "Verse of the Day", "Daily Wisdom")
     val pagerState = rememberPagerState(initialPage = 0, pageCount = { items.size })
     val scope = rememberCoroutineScope()
 
-    // Auto-scroll every 3 seconds
     LaunchedEffect(pagerState.currentPage) {
-        delay(3000)
+        delay(5000)
         val nextPage = (pagerState.currentPage + 1) % items.size
         scope.launch { pagerState.animateScrollToPage(nextPage) }
     }
 
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        HorizontalPager(
-            state = pagerState,
+        // Dynamic title
+        Text(
+            text = items[pagerState.currentPage],
+            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+
+        // Main container with safe height bounds
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp)
-                .padding(16.dp)
-        ) { page ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(text = items[page], style = MaterialTheme.typography.titleMedium)
-                Spacer(modifier = Modifier.height(12.dp))
-                Box(
+                .heightIn(min = 220.dp, max = 400.dp)
+                .clip(RoundedCornerShape(16.dp))
+                .border(
+                    width = 1.5.dp,
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+                    shape = RoundedCornerShape(16.dp)
+                )
+                .background(Color.White)
+                .padding(12.dp)
+        ) {
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.fillMaxSize()
+            ) { page ->
+
+                // Scroll state for long content
+                val scrollState = rememberScrollState()
+
+                Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.surfaceVariant)
-                )
+                        .verticalScroll(scrollState)
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    when (page) {
+                        0 -> RandomHadithView(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight()
+                        )
+
+                        1 -> RandomQuranVerseView(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight()
+                        )
+
+                        2 -> HadithOfDayView(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight()
+                        )
+                    }
+                }
             }
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
         // Dots indicator
         Row(
@@ -77,14 +125,18 @@ fun DailySlider() {
                 Box(
                     modifier = Modifier
                         .padding(4.dp)
-                        .size(if (selected) 12.dp else 10.dp)
+                        .size(if (selected) 12.dp else 8.dp)
                         .background(
-                            if (selected) MaterialTheme.colorScheme.primary
-                            else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
-                            shape = MaterialTheme.shapes.small
+                            if (selected)
+                                MaterialTheme.colorScheme.primary
+                            else
+                                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
+                            shape = CircleShape
                         )
                 )
             }
         }
     }
 }
+
+
