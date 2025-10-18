@@ -1,6 +1,7 @@
 package com.islamicapp.siraathalmusthaqeem
 
 import android.app.Application
+import com.islamicapp.core.di.coreModule
 import com.islamicapp.data.di.dataModule
 import com.islamicapp.domain.di.domainModule
 import com.islamicapp.siraathalmusthaqeem.di.appModule
@@ -18,7 +19,8 @@ class MyApp : Application() {
             modules(
                 dataModule,
                 domainModule,
-                appModule
+                appModule,
+                coreModule
             )
         }
     }

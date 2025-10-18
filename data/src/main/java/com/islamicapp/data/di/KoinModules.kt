@@ -9,8 +9,13 @@ import com.islamicapp.data.hijricalendar.source.HijriCalendarDataSource
 import com.islamicapp.data.hijricalendar.source.HijriCalendarDataSourceImpl
 import com.islamicapp.data.hijricalendar.source.network.HijriCalendarApi
 import com.islamicapp.data.hijricalendar.source.network.HijriCalendarNetworkDataSource
+import com.islamicapp.data.qibla.source.QiblaDataSource
+import com.islamicapp.data.qibla.source.QiblaDataSourceImpl
+import com.islamicapp.data.qibla.source.network.QiblaApi
+import com.islamicapp.data.qibla.source.network.QiblaNetworkDataSource
 import com.islamicapp.domain.allah99names.repository.Allah99NamesRepository
 import com.islamicapp.domain.hijricalendar.repository.HijriCalendarRepository
+import com.islamicapp.domain.qibla.repository.QiblaRepository
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -142,7 +147,7 @@ val dataModule = module {
      * Example: Allah99NamesApi uses ALLAH_99_NAMES_RETROFIT instance.
      */
 //    single { get<Retrofit>(named(PRAYER_TIMES_RETROFIT)).create(PrayerTimesApi::class.java) }
-//    single { get<Retrofit>(named(QIBLA_RETROFIT)).create(QiblaApi::class.java) }
+    single { get<Retrofit>(named(QIBLA_RETROFIT)).create(QiblaApi::class.java) }
     single { get<Retrofit>(named(ALLAH_99_NAMES_RETROFIT)).create(Allah99NamesApi::class.java) }
 //    single { get<Retrofit>(named(SAHIH_AL_BUKHARI_RETROFIT)).create(HadithApi::class.java) }
 //    single { get<Retrofit>(named(SAHIH_MUSLIM_RETROFIT)).create(HadithApi::class.java) }
@@ -160,7 +165,9 @@ val dataModule = module {
      * - Provides data from API.
      */
 //    factory { PrayerTimesNetworkDataSource(prayerApi = get()) }
-//    factory { QiblaNetworkDataSource(qiblaApi = get()) }
+    factory<QiblaDataSource> {
+        QiblaNetworkDataSource(get())
+    }
     factory<Allah99NamesDataSource> {
         Allah99NamesNetworkDataSource(get())
     }
@@ -179,9 +186,9 @@ val dataModule = module {
 //    factory<PrayerTimesRepository> {
 //        PrayerTimesRepositoryImpl(prayerTimesNetworkDataSource = get())
 //    }
-//    factory<QiblaRepository> {
-//        QiblaRepositoryImpl(qiblaNetworkDataSource = get())
-//    }
+    factory<QiblaRepository> {
+        QiblaDataSourceImpl(get())
+    }
     factory<Allah99NamesRepository> {
         Allah99NamesDataSourceImpl(get())
     }
