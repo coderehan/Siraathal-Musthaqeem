@@ -17,10 +17,10 @@ class MyApp : Application() {
             androidContext(this@MyApp)
             androidLogger(Level.ERROR)
             modules(
+                coreModule,
                 dataModule,
                 domainModule,
-                appModule,
-                coreModule
+                appModule
             )
         }
     }

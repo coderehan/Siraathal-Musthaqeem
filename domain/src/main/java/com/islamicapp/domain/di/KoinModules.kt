@@ -1,6 +1,7 @@
 package com.islamicapp.domain.di
 
 import com.islamicapp.domain.allah99names.usecase.Allah99NamesUseCase
+import com.islamicapp.domain.hadith.usecase.HadithUseCase
 import com.islamicapp.domain.hijricalendar.usecase.HijriCalendarUseCase
 import org.koin.dsl.module
 
@@ -15,5 +16,6 @@ val domainModule = module {
      */
     factory { Allah99NamesUseCase(get()) }
     factory { HijriCalendarUseCase(get()) }
+    factory { HadithUseCase(get()) }
 
 }

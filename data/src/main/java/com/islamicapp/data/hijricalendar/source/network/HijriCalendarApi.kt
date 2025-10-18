@@ -6,7 +6,7 @@ import retrofit2.http.Path
 
 interface HijriCalendarApi {
 
-    @GET("/v1/gToH/{date}")
+    @GET("v1/gToH/{date}")
     suspend fun getHijriCalendarDate(
         @Path("date") date: String
     ): HijriCalendarResponse

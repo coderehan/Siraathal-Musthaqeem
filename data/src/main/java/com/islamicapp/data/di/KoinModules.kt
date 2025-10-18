@@ -1,15 +1,21 @@
 package com.islamicapp.data.di
 
-import com.islamicapp.core.Constants
+import com.islamicapp.core.utils.Constants
 import com.islamicapp.data.allah99names.source.Allah99NamesDataSource
 import com.islamicapp.data.allah99names.source.Allah99NamesDataSourceImpl
 import com.islamicapp.data.allah99names.source.network.Allah99NamesApi
 import com.islamicapp.data.allah99names.source.network.Allah99NamesNetworkDataSource
+import com.islamicapp.data.hadith.mapper.HadithMapper
+import com.islamicapp.data.hadith.source.HadithDataSource
+import com.islamicapp.data.hadith.source.HadithDataSourceImpl
+import com.islamicapp.data.hadith.source.network.HadithApi
+import com.islamicapp.data.hadith.source.network.HadithNetworkDataSource
 import com.islamicapp.data.hijricalendar.source.HijriCalendarDataSource
 import com.islamicapp.data.hijricalendar.source.HijriCalendarDataSourceImpl
 import com.islamicapp.data.hijricalendar.source.network.HijriCalendarApi
 import com.islamicapp.data.hijricalendar.source.network.HijriCalendarNetworkDataSource
 import com.islamicapp.domain.allah99names.repository.Allah99NamesRepository
+import com.islamicapp.domain.hadith.repository.HadithRepository
 import com.islamicapp.domain.hijricalendar.repository.HijriCalendarRepository
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -23,11 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 const val PRAYER_TIMES_RETROFIT = "PRAYER_TIMES_RETROFIT"
 const val QIBLA_RETROFIT = "QIBLA_RETROFIT"
 const val ALLAH_99_NAMES_RETROFIT = "ALLAH_99_NAMES_RETROFIT"
-const val SAHIH_AL_BUKHARI_RETROFIT = "SAHIH_AL_BUKHARI_RETROFIT"
-const val SAHIH_MUSLIM_RETROFIT = "SAHIH_MUSLIM_RETROFIT"
-const val SUNAN_AN_NASAI_RETROFIT = "SUNAN_AN_NASAI_RETROFIT"
-const val SUNAN_ABU_DAWUD_RETROFIT = "SUNAN_ABU_DAWUD_RETROFIT"
-const val JAMIAT_TIRMIDHI_RETROFIT = "JAMIAT_TIRMIDHI_RETROFIT"
+const val HADITH_RETROFIT = "HADITH_RETROFIT"
 const val QURAN_SURAH_BASE_RETROFIT = "QURAN_SURAH_BASE_RETROFIT"
 const val QURAN_JUZ_BASE_RETROFIT = "QURAN_JUZ_BASE_RETROFIT"
 const val QURAN_AUDIO_BASE_RETROFIT = "QURAN_AUDIO_BASE_RETROFIT"
@@ -65,42 +67,10 @@ val dataModule = module {
             .build()
     }
 
-    // SAHIH_AL_BUKHARI_RETROFIT instance
-    single(named(SAHIH_AL_BUKHARI_RETROFIT)) {
+    // HADITH_RETROFIT instance
+    single(named(HADITH_RETROFIT)) {
         Retrofit.Builder()
-            .baseUrl(Constants.SAHIH_AL_BUKHARI_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    // SAHIH_MUSLIM_RETROFIT instance
-    single(named(SAHIH_MUSLIM_RETROFIT)) {
-        Retrofit.Builder()
-            .baseUrl(Constants.SAHIH_MUSLIM_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    // SUNAN_AN_NASAI_RETROFIT instance
-    single(named(SUNAN_AN_NASAI_RETROFIT)) {
-        Retrofit.Builder()
-            .baseUrl(Constants.SUNAN_AN_NASAI_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    // SUNAN_ABU_DAWUD_RETROFIT instance
-    single(named(SUNAN_ABU_DAWUD_RETROFIT)) {
-        Retrofit.Builder()
-            .baseUrl(Constants.SUNAN_ABU_DAWUD_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    // JAMIAT_TIRMIDHI_RETROFIT instance
-    single(named(JAMIAT_TIRMIDHI_RETROFIT)) {
-        Retrofit.Builder()
-            .baseUrl(Constants.JAMIAT_TIRMIDHI_BASE_URL)
+            .baseUrl(Constants.HADITH_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -143,16 +113,14 @@ val dataModule = module {
      */
 //    single { get<Retrofit>(named(PRAYER_TIMES_RETROFIT)).create(PrayerTimesApi::class.java) }
     single { get<Retrofit>(named(ALLAH_99_NAMES_RETROFIT)).create(Allah99NamesApi::class.java) }
-//    single { get<Retrofit>(named(SAHIH_AL_BUKHARI_RETROFIT)).create(HadithApi::class.java) }
-//    single { get<Retrofit>(named(SAHIH_MUSLIM_RETROFIT)).create(HadithApi::class.java) }
-//    single { get<Retrofit>(named(SUNAN_AN_NASAI_RETROFIT)).create(HadithApi::class.java) }
-//    single { get<Retrofit>(named(SUNAN_ABU_DAWUD_RETROFIT)).create(HadithApi::class.java) }
-//    single { get<Retrofit>(named(JAMIAT_TIRMIDHI_RETROFIT)).create(HadithApi::class.java) }
+    single { get<Retrofit>(named(HADITH_RETROFIT)).create(HadithApi::class.java) }
 //    single { get<Retrofit>(named(QURAN_SURAH_BASE_RETROFIT)).create(QuranApi::class.java) }
 //    single { get<Retrofit>(named(QURAN_JUZ_BASE_RETROFIT)).create(QuranApi::class.java) }
 //    single { get<Retrofit>(named(QURAN_AUDIO_BASE_RETROFIT)).create(QuranApi::class.java) }
     single { get<Retrofit>(named(HIJRI_CALENDAR_BASE_RETROFIT)).create(HijriCalendarApi::class.java) }
 
+    // Register mapper
+    factory { HadithMapper() }
 
     /**
      * Register Network Data Source (API → Mapper → Domain model).
@@ -162,7 +130,9 @@ val dataModule = module {
     factory<Allah99NamesDataSource> {
         Allah99NamesNetworkDataSource(get())
     }
-//    factory { HadithNetworkDataSource(hadithApi = get()) }
+    factory<HadithDataSource> {
+        HadithNetworkDataSource(get(), get())
+    }
 //    factory { QuranNetworkDataSource(quranApi = get()) }
     factory<HijriCalendarDataSource> {
         HijriCalendarNetworkDataSource(get())
@@ -180,9 +150,9 @@ val dataModule = module {
     factory<Allah99NamesRepository> {
         Allah99NamesDataSourceImpl(get())
     }
-//    factory<HadithRepository> {
-//        HadithRepositoryImpl(hadithNetworkDataSource = get())
-//    }
+    factory<HadithRepository> {
+        HadithDataSourceImpl(get())
+    }
 //    factory<QuranRepository> {
 //        QuranRepositoryImpl(quranNetworkDataSource = get())
 //    }

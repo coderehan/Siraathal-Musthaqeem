@@ -10,7 +10,7 @@ import retrofit2.http.GET
 
 interface Allah99NamesApi {
 
-    @GET("/v1/asmaAlHusna")
+    @GET("v1/asmaAlHusna")
     suspend fun getAllah99Names(): Allah99NamesResponse
 
 }

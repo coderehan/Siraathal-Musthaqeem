@@ -55,6 +55,13 @@ android {
         // Enables Jetpack Compose
         compose = true
     }
+
+    packaging {
+        resources {
+            excludes += "META-INF/versions/9/OSGI-INF/MANIFEST.MF"
+        }
+    }
+
 }
 
 dependencies {
@@ -159,9 +166,6 @@ dependencies {
 
     // Spinkit Progressbar
     implementation(libs.spinkit)
-
-    // Compose Foundation
-    implementation(libs.foundation)
 
 
 }
