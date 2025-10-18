@@ -7,13 +7,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import com.islamicapp.core.utils.HadithCollectionType
-import com.islamicapp.siraathalmusthaqeem.screen.hadith.components.HadithListScreen
 import com.islamicapp.siraathalmusthaqeem.utils.CommonActionBar
 import com.islamicapp.siraathalmusthaqeem.utils.CommonTabLayout
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun HadithScreen(navController: NavController, viewModel: HadithViewModel = koinViewModel()) {
+fun HadithScreen(
+    navController: NavController
+) {
     val hadithTabs = listOf(
         "Sahih Al-Bukhari" to HadithCollectionType.BUKHARI,
         "Sahih Muslim" to HadithCollectionType.MUSLIM,
@@ -31,9 +31,13 @@ fun HadithScreen(navController: NavController, viewModel: HadithViewModel = koin
 
         CommonTabLayout(tabTitles = hadithTabs.map { it.first }) { index, _ ->
             val collectionType = hadithTabs[index].second
+
+            // Pass navController to HadithListScreen
             HadithListScreen(
+                navController = navController,
                 collectionType = collectionType
             )
         }
     }
 }
+

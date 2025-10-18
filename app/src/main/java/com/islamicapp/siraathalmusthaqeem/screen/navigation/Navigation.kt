@@ -2,12 +2,16 @@ package com.islamicapp.siraathalmusthaqeem.screen.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.islamicapp.core.utils.HadithCollectionType
 import com.islamicapp.siraathalmusthaqeem.screen.allah99names.Allah99NamesScreen
 import com.islamicapp.siraathalmusthaqeem.screen.dua.DuaScreen
 import com.islamicapp.siraathalmusthaqeem.screen.hadith.HadithScreen
+import com.islamicapp.siraathalmusthaqeem.screen.hadithdetail.HadithDetailScreen
 import com.islamicapp.siraathalmusthaqeem.screen.home.HomeScreen
 import com.islamicapp.siraathalmusthaqeem.screen.masjid.MasjidScreen
 import com.islamicapp.siraathalmusthaqeem.screen.splash.SplashScreen
@@ -86,6 +90,24 @@ fun Navigation(preferencesManager: PreferencesManager) {
         // Hadith
         composable(NavigationItem.Hadith.route) {
             HadithScreen(navController = navController)
+        }
+
+        // Hadith Detail Screen
+        composable(
+            route = "hadith_detail/{collectionType}/{sectionId}",
+            arguments = listOf(
+                navArgument("collectionType") { type = NavType.StringType },
+                navArgument("sectionId") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val collectionType = backStackEntry.arguments?.getString("collectionType")!!
+            val sectionId = backStackEntry.arguments?.getString("sectionId")!!
+
+            HadithDetailScreen(
+                navController = navController,
+                collectionType = HadithCollectionType.valueOf(collectionType),
+                sectionId = sectionId
+            )
         }
 
         // Seerah
