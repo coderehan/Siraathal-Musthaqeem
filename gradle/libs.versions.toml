@@ -154,7 +154,7 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 
 
 # ==============================
-# Plugin References
+# Plugin Referencesli
 # ==============================
 
 [plugins]

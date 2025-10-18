@@ -16,14 +16,12 @@ import com.islamicapp.siraathalmusthaqeem.screen.pilgrimage.PilgrimageScreen
 import com.islamicapp.siraathalmusthaqeem.screen.prayertimes.PrayerTimesScreen
 import com.islamicapp.siraathalmusthaqeem.screen.profile.ProfileScreen
 import com.islamicapp.siraathalmusthaqeem.screen.prophets.ProphetsScreen
-import com.islamicapp.siraathalmusthaqeem.screen.qibla.QiblaScreen
-import com.islamicapp.siraathalmusthaqeem.screen.qibla.QiblaViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.quran.QuranScreen
 import com.islamicapp.siraathalmusthaqeem.screen.seerah.SeerahScreen
 import com.islamicapp.siraathalmusthaqeem.screen.tasbeeh.TasbeehScreen
 import com.islamicapp.siraathalmusthaqeem.screen.zakath.ZakathScreen
 import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
-import org.koin.androidx.compose.koinViewModel
+import com.islamicapp.siraathalmusthaqeem.screen.qibla.QiblaScreen
 
 @Composable
 fun Navigation(preferencesManager: PreferencesManager) {
@@ -62,11 +60,7 @@ fun Navigation(preferencesManager: PreferencesManager) {
 
         // Qibla
         composable(NavigationItem.Qibla.route) {
-            val viewModel: QiblaViewModel = koinViewModel()
-            QiblaScreen(
-                navController = navController,
-                viewModel = viewModel
-            )
+            QiblaScreen(navController = navController)
         }
 
         // Masjid
