@@ -14,9 +14,15 @@ import com.islamicapp.data.hijricalendar.source.HijriCalendarDataSource
 import com.islamicapp.data.hijricalendar.source.HijriCalendarDataSourceImpl
 import com.islamicapp.data.hijricalendar.source.network.HijriCalendarApi
 import com.islamicapp.data.hijricalendar.source.network.HijriCalendarNetworkDataSource
+import com.islamicapp.data.quran.mapper.QuranMapper
+import com.islamicapp.data.quran.source.QuranDataSource
+import com.islamicapp.data.quran.source.QuranDataSourceImpl
+import com.islamicapp.data.quran.source.network.QuranApi
+import com.islamicapp.data.quran.source.network.QuranNetworkDataSource
 import com.islamicapp.domain.allah99names.repository.Allah99NamesRepository
 import com.islamicapp.domain.hadith.repository.HadithRepository
 import com.islamicapp.domain.hijricalendar.repository.HijriCalendarRepository
+import com.islamicapp.domain.quran.repository.QuranRepository
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -114,13 +120,14 @@ val dataModule = module {
 //    single { get<Retrofit>(named(PRAYER_TIMES_RETROFIT)).create(PrayerTimesApi::class.java) }
     single { get<Retrofit>(named(ALLAH_99_NAMES_RETROFIT)).create(Allah99NamesApi::class.java) }
     single { get<Retrofit>(named(HADITH_RETROFIT)).create(HadithApi::class.java) }
-//    single { get<Retrofit>(named(QURAN_SURAH_BASE_RETROFIT)).create(QuranApi::class.java) }
-//    single { get<Retrofit>(named(QURAN_JUZ_BASE_RETROFIT)).create(QuranApi::class.java) }
+    single { get<Retrofit>(named(QURAN_SURAH_BASE_RETROFIT)).create(QuranApi::class.java) }
+    single { get<Retrofit>(named(QURAN_JUZ_BASE_RETROFIT)).create(QuranApi::class.java) }
 //    single { get<Retrofit>(named(QURAN_AUDIO_BASE_RETROFIT)).create(QuranApi::class.java) }
     single { get<Retrofit>(named(HIJRI_CALENDAR_BASE_RETROFIT)).create(HijriCalendarApi::class.java) }
 
     // Register mapper
     factory { HadithMapper() }
+    factory { QuranMapper() }
 
     /**
      * Register Network Data Source (API → Mapper → Domain model).
@@ -133,7 +140,9 @@ val dataModule = module {
     factory<HadithDataSource> {
         HadithNetworkDataSource(get(), get())
     }
-//    factory { QuranNetworkDataSource(quranApi = get()) }
+    factory<QuranDataSource> {
+        QuranNetworkDataSource(get(), get())
+    }
     factory<HijriCalendarDataSource> {
         HijriCalendarNetworkDataSource(get())
     }
@@ -153,9 +162,9 @@ val dataModule = module {
     factory<HadithRepository> {
         HadithDataSourceImpl(get())
     }
-//    factory<QuranRepository> {
-//        QuranRepositoryImpl(quranNetworkDataSource = get())
-//    }
+    factory<QuranRepository> {
+        QuranDataSourceImpl(get())
+    }
     factory<HijriCalendarRepository> {
         HijriCalendarDataSourceImpl(get())
     }

@@ -5,7 +5,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.BODY_SENSORS" />
-    <uses-feature android:name="android.hardware.sensor.compass" android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.sensor.compass"
+        android:required="false" />
 
     <application
         android:name=".MyApp"
@@ -16,7 +19,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SiraathalMusthaqeem">
+        android:theme="@style/Theme.SiraathalMusthaqeem"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:exported="true"

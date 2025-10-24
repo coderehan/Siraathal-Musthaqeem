@@ -36,7 +36,16 @@ fun HadithDetailScreen(
     }
 
     Scaffold(
-        topBar = { CommonActionBar(title = "Hadith Details", navController = navController) }
+        topBar = {
+            val titleText = when (val state = uiState) {
+                is UIState.Success -> {
+                    state.data.firstOrNull()?.sectionTitle ?: "Hadith Details"
+                }
+
+                else -> "Hadith Details"
+            }
+            CommonActionBar(title = titleText, navController = navController)
+        }
     ) { paddingValues ->
         Box(
             modifier = Modifier

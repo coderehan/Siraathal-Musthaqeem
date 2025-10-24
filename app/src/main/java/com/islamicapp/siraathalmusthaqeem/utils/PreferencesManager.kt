@@ -18,6 +18,7 @@ class PreferencesManager(private val context: Context) {
     private val ONBOARDING_KEY = booleanPreferencesKey("onboarding_completed")
     private val PROFILE_KEY = booleanPreferencesKey("profile_completed")
     private val USER_NAME_KEY = stringPreferencesKey("user_name")
+    private val IS_DARK_THEME_KEY = booleanPreferencesKey("is_dark_theme")
 
     // ----- Onboarding -----
     suspend fun setOnboardingCompleted(completed: Boolean) {

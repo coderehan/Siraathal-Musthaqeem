@@ -1,20 +1,38 @@
 package com.islamicapp.siraathalmusthaqeem.screen.quran
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
+import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavController
+import com.islamicapp.siraathalmusthaqeem.screen.quran.juz.JuzListScreen
+import com.islamicapp.siraathalmusthaqeem.screen.quran.surah.SurahListScreen
+import com.islamicapp.siraathalmusthaqeem.utils.CommonActionBar
+import com.islamicapp.siraathalmusthaqeem.utils.CommonTabLayout
 
 @Composable
-fun QuranScreen(navController: NavHostController) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+fun QuranScreen(
+    navController: NavController
+) {
+    val quranTabs = listOf("Surah", "Juz")
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
     ) {
-        Text(text = "Quran", style = MaterialTheme.typography.headlineMedium)
+        CommonActionBar(title = "Quran", navController = navController)
+
+        CommonTabLayout(
+            tabTitles = quranTabs,
+            isScrollable = false    // use equal-width tabs for Quran
+        ) { index, _ ->
+            when (index) {
+                0 -> SurahListScreen(navController)
+                1 -> JuzListScreen(navController)
+            }
+        }
     }
 }
