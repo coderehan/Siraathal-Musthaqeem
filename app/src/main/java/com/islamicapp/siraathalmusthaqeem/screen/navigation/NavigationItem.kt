@@ -20,5 +20,6 @@ sealed class NavigationItem(val route: String) {
     data object Quran : NavigationItem("quran")
     data object Dua : NavigationItem("dua")
     data object Tasbeeh : NavigationItem("tasbeeh")
+    data object Theme : NavigationItem("theme")
 
 }

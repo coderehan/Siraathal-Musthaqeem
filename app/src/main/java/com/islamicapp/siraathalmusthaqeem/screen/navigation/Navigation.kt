@@ -28,6 +28,7 @@ import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
 import com.islamicapp.siraathalmusthaqeem.screen.qibla.QiblaScreen
 import com.islamicapp.siraathalmusthaqeem.screen.quran.juz.JuzDetailScreen
 import com.islamicapp.siraathalmusthaqeem.screen.quran.surah.SurahDetailScreen
+import com.islamicapp.siraathalmusthaqeem.screen.theme.ThemeSelectorWrapper
 
 @Composable
 fun Navigation(preferencesManager: PreferencesManager) {
@@ -52,6 +53,11 @@ fun Navigation(preferencesManager: PreferencesManager) {
         // Profile
         composable(NavigationItem.Profile.route) {
             ProfileScreen(navController = navController, preferencesManager = preferencesManager)
+        }
+
+        // Theme Selection
+        composable("theme") {
+            ThemeSelectorWrapper(navController = navController)
         }
 
         // Home

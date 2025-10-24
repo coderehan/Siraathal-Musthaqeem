@@ -6,10 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.islamicapp.siraathalmusthaqeem.screen.navigation.Navigation
+import com.islamicapp.siraathalmusthaqeem.screen.theme.ThemeViewModel
 import com.islamicapp.siraathalmusthaqeem.ui.theme.SiraathalMusthaqeemTheme
 import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
+import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
 
@@ -19,15 +23,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // Initialize PreferencesManager with applicationContext
         preferencesManager = PreferencesManager(applicationContext)
 
         setContent {
-            SiraathalMusthaqeemTheme {
+            val themeViewModel: ThemeViewModel = koinViewModel()
+            val isDarkTheme by themeViewModel.isDarkTheme.collectAsState()
+
+            // Apply saved dark/light theme dynamically
+            SiraathalMusthaqeemTheme(darkTheme = isDarkTheme) {
                 Surface(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    // Pass PreferencesManager into Navigation
                     Navigation(preferencesManager)
                 }
             }

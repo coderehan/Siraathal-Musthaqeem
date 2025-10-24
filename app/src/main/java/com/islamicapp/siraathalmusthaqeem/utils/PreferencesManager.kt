@@ -57,4 +57,16 @@ class PreferencesManager(private val context: Context) {
     val userNameFlow: Flow<String> = context.dataStore.data.map { prefs ->
         prefs[USER_NAME_KEY] ?: ""
     }
+
+    // ----- Theme Preference -----
+    suspend fun setDarkThemeEnabled(isDark: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[IS_DARK_THEME_KEY] = isDark
+        }
+    }
+
+    val isDarkThemeFlow: Flow<Boolean> = context.dataStore.data.map { prefs ->
+        prefs[IS_DARK_THEME_KEY] ?: false
+    }
+
 }
