@@ -3,6 +3,7 @@ package com.islamicapp.domain.di
 import com.islamicapp.domain.allah99names.usecase.Allah99NamesUseCase
 import com.islamicapp.domain.hadith.usecase.HadithUseCase
 import com.islamicapp.domain.hijricalendar.usecase.HijriCalendarUseCase
+import com.islamicapp.domain.quran.usecase.QuranUseCase
 import org.koin.dsl.module
 
 // As 'UseCase' comes under 'Domain Module', it should come under 'Domain Module' level
@@ -17,5 +18,6 @@ val domainModule = module {
     factory { Allah99NamesUseCase(get()) }
     factory { HijriCalendarUseCase(get()) }
     factory { HadithUseCase(get()) }
+    factory { QuranUseCase(get()) }
 
 }

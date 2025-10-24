@@ -22,6 +22,7 @@ fun CommonTabLayout(
     selectedColor: Color = MaterialTheme.colorScheme.primary,
     unselectedColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
     indicatorColor: Color = MaterialTheme.colorScheme.primary,
+    isScrollable: Boolean = true,
     content: @Composable (pageIndex: Int, title: String) -> Unit
 ) {
     val pagerState = rememberPagerState(initialPage = 0, pageCount = { tabTitles.size })
@@ -32,30 +33,61 @@ fun CommonTabLayout(
             .fillMaxSize()
             .background(backgroundColor)
     ) {
-        ScrollableTabRow(
-            selectedTabIndex = pagerState.currentPage,
-            containerColor = backgroundColor,
-            contentColor = selectedColor,
-            edgePadding = 0.dp,
-            indicator = { tabPositions ->
-                AnimatedTabIndicator(pagerState.currentPage, tabPositions, indicatorColor)
+        if (isScrollable) {
+            //  For Hadith (5 tabs, scrollable)
+            ScrollableTabRow(
+                selectedTabIndex = pagerState.currentPage,
+                containerColor = backgroundColor,
+                contentColor = selectedColor,
+                edgePadding = 0.dp,
+                indicator = { tabPositions ->
+                    AnimatedTabIndicator(pagerState.currentPage, tabPositions, indicatorColor)
+                }
+            ) {
+                tabTitles.forEachIndexed { index, title ->
+                    val selected = pagerState.currentPage == index
+                    Tab(
+                        selected = selected,
+                        onClick = {
+                            coroutineScope.launch { pagerState.animateScrollToPage(index) }
+                        },
+                        text = {
+                            Text(
+                                text = title,
+                                color = if (selected) selectedColor else unselectedColor,
+                                fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal
+                            )
+                        }
+                    )
+                }
             }
-        ) {
-            tabTitles.forEachIndexed { index, title ->
-                val selected = pagerState.currentPage == index
-                Tab(
-                    selected = selected,
-                    onClick = {
-                        coroutineScope.launch { pagerState.animateScrollToPage(index) }
-                    },
-                    text = {
-                        Text(
-                            text = title,
-                            color = if (selected) selectedColor else unselectedColor,
-                            fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal
-                        )
-                    }
-                )
+        } else {
+            // 🔹 For Quran (2 tabs, equal width)
+            TabRow(
+                selectedTabIndex = pagerState.currentPage,
+                containerColor = backgroundColor,
+                contentColor = selectedColor,
+                indicator = { tabPositions ->
+                    AnimatedTabIndicator(pagerState.currentPage, tabPositions, indicatorColor)
+                }
+            ) {
+                tabTitles.forEachIndexed { index, title ->
+                    val selected = pagerState.currentPage == index
+                    Tab(
+                        modifier = Modifier.fillMaxWidth(), // ensures equal width
+                        selected = selected,
+                        onClick = {
+                            coroutineScope.launch { pagerState.animateScrollToPage(index) }
+                        },
+                        text = {
+                            Text(
+                                text = title,
+                                color = if (selected) selectedColor else unselectedColor,
+                                fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal
+                            )
+                        }
+                    )
+                }
             }
         }
 

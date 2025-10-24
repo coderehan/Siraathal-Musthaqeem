@@ -26,6 +26,7 @@ import com.islamicapp.siraathalmusthaqeem.screen.tasbeeh.TasbeehScreen
 import com.islamicapp.siraathalmusthaqeem.screen.zakath.ZakathScreen
 import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
 import com.islamicapp.siraathalmusthaqeem.screen.qibla.QiblaScreen
+import com.islamicapp.siraathalmusthaqeem.screen.quran.surah.SurahDetailScreen
 
 @Composable
 fun Navigation(preferencesManager: PreferencesManager) {
@@ -123,6 +124,21 @@ fun Navigation(preferencesManager: PreferencesManager) {
         // Quran
         composable(NavigationItem.Quran.route) {
             QuranScreen(navController = navController)
+        }
+
+        // Surah Detail Screen
+        composable(
+            route = "surah_detail/{surahNumber}",
+            arguments = listOf(
+                navArgument("surahNumber") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val surahNumber = backStackEntry.arguments?.getInt("surahNumber") ?: 1
+
+            SurahDetailScreen(
+                navController = navController,
+                surahNumber = surahNumber
+            )
         }
 
         // Dua
