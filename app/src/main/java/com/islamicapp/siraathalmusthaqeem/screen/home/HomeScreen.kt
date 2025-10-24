@@ -78,7 +78,12 @@ fun HomeScreen(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 // Drawer menu items
-                DrawerMenuItem("Theme", R.drawable.ic_android) { scope.launch { drawerState.close() } }
+                DrawerMenuItem("Theme", R.drawable.ic_android) {
+                    scope.launch { drawerState.close() }
+                    navController.navigate("theme") {
+                        launchSingleTop = true
+                    }
+                }
                 DrawerMenuItem("Edit Profile", R.drawable.ic_android) {
                     scope.launch { drawerState.close() }
                     navController.navigate(NavigationItem.Profile.route)
