@@ -1,5 +1,6 @@
 package com.islamicapp.domain.quran.repository
 
+import com.islamicapp.domain.quran.model.Juz
 import com.islamicapp.domain.quran.model.Surah
 
 interface QuranRepository {
@@ -8,5 +9,5 @@ interface QuranRepository {
 
     suspend fun getSurahDetail(surahNumber: Int): List<Surah>
 
-    suspend fun getJuzDetail(juzNumber: Int): List<Surah>
+    suspend fun getJuzDetail(juzNumber: Int): List<Juz>
 }

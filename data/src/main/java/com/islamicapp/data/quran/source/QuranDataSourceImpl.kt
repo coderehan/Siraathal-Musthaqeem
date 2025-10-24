@@ -1,5 +1,6 @@
 package com.islamicapp.data.quran.source
 
+import com.islamicapp.domain.quran.model.Juz
 import com.islamicapp.domain.quran.model.Surah
 import com.islamicapp.domain.quran.repository.QuranRepository
 
@@ -15,7 +16,7 @@ class QuranDataSourceImpl(
         return dataSource.getSurahDetail(surahNumber)
     }
 
-    override suspend fun getJuzDetail(juzNumber: Int): List<Surah> {
+    override suspend fun getJuzDetail(juzNumber: Int): List<Juz> {
         return dataSource.getJuzDetail(juzNumber)
     }
 }

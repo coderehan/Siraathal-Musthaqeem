@@ -1,4 +1,4 @@
-package com.islamicapp.siraathalmusthaqeem.screen.quran
+package com.islamicapp.siraathalmusthaqeem.screen.quran.surah
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

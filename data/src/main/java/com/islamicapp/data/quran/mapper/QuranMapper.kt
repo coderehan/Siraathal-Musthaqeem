@@ -1,7 +1,9 @@
 package com.islamicapp.data.quran.mapper
 
+import com.islamicapp.data.quran.model.juz.JuzDetailResponse
 import com.islamicapp.data.quran.model.surah.SurahDetailResponse
 import com.islamicapp.data.quran.model.surah.SurahListResponse
+import com.islamicapp.domain.quran.model.Juz
 import com.islamicapp.domain.quran.model.Surah
 
 class QuranMapper {
@@ -41,4 +43,22 @@ class QuranMapper {
             )
         }
     }
+
+    fun mapJuzDetail(input: JuzDetailResponse): List<Juz> {
+        val data = input.data
+        val distinctAyahs = data.ayahs.distinctBy { it.number }.sortedBy { it.number }
+        return distinctAyahs.map { ayah ->
+            Juz(
+                surahNumber = ayah.surah.number,
+                surahNameArabic = ayah.surah.name,
+                surahNameEnglish = ayah.surah.englishName,
+                englishNameTranslation = ayah.surah.englishNameTranslation,
+                revelationType = ayah.surah.revelationType,
+                numberOfAyahs = ayah.surah.numberOfAyahs,
+                ayahText = ayah.text.trim(),
+                numberInSurah = ayah.numberInSurah
+            )
+        }
+    }
+
 }

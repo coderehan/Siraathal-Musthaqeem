@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.InlineTextContent
-import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -26,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.islamicapp.siraathalmusthaqeem.R
-import com.islamicapp.siraathalmusthaqeem.screen.quran.SurahViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.quran.components.SurahDetailItem
 import com.islamicapp.siraathalmusthaqeem.utils.CommonActionBar
 import com.islamicapp.siraathalmusthaqeem.utils.SpinKitLoader
@@ -40,6 +38,7 @@ fun SurahDetailScreen(
     viewModel: SurahViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val quranFont = remember { FontFamily(Font(R.font.indo_pak_quran)) }
 
     LaunchedEffect(surahNumber) {
         viewModel.loadSurahDetail(surahNumber)
@@ -48,10 +47,7 @@ fun SurahDetailScreen(
     Scaffold(
         topBar = {
             val titleText = when (val state = uiState) {
-                is UIState.Success -> {
-                    state.data.firstOrNull()?.surahNameEnglish ?: "Surah Details"
-                }
-
+                is UIState.Success -> state.data.firstOrNull()?.surahNameEnglish ?: "Surah Details"
                 else -> "Surah Details"
             }
             CommonActionBar(title = titleText, navController = navController)
@@ -67,72 +63,42 @@ fun SurahDetailScreen(
                 is UIState.Loading -> Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
-                ) {
-                    SpinKitLoader()
-                }
+                ) { SpinKitLoader() }
 
                 is UIState.Success -> {
                     val surahDetailList = state.data
 
                     if (surahDetailList.isNotEmpty()) {
                         val surahHeader = surahDetailList.first()
-
-                        // Ensure ayahs are unique and sorted
                         val uniqueAyahs = surahDetailList
                             .distinctBy { it.numberInSurah }
                             .sortedBy { it.numberInSurah }
 
-                        // Build AnnotatedString
-                        val fullText = buildAnnotatedString {
-                            uniqueAyahs.forEach { ayah ->
-                                val cleanText = ayah.ayahText.trim().replace("۩", "").trim()
-                                append(cleanText)
-                                append(" ")
+                        val bismillahText = "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ"
+                        var showBismillah = false
+                        var remainingAyahs = uniqueAyahs
 
-                                appendInlineContent(
-                                    "ayahMarker",
-                                    "•"
+                        // Handle Bismillah display logic
+                        if (surahHeader.surahNumber != 9) {
+                            val firstAyah = uniqueAyahs.firstOrNull()
+                            if (firstAyah != null && firstAyah.ayahText.contains(bismillahText)) {
+                                showBismillah = true
+
+                                // Remove Bismillah portion from first ayah (keep the remaining part)
+                                val modifiedFirst = firstAyah.copy(
+                                    ayahText = firstAyah.ayahText.replace(bismillahText, "").trim()
                                 )
-
-                                if (ayah.hasSajda) {
-                                    append(" ")
-                                    appendInlineContent(
-                                        "sajdaMarker${ayah.numberInSurah}",
-                                        "[sajda]"
-                                    )
-                                }
-
-                                append(" ")
+                                remainingAyahs = listOf(modifiedFirst) + uniqueAyahs.drop(1)
                             }
                         }
 
-                        // Inline Content (one unified block)
+                        // Sajda marker inline map
                         val inlineContentMap = buildMap<String, InlineTextContent> {
-                            uniqueAyahs.forEach { ayah ->
-
-                                // Ayah number marker (no circle, just plain number)
-                                put(
-                                    "ayahMarker${ayah.numberInSurah}", InlineTextContent(
-                                        Placeholder(
-                                            width = 20.sp,
-                                            height = 20.sp,
-                                            placeholderVerticalAlign = PlaceholderVerticalAlign.Center
-                                        )
-                                    ) {
-                                        Text(
-                                            text = ayah.numberInSurah.toString(),
-                                            style = MaterialTheme.typography.bodyMedium.copy(
-                                                fontWeight = FontWeight.Bold,
-                                                color = MaterialTheme.colorScheme.primary
-                                            )
-                                        )
-                                    }
-                                )
-
-                                // Sajda marker (keep as is)
+                            remainingAyahs.forEach { ayah ->
                                 if (ayah.hasSajda) {
                                     put(
-                                        "sajdaMarker${ayah.numberInSurah}", InlineTextContent(
+                                        "sajdaMarker${ayah.numberInSurah}",
+                                        InlineTextContent(
                                             Placeholder(
                                                 width = 28.sp,
                                                 height = 28.sp,
@@ -156,25 +122,58 @@ fun SurahDetailScreen(
                                                     )
                                                 )
                                             }
-                                        })
+                                        }
+                                    )
                                 }
                             }
                         }
 
-                        val quranFont = FontFamily(Font(R.font.indo_pak_quran))
-                        // Display final UI
+                        // Build annotated Quranic text
+                        val fullText = buildAnnotatedString {
+                            remainingAyahs.forEach { ayah ->
+                                val cleanText = ayah.ayahText.trim().replace("۩", "").trim()
+                                append(cleanText)
+                                append(" • ")
+                            }
+                        }
+
+                        // UI Layout
                         LazyColumn(
                             contentPadding = PaddingValues(16.dp),
                             verticalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
                             item { SurahDetailItem(surah = surahHeader) }
+
+                            // Centered Bismillah
+                            if (showBismillah) {
+                                item {
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(top = 8.dp),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text(
+                                            text = bismillahText,
+                                            style = MaterialTheme.typography.titleLarge.copy(
+                                                fontFamily = quranFont,
+                                                color = MaterialTheme.colorScheme.primary,
+                                                fontSize = 38.sp
+                                            ),
+                                            textAlign = TextAlign.Center
+                                        )
+                                    }
+                                }
+                            }
+
+                            // Main Quran text
                             item {
                                 Box(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .shadow(elevation = 1.dp, shape = RoundedCornerShape(12.dp))
-                                        .background(Color.White, shape = RoundedCornerShape(12.dp))
-                                        .padding(16.dp)
+                                        .shadow(1.dp, RoundedCornerShape(12.dp))
+                                        .background(Color.White, RoundedCornerShape(12.dp))
+                                        .padding(12.dp)
                                 ) {
                                     Text(
                                         text = fullText,
@@ -182,14 +181,13 @@ fun SurahDetailScreen(
                                         style = MaterialTheme.typography.titleLarge.copy(
                                             fontFamily = quranFont,
                                             color = Color(0xFF111827),
-                                            fontWeight = FontWeight.Normal,
                                             lineHeight = 45.sp,
                                             fontSize = 40.sp
                                         ),
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(16.dp),
-                                        textAlign = TextAlign.Justify,
+                                        textAlign = TextAlign.Justify
                                     )
                                 }
                             }

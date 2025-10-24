@@ -2,6 +2,7 @@ package com.islamicapp.data.quran.source.network
 
 import com.islamicapp.data.quran.mapper.QuranMapper
 import com.islamicapp.data.quran.source.QuranDataSource
+import com.islamicapp.domain.quran.model.Juz
 import com.islamicapp.domain.quran.model.Surah
 
 class QuranNetworkDataSource(
@@ -17,8 +18,8 @@ class QuranNetworkDataSource(
         return api.getSurahDetail(surahNumber).run(mapper::mapSurahDetail)
     }
 
-    override suspend fun getJuzDetail(juzNumber: Int): List<Surah> {
-        TODO("Not yet implemented")
+    override suspend fun getJuzDetail(juzNumber: Int): List<Juz> {
+        return api.getJuzDetail(juzNumber).run(mapper::mapJuzDetail)
     }
 
 }

@@ -8,5 +8,6 @@ data class Juz(
     val revelationType: String,
     val numberOfAyahs: Int,
     val ayahText: String,
+    val hasSajda: Boolean = false,
     val numberInSurah: Int
 )

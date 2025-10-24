@@ -17,7 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.islamicapp.domain.quran.model.Surah
-import com.islamicapp.siraathalmusthaqeem.screen.quran.SurahViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.quran.components.SurahListItem
 import com.islamicapp.siraathalmusthaqeem.utils.SpinKitLoader
 import com.islamicapp.siraathalmusthaqeem.utils.UIState

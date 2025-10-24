@@ -18,16 +18,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.islamicapp.domain.quran.model.Surah
+import com.islamicapp.siraathalmusthaqeem.R
 
 @Composable
 fun SurahListItem(
     surah: Surah,
     navController: NavController
 ) {
+    val quranFont = FontFamily(Font(R.font.indo_pak_quran))
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -77,10 +84,14 @@ fun SurahListItem(
 
         Text(
             text = surah.surahNameArabic,
-            style = MaterialTheme.typography.titleMedium.copy(
+            style = MaterialTheme.typography.titleLarge.copy(
+                fontFamily = quranFont,
                 fontWeight = FontWeight.Bold,
+                fontSize = 32.sp,
+                letterSpacing = 2.sp,
                 color = MaterialTheme.colorScheme.primary
-            )
+            ),
+            textAlign = TextAlign.End
         )
     }
 
@@ -91,5 +102,6 @@ fun SurahListItem(
             .background(Color.LightGray.copy(alpha = 0.3f))
     )
 }
+
 
 
