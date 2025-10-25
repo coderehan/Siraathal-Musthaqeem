@@ -3,6 +3,7 @@ package com.islamicapp.siraathalmusthaqeem.di
 import com.islamicapp.siraathalmusthaqeem.screen.allah99names.Allah99NamesViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.hadith.HadithViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.hijricalendar.HijriCalendarViewModel
+import com.islamicapp.siraathalmusthaqeem.screen.prayertimes.PrayerTimesViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.quran.juz.JuzViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.quran.surah.SurahViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.theme.ThemeViewModel
@@ -22,6 +23,7 @@ val appModule = module {
     viewModel { HadithViewModel(get()) }
     viewModel { SurahViewModel(get()) }
     viewModel { JuzViewModel(get()) }
+    viewModel { PrayerTimesViewModel(get()) }
     viewModel { ThemeViewModel(get()) }
     single { PreferencesManager(get()) }
 

@@ -3,6 +3,7 @@ package com.islamicapp.domain.di
 import com.islamicapp.domain.allah99names.usecase.Allah99NamesUseCase
 import com.islamicapp.domain.hadith.usecase.HadithUseCase
 import com.islamicapp.domain.hijricalendar.usecase.HijriCalendarUseCase
+import com.islamicapp.domain.prayertimes.usecase.PrayerTimesUseCase
 import com.islamicapp.domain.quran.usecase.QuranUseCase
 import org.koin.dsl.module
 
@@ -19,5 +20,6 @@ val domainModule = module {
     factory { HijriCalendarUseCase(get()) }
     factory { HadithUseCase(get()) }
     factory { QuranUseCase(get()) }
+    factory { PrayerTimesUseCase(get()) }
 
 }

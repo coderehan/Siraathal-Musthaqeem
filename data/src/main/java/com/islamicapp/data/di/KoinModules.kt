@@ -14,6 +14,10 @@ import com.islamicapp.data.hijricalendar.source.HijriCalendarDataSource
 import com.islamicapp.data.hijricalendar.source.HijriCalendarDataSourceImpl
 import com.islamicapp.data.hijricalendar.source.network.HijriCalendarApi
 import com.islamicapp.data.hijricalendar.source.network.HijriCalendarNetworkDataSource
+import com.islamicapp.data.prayertimes.source.PrayerTimesDataSource
+import com.islamicapp.data.prayertimes.source.PrayerTimesDataSourceImpl
+import com.islamicapp.data.prayertimes.source.network.PrayerTimesApi
+import com.islamicapp.data.prayertimes.source.network.PrayerTimesNetworkDataSource
 import com.islamicapp.data.quran.mapper.QuranMapper
 import com.islamicapp.data.quran.source.QuranDataSource
 import com.islamicapp.data.quran.source.QuranDataSourceImpl
@@ -22,6 +26,7 @@ import com.islamicapp.data.quran.source.network.QuranNetworkDataSource
 import com.islamicapp.domain.allah99names.repository.Allah99NamesRepository
 import com.islamicapp.domain.hadith.repository.HadithRepository
 import com.islamicapp.domain.hijricalendar.repository.HijriCalendarRepository
+import com.islamicapp.domain.prayertimes.repository.PrayerTimesRepository
 import com.islamicapp.domain.quran.repository.QuranRepository
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -117,7 +122,7 @@ val dataModule = module {
      * Register API interfaces using respective Retrofit clients.
      * Example: Allah99NamesApi uses ALLAH_99_NAMES_RETROFIT instance.
      */
-//    single { get<Retrofit>(named(PRAYER_TIMES_RETROFIT)).create(PrayerTimesApi::class.java) }
+    single { get<Retrofit>(named(PRAYER_TIMES_RETROFIT)).create(PrayerTimesApi::class.java) }
     single { get<Retrofit>(named(ALLAH_99_NAMES_RETROFIT)).create(Allah99NamesApi::class.java) }
     single { get<Retrofit>(named(HADITH_RETROFIT)).create(HadithApi::class.java) }
     single { get<Retrofit>(named(QURAN_SURAH_BASE_RETROFIT)).create(QuranApi::class.java) }
@@ -133,7 +138,9 @@ val dataModule = module {
      * Register Network Data Source (API → Mapper → Domain model).
      * - Provides data from API.
      */
-//    factory { PrayerTimesNetworkDataSource(prayerApi = get()) }
+    factory<PrayerTimesDataSource> {
+        PrayerTimesNetworkDataSource(get())
+    }
     factory<Allah99NamesDataSource> {
         Allah99NamesNetworkDataSource(get())
     }
@@ -153,9 +160,9 @@ val dataModule = module {
      * - Bridges data layer with domain layer.
      * - Domain layer only depends on repository interface, not data source.
      */
-//    factory<PrayerTimesRepository> {
-//        PrayerTimesRepositoryImpl(prayerTimesNetworkDataSource = get())
-//    }
+    factory<PrayerTimesRepository> {
+        PrayerTimesDataSourceImpl(get())
+    }
     factory<Allah99NamesRepository> {
         Allah99NamesDataSourceImpl(get())
     }
