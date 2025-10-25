@@ -6,6 +6,7 @@ import com.islamicapp.siraathalmusthaqeem.screen.hijricalendar.HijriCalendarView
 import com.islamicapp.siraathalmusthaqeem.screen.prayertimes.PrayerTimesViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.quran.juz.JuzViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.quran.surah.SurahViewModel
+import com.islamicapp.siraathalmusthaqeem.screen.tasbeeh.TasbeehViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.theme.ThemeViewModel
 import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
 import org.koin.dsl.module
@@ -24,6 +25,7 @@ val appModule = module {
     viewModel { SurahViewModel(get()) }
     viewModel { JuzViewModel(get()) }
     viewModel { PrayerTimesViewModel(get()) }
+    viewModel { TasbeehViewModel(get()) }
     viewModel { ThemeViewModel(get()) }
     single { PreferencesManager(get()) }
 

@@ -3,8 +3,10 @@ package com.islamicapp.siraathalmusthaqeem.utils
 import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.islamicapp.siraathalmusthaqeem.screen.tasbeeh.model.TasbeehData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -67,6 +69,37 @@ class PreferencesManager(private val context: Context) {
 
     val isDarkThemeFlow: Flow<Boolean> = context.dataStore.data.map { prefs ->
         prefs[IS_DARK_THEME_KEY] ?: false
+    }
+
+    // Tasbeeh Preferences
+    private val TASBEEH_COUNT_KEY = intPreferencesKey("tasbeeh_count")
+    private val TASBEEH_TARGET_KEY = intPreferencesKey("tasbeeh_target")
+    private val TASBEEH_SOUND_KEY = booleanPreferencesKey("tasbeeh_sound")
+    private val TASBEEH_VIBRATION_KEY = booleanPreferencesKey("tasbeeh_vibration")
+
+    // TASBEEH STORAGE
+    val tasbeehDataFlow: Flow<TasbeehData> = context.dataStore.data.map { prefs ->
+        TasbeehData(
+            count = prefs[TASBEEH_COUNT_KEY] ?: 0,
+            target = prefs[TASBEEH_TARGET_KEY] ?: 33, // default value; user can change dynamically
+            soundEnabled = prefs[TASBEEH_SOUND_KEY] ?: true,
+            vibrationEnabled = prefs[TASBEEH_VIBRATION_KEY] ?: true
+        )
+    }
+
+    suspend fun saveTasbeehData(data: TasbeehData) {
+        context.dataStore.edit { prefs ->
+            prefs[TASBEEH_COUNT_KEY] = data.count
+            prefs[TASBEEH_TARGET_KEY] = data.target
+            prefs[TASBEEH_SOUND_KEY] = data.soundEnabled
+            prefs[TASBEEH_VIBRATION_KEY] = data.vibrationEnabled
+        }
+    }
+
+    suspend fun resetTasbeeh() {
+        context.dataStore.edit { prefs ->
+            prefs[TASBEEH_COUNT_KEY] = 0
+        }
     }
 
 }
