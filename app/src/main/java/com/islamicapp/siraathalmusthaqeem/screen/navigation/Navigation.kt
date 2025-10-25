@@ -19,7 +19,8 @@ import com.islamicapp.siraathalmusthaqeem.screen.onboarding.OnboardingScreen
 import com.islamicapp.siraathalmusthaqeem.screen.pilgrimage.PilgrimageScreen
 import com.islamicapp.siraathalmusthaqeem.screen.prayertimes.PrayerTimesScreen
 import com.islamicapp.siraathalmusthaqeem.screen.profile.ProfileScreen
-import com.islamicapp.siraathalmusthaqeem.screen.prophets.ProphetsScreen
+import com.islamicapp.siraathalmusthaqeem.screen.prophetsstories.ProphetsStoriesDetailScreen
+import com.islamicapp.siraathalmusthaqeem.screen.prophetsstories.ProphetsStoriesListScreen
 import com.islamicapp.siraathalmusthaqeem.screen.quran.QuranScreen
 import com.islamicapp.siraathalmusthaqeem.screen.seerah.SeerahScreen
 import com.islamicapp.siraathalmusthaqeem.screen.tasbeeh.TasbeehScreen
@@ -125,8 +126,27 @@ fun Navigation(preferencesManager: PreferencesManager) {
 
         // Prophets
         composable(NavigationItem.Prophets.route) {
-            ProphetsScreen(navController = navController)
+            ProphetsStoriesListScreen(navController = navController)
         }
+
+        // Prophets Stories Detail
+        composable(
+            route = "prophet_detail/{prophetName}/{fileName}",
+            arguments = listOf(
+                navArgument("prophetName") { type = NavType.StringType },
+                navArgument("fileName") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val prophetName = backStackEntry.arguments?.getString("prophetName") ?: ""
+            val fileName = backStackEntry.arguments?.getString("fileName") ?: ""
+
+            ProphetsStoriesDetailScreen(
+                navController = navController,
+                prophetName = prophetName,
+                fileName = fileName
+            )
+        }
+
 
         // Quran
         composable(NavigationItem.Quran.route) {

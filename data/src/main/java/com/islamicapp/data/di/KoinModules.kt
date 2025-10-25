@@ -18,6 +18,9 @@ import com.islamicapp.data.prayertimes.source.PrayerTimesDataSource
 import com.islamicapp.data.prayertimes.source.PrayerTimesDataSourceImpl
 import com.islamicapp.data.prayertimes.source.network.PrayerTimesApi
 import com.islamicapp.data.prayertimes.source.network.PrayerTimesNetworkDataSource
+import com.islamicapp.data.prophetsstories.repository.ProphetsStoriesRepositoryImpl
+import com.islamicapp.data.prophetsstories.source.local.ProphetsStoriesDataSource
+import com.islamicapp.data.prophetsstories.source.local.ProphetsStoriesDataSourceImpl
 import com.islamicapp.data.quran.mapper.QuranMapper
 import com.islamicapp.data.quran.source.QuranDataSource
 import com.islamicapp.data.quran.source.QuranDataSourceImpl
@@ -27,6 +30,7 @@ import com.islamicapp.domain.allah99names.repository.Allah99NamesRepository
 import com.islamicapp.domain.hadith.repository.HadithRepository
 import com.islamicapp.domain.hijricalendar.repository.HijriCalendarRepository
 import com.islamicapp.domain.prayertimes.repository.PrayerTimesRepository
+import com.islamicapp.domain.prophetsstories.repository.ProphetsStoriesRepository
 import com.islamicapp.domain.quran.repository.QuranRepository
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -153,6 +157,9 @@ val dataModule = module {
     factory<HijriCalendarDataSource> {
         HijriCalendarNetworkDataSource(get())
     }
+    factory<ProphetsStoriesDataSource> {
+        ProphetsStoriesDataSourceImpl(get())
+    }
 
 
     /**
@@ -174,6 +181,9 @@ val dataModule = module {
     }
     factory<HijriCalendarRepository> {
         HijriCalendarDataSourceImpl(get())
+    }
+    factory<ProphetsStoriesRepository> {
+        ProphetsStoriesRepositoryImpl(get())
     }
 
 }
