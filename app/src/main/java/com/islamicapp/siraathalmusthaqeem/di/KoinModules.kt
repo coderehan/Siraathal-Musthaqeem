@@ -4,6 +4,7 @@ import com.islamicapp.siraathalmusthaqeem.screen.allah99names.Allah99NamesViewMo
 import com.islamicapp.siraathalmusthaqeem.screen.hadith.HadithViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.hijricalendar.HijriCalendarViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.prayertimes.PrayerTimesViewModel
+import com.islamicapp.siraathalmusthaqeem.screen.prophetsstories.ProphetsStoriesViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.quran.juz.JuzViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.quran.surah.SurahViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.tasbeeh.TasbeehViewModel
@@ -26,6 +27,7 @@ val appModule = module {
     viewModel { JuzViewModel(get()) }
     viewModel { PrayerTimesViewModel(get()) }
     viewModel { TasbeehViewModel(get()) }
+    viewModel { ProphetsStoriesViewModel(get()) }
     viewModel { ThemeViewModel(get()) }
     single { PreferencesManager(get()) }
 
