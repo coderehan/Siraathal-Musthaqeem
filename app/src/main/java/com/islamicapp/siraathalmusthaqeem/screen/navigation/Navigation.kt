@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.islamicapp.core.utils.HadithCollectionType
+import com.islamicapp.siraathalmusthaqeem.screen.aboutapp.AboutAppScreen
 import com.islamicapp.siraathalmusthaqeem.screen.allah99names.Allah99NamesScreen
 import com.islamicapp.siraathalmusthaqeem.screen.dua.DuaScreen
 import com.islamicapp.siraathalmusthaqeem.screen.dua.emotionsduas.EmotionsDuasDetailScreen
@@ -229,6 +230,11 @@ fun Navigation(preferencesManager: PreferencesManager) {
         // Tasbeeh
         composable(NavigationItem.Tasbeeh.route) {
             TasbeehScreen(navController = navController)
+        }
+
+        // About App
+        composable(route = "about") {
+            AboutAppScreen(navController = navController)
         }
     }
 }

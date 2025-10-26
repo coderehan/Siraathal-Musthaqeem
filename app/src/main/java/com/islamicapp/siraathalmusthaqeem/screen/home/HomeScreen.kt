@@ -1,5 +1,7 @@
 package com.islamicapp.siraathalmusthaqeem.screen.home
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,6 +24,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -41,6 +44,7 @@ fun HomeScreen(
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     // Collect name from DataStore
     val userName by preferencesManager.userNameFlow.collectAsState(initial = "")
@@ -88,11 +92,94 @@ fun HomeScreen(
                     scope.launch { drawerState.close() }
                     navController.navigate(NavigationItem.Profile.route)
                 }
-                DrawerMenuItem("Request a feature", R.drawable.ic_android) { scope.launch { drawerState.close() } }
-                DrawerMenuItem("Report a bug/issue", R.drawable.ic_android) { scope.launch { drawerState.close() } }
-                DrawerMenuItem("Rate the App", R.drawable.ic_android) { scope.launch { drawerState.close() } }
-                DrawerMenuItem("Share the App", R.drawable.ic_android) { scope.launch { drawerState.close() } }
-                DrawerMenuItem("About the App", R.drawable.ic_android) { scope.launch { drawerState.close() } }
+                // Request a feature
+                DrawerMenuItem("Request a feature", R.drawable.ic_android) {
+                    scope.launch { drawerState.close() }
+                    val intent = Intent(Intent.ACTION_SENDTO).apply {
+                        data = Uri.parse("mailto:")
+                        putExtra(Intent.EXTRA_EMAIL, arrayOf("mohammedrehanm1137@gmail.com"))
+                        putExtra(
+                            Intent.EXTRA_SUBJECT,
+                            "Feature Request - Siraathal Musthaqeem App"
+                        )
+                    }
+                    // Use runCatching to avoid crashes if no email app is found
+                    runCatching {
+                        context.startActivity(Intent.createChooser(intent, "Send email"))
+                    }
+                }
+
+                // Report a bug
+                DrawerMenuItem("Report a bug/issue", R.drawable.ic_android) {
+                    scope.launch { drawerState.close() }
+                    val intent = Intent(Intent.ACTION_SENDTO).apply {
+                        data = Uri.parse("mailto:")
+                        putExtra(Intent.EXTRA_EMAIL, arrayOf("mohammedrehanm1137@gmail.com"))
+                        putExtra(Intent.EXTRA_SUBJECT, "Bug Report - Siraathal Musthaqeem App")
+                    }
+                    // Use runCatching to avoid crashes if no email app is found
+                    runCatching {
+                        context.startActivity(Intent.createChooser(intent, "Send email"))
+                    }
+                }
+
+                // Rate the app
+                DrawerMenuItem("Rate the App", R.drawable.ic_android) {
+                    scope.launch {
+                        drawerState.close()
+                        val appPackageName = context.packageName
+                        val playStoreIntent = Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("market://details?id=$appPackageName")
+                        ).apply {
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        }
+
+                        runCatching {
+                            context.startActivity(playStoreIntent)
+                        }.onFailure {
+                            // fallback to browser
+                            context.startActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                                )
+                            )
+                        }
+                    }
+                }
+
+                // Share the app
+                DrawerMenuItem("Share the App", R.drawable.ic_android) {
+                    scope.launch {
+                        drawerState.close()
+                        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                            type = "text/plain"
+                            putExtra(
+                                Intent.EXTRA_TEXT,
+                                "✨ Discover *Siraathal Musthaqeem* — your complete Islamic companion app.\n" +
+                                        "Read Quran, explore powerful Duas, track Salah times and much more.\n\n" +
+                                        "Download now and stay connected to Allah:\n" +
+                                        "https://play.google.com/store/apps/details?id=${context.packageName}"
+                            )
+                        }
+                        runCatching {
+                            context.startActivity(
+                                Intent.createChooser(
+                                    shareIntent,
+                                    "Share App via"
+                                )
+                            )
+                        }
+                    }
+                }
+
+                DrawerMenuItem("About the App", R.drawable.ic_android) {
+                    scope.launch {
+                        drawerState.close()
+                        navController.navigate("about")
+                    }
+                }
 
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
