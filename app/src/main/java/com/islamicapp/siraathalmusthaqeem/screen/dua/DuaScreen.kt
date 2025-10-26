@@ -30,17 +30,15 @@ fun DuaScreen(navController: NavHostController) {
             .fillMaxSize()
             .background(Color.White)
     ) {
-        // Reusing CommonActionBar
         CommonActionBar(title = "Duas", navController = navController)
 
-        // Reusing CommonTabLayout
         CommonTabLayout(tabTitles = duaTabs) { index, title ->
             when (index) {
-                0 -> MasnoonDuasScreen(title)
-                1 -> EmotionsDuasScreen(title)
+                0 -> MasnoonDuasScreen(title = title)
+                1 -> EmotionsDuasScreen(navController = navController)
                 2 -> RabbanaDuasScreen()
-                3 -> QuranicDuasScreen(title)
-                4 -> ProphetsDuasScreen(title)
+                3 -> QuranicDuasScreen(title = title)
+                4 -> ProphetsDuasScreen(title = title)
             }
         }
     }

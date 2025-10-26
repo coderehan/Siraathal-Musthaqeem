@@ -10,6 +10,7 @@ import androidx.navigation.navArgument
 import com.islamicapp.core.utils.HadithCollectionType
 import com.islamicapp.siraathalmusthaqeem.screen.allah99names.Allah99NamesScreen
 import com.islamicapp.siraathalmusthaqeem.screen.dua.DuaScreen
+import com.islamicapp.siraathalmusthaqeem.screen.dua.emotionsduas.EmotionsDuasDetailScreen
 import com.islamicapp.siraathalmusthaqeem.screen.hadith.HadithScreen
 import com.islamicapp.siraathalmusthaqeem.screen.hadithdetail.HadithDetailScreen
 import com.islamicapp.siraathalmusthaqeem.screen.home.HomeScreen
@@ -187,6 +188,25 @@ fun Navigation(preferencesManager: PreferencesManager) {
         composable(NavigationItem.Dua.route) {
             DuaScreen(navController = navController)
         }
+
+        // Emotions Duas Detail
+        composable(
+            route = "emotion_detail/{emotionName}/{fileName}",
+            arguments = listOf(
+                navArgument("emotionName") { type = NavType.StringType },
+                navArgument("fileName") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val emotionName = backStackEntry.arguments?.getString("emotionName") ?: ""
+            val fileName = backStackEntry.arguments?.getString("fileName") ?: ""
+
+            EmotionsDuasDetailScreen(
+                navController = navController,
+                emotionName = emotionName,
+                fileName = fileName
+            )
+        }
+
 
         // Tasbeeh
         composable(NavigationItem.Tasbeeh.route) {

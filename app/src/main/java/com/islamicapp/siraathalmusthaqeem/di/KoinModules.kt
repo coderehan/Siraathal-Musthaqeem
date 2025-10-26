@@ -1,6 +1,7 @@
 package com.islamicapp.siraathalmusthaqeem.di
 
 import com.islamicapp.siraathalmusthaqeem.screen.allah99names.Allah99NamesViewModel
+import com.islamicapp.siraathalmusthaqeem.screen.dua.emotionsduas.EmotionsDuasViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.dua.rabbanaduas.RabbanaDuasViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.hadith.HadithViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.hijricalendar.HijriCalendarViewModel
@@ -30,6 +31,7 @@ val appModule = module {
     viewModel { TasbeehViewModel(get()) }
     viewModel { ProphetsStoriesViewModel(get()) }
     viewModel { RabbanaDuasViewModel(get()) }
+    viewModel { EmotionsDuasViewModel(get()) }
     viewModel { ThemeViewModel(get()) }
     single { PreferencesManager(get()) }
 
