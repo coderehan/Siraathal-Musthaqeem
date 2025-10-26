@@ -1,20 +1,47 @@
 package com.islamicapp.siraathalmusthaqeem.screen.dua
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
+import com.islamicapp.siraathalmusthaqeem.screen.dua.emotionsduas.EmotionsDuasScreen
+import com.islamicapp.siraathalmusthaqeem.screen.dua.masnoonduas.MasnoonDuasScreen
+import com.islamicapp.siraathalmusthaqeem.screen.dua.prophetsduas.ProphetsDuasScreen
+import com.islamicapp.siraathalmusthaqeem.screen.dua.quranicduas.QuranicDuasScreen
+import com.islamicapp.siraathalmusthaqeem.screen.dua.rabbanaduas.RabbanaDuasScreen
+import com.islamicapp.siraathalmusthaqeem.utils.CommonActionBar
+import com.islamicapp.siraathalmusthaqeem.utils.CommonTabLayout
 
 @Composable
 fun DuaScreen(navController: NavHostController) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+    val duaTabs = listOf(
+        "Masnoon Duas",
+        "Emotions Duas",
+        "40 Rabbana Duas",
+        "Quranic Duas",
+        "Prophets Duas"
+    )
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
     ) {
-        Text(text = "Dua", style = MaterialTheme.typography.headlineMedium)
+        // Reusing CommonActionBar
+        CommonActionBar(title = "Duas", navController = navController)
+
+        // Reusing CommonTabLayout
+        CommonTabLayout(tabTitles = duaTabs) { index, title ->
+            when (index) {
+                0 -> MasnoonDuasScreen(title)
+                1 -> EmotionsDuasScreen(title)
+                2 -> RabbanaDuasScreen()
+                3 -> QuranicDuasScreen(title)
+                4 -> ProphetsDuasScreen(title)
+            }
+        }
     }
 }

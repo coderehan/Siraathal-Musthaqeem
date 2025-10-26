@@ -1,6 +1,7 @@
 package com.islamicapp.domain.di
 
 import com.islamicapp.domain.allah99names.usecase.Allah99NamesUseCase
+import com.islamicapp.domain.duas.rabbanaduas.usecase.RabbanaDuasUseCase
 import com.islamicapp.domain.hadith.usecase.HadithUseCase
 import com.islamicapp.domain.hijricalendar.usecase.HijriCalendarUseCase
 import com.islamicapp.domain.prayertimes.usecase.PrayerTimesUseCase
@@ -23,5 +24,6 @@ val domainModule = module {
     factory { QuranUseCase(get()) }
     factory { PrayerTimesUseCase(get()) }
     factory { ProphetsStoriesUseCase(get()) }
+    factory { RabbanaDuasUseCase(get()) }
 
 }
