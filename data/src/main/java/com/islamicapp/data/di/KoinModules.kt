@@ -5,6 +5,9 @@ import com.islamicapp.data.allah99names.source.Allah99NamesDataSource
 import com.islamicapp.data.allah99names.source.Allah99NamesDataSourceImpl
 import com.islamicapp.data.allah99names.source.network.Allah99NamesApi
 import com.islamicapp.data.allah99names.source.network.Allah99NamesNetworkDataSource
+import com.islamicapp.data.duas.rabbanaduas.repository.RabbanaDuasRepositoryImpl
+import com.islamicapp.data.duas.rabbanaduas.source.local.RabbanaDuasDataSource
+import com.islamicapp.data.duas.rabbanaduas.source.local.RabbanaDuasDataSourceImpl
 import com.islamicapp.data.hadith.mapper.HadithMapper
 import com.islamicapp.data.hadith.source.HadithDataSource
 import com.islamicapp.data.hadith.source.HadithDataSourceImpl
@@ -27,6 +30,7 @@ import com.islamicapp.data.quran.source.QuranDataSourceImpl
 import com.islamicapp.data.quran.source.network.QuranApi
 import com.islamicapp.data.quran.source.network.QuranNetworkDataSource
 import com.islamicapp.domain.allah99names.repository.Allah99NamesRepository
+import com.islamicapp.domain.duas.rabbanaduas.repository.RabbanaDuasRepository
 import com.islamicapp.domain.hadith.repository.HadithRepository
 import com.islamicapp.domain.hijricalendar.repository.HijriCalendarRepository
 import com.islamicapp.domain.prayertimes.repository.PrayerTimesRepository
@@ -160,6 +164,9 @@ val dataModule = module {
     factory<ProphetsStoriesDataSource> {
         ProphetsStoriesDataSourceImpl(get())
     }
+    factory<RabbanaDuasDataSource> {
+        RabbanaDuasDataSourceImpl(get())
+    }
 
 
     /**
@@ -184,6 +191,9 @@ val dataModule = module {
     }
     factory<ProphetsStoriesRepository> {
         ProphetsStoriesRepositoryImpl(get())
+    }
+    factory<RabbanaDuasRepository> {
+        RabbanaDuasRepositoryImpl(get())
     }
 
 }
