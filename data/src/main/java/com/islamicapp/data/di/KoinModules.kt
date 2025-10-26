@@ -11,6 +11,9 @@ import com.islamicapp.data.duas.emotionsduas.repository.EmotionsDuasRepositoryIm
 import com.islamicapp.data.duas.prophetsduas.local.ProphetsDuasDataSource
 import com.islamicapp.data.duas.prophetsduas.local.ProphetsDuasDataSourceImpl
 import com.islamicapp.data.duas.prophetsduas.repository.ProphetsDuasRepositoryImpl
+import com.islamicapp.data.duas.quranicduas.local.QuranicDuasDataSource
+import com.islamicapp.data.duas.quranicduas.local.QuranicDuasDataSourceImpl
+import com.islamicapp.data.duas.quranicduas.repository.QuranicDuasRepositoryImpl
 import com.islamicapp.data.duas.rabbanaduas.repository.RabbanaDuasRepositoryImpl
 import com.islamicapp.data.duas.rabbanaduas.source.local.RabbanaDuasDataSource
 import com.islamicapp.data.duas.rabbanaduas.source.local.RabbanaDuasDataSourceImpl
@@ -38,6 +41,7 @@ import com.islamicapp.data.quran.source.network.QuranNetworkDataSource
 import com.islamicapp.domain.allah99names.repository.Allah99NamesRepository
 import com.islamicapp.domain.duas.emotionsduas.repository.EmotionsDuasRepository
 import com.islamicapp.domain.duas.prophetsduas.repository.ProphetsDuasRepository
+import com.islamicapp.domain.duas.quranicduas.repository.QuranicDuasRepository
 import com.islamicapp.domain.duas.rabbanaduas.repository.RabbanaDuasRepository
 import com.islamicapp.domain.hadith.repository.HadithRepository
 import com.islamicapp.domain.hijricalendar.repository.HijriCalendarRepository
@@ -181,6 +185,9 @@ val dataModule = module {
     factory<ProphetsDuasDataSource> {
         ProphetsDuasDataSourceImpl(get())
     }
+    factory<QuranicDuasDataSource> {
+        QuranicDuasDataSourceImpl(get())
+    }
 
 
     /**
@@ -214,6 +221,9 @@ val dataModule = module {
     }
     factory<ProphetsDuasRepository> {
         ProphetsDuasRepositoryImpl(get())
+    }
+    factory<QuranicDuasRepository> {
+        QuranicDuasRepositoryImpl(get())
     }
 
 }

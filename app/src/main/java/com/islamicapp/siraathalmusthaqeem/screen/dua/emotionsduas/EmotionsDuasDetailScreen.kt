@@ -14,6 +14,7 @@ import androidx.navigation.NavController
 import com.islamicapp.domain.duas.emotionsduas.model.EmotionsDuas
 import com.islamicapp.siraathalmusthaqeem.screen.dua.emotionsduas.components.EmotionsDuasDetailItem
 import com.islamicapp.siraathalmusthaqeem.utils.CommonActionBar
+import com.islamicapp.siraathalmusthaqeem.utils.SpinKitLoader
 import com.islamicapp.siraathalmusthaqeem.utils.UIState
 import org.koin.androidx.compose.koinViewModel
 
@@ -49,7 +50,7 @@ fun EmotionsDuasDetailScreen(
         ) {
             when (uiState) {
                 is UIState.Loading<*> -> Box(Modifier.fillMaxSize(), Alignment.Center) {
-                    CircularProgressIndicator()
+                    SpinKitLoader()
                 }
 
                 is UIState.Success<*> -> {
