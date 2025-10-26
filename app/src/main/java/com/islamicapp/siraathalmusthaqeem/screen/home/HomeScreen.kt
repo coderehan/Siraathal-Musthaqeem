@@ -270,15 +270,17 @@ fun HomeScreen(
                             HijriCalendarScreen()
                         }
 
-                        // Speaker Icon
+                        // Azaan Icon
                         IconButton(
-                            onClick = { /* TODO: play daily reminder */ },
+                            onClick = {
+                                navController.navigate("azaan")
+                            },
                             modifier = Modifier.size(48.dp)
                         ) {
                             Icon(
-                                painter = painterResource(id = R.drawable.ic_android),
-                                contentDescription = "Play daily reminder",
-                                modifier = Modifier.size(24.dp)
+                                painter = painterResource(id = R.drawable.ic_azaan_speaker),
+                                contentDescription = "Play Azaan",
+                                modifier = Modifier.size(40.dp)
                             )
                         }
                     }
