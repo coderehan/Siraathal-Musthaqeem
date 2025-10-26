@@ -16,7 +16,6 @@ import com.islamicapp.siraathalmusthaqeem.screen.dua.quranicduas.QuranicDuasDeta
 import com.islamicapp.siraathalmusthaqeem.screen.hadith.HadithScreen
 import com.islamicapp.siraathalmusthaqeem.screen.hadithdetail.HadithDetailScreen
 import com.islamicapp.siraathalmusthaqeem.screen.home.HomeScreen
-import com.islamicapp.siraathalmusthaqeem.screen.masjid.MasjidScreen
 import com.islamicapp.siraathalmusthaqeem.screen.splash.SplashScreen
 import com.islamicapp.siraathalmusthaqeem.screen.onboarding.OnboardingScreen
 import com.islamicapp.siraathalmusthaqeem.screen.pilgrimage.PilgrimageScreen
@@ -77,11 +76,6 @@ fun Navigation(preferencesManager: PreferencesManager) {
         // Qibla
         composable(NavigationItem.Qibla.route) {
             QiblaScreen(navController = navController)
-        }
-
-        // Masjid
-        composable(NavigationItem.Masjid.route) {
-            MasjidScreen(navController = navController)
         }
 
         // Allah 99 Names

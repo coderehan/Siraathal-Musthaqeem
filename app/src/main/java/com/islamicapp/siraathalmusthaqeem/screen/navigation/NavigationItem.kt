@@ -10,7 +10,6 @@ sealed class NavigationItem(val route: String) {
     data object Home : NavigationItem("home")
     data object PrayerTimes : NavigationItem("prayer_times")
     data object Qibla : NavigationItem("qibla")
-    data object Masjid : NavigationItem("masjid")
     data object Allah99Names : NavigationItem("allah_99_names")
     data object Zakath : NavigationItem("zakath")
     data object Pilgrimage : NavigationItem("pilgrimage")
