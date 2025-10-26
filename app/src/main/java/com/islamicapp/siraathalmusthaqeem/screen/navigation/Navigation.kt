@@ -11,6 +11,7 @@ import com.islamicapp.core.utils.HadithCollectionType
 import com.islamicapp.siraathalmusthaqeem.screen.allah99names.Allah99NamesScreen
 import com.islamicapp.siraathalmusthaqeem.screen.dua.DuaScreen
 import com.islamicapp.siraathalmusthaqeem.screen.dua.emotionsduas.EmotionsDuasDetailScreen
+import com.islamicapp.siraathalmusthaqeem.screen.dua.quranicduas.QuranicDuasDetailScreen
 import com.islamicapp.siraathalmusthaqeem.screen.hadith.HadithScreen
 import com.islamicapp.siraathalmusthaqeem.screen.hadithdetail.HadithDetailScreen
 import com.islamicapp.siraathalmusthaqeem.screen.home.HomeScreen
@@ -207,6 +208,23 @@ fun Navigation(preferencesManager: PreferencesManager) {
             )
         }
 
+        // Quranic Duas Detail
+        composable(
+            route = "quranic_dua_detail/{categoryName}/{fileName}",
+            arguments = listOf(
+                navArgument("categoryName") { type = NavType.StringType },
+                navArgument("fileName") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val categoryName = backStackEntry.arguments?.getString("categoryName") ?: ""
+            val fileName = backStackEntry.arguments?.getString("fileName") ?: ""
+
+            QuranicDuasDetailScreen(
+                navController = navController,
+                categoryName = categoryName,
+                fileName = fileName
+            )
+        }
 
         // Tasbeeh
         composable(NavigationItem.Tasbeeh.route) {
