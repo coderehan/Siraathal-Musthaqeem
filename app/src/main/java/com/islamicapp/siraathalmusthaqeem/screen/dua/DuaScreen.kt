@@ -38,7 +38,7 @@ fun DuaScreen(navController: NavHostController) {
                 1 -> EmotionsDuasScreen(navController = navController)
                 2 -> RabbanaDuasScreen()
                 3 -> QuranicDuasScreen(title = title)
-                4 -> ProphetsDuasScreen(title = title)
+                4 -> ProphetsDuasScreen()
             }
         }
     }
