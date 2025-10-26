@@ -1,7 +1,10 @@
 package com.islamicapp.siraathalmusthaqeem.screen.home
 
+import android.content.Context
 import android.content.Intent
+import android.location.LocationManager
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -35,6 +38,7 @@ import com.islamicapp.siraathalmusthaqeem.screen.hijricalendar.HijriCalendarScre
 import com.islamicapp.siraathalmusthaqeem.screen.home.components.DailySlider
 import kotlinx.coroutines.launch
 import com.islamicapp.siraathalmusthaqeem.screen.navigation.NavigationItem
+import android.provider.Settings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,6 +67,13 @@ fun HomeScreen(
         Feature("Seerah", R.drawable.ic_android, "seerah"),
         Feature("Prophets", R.drawable.ic_android, "prophets"),
     )
+
+    @Suppress("DEPRECATION")
+    fun isLocationEnabled(context: Context): Boolean {
+        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as? LocationManager
+        return locationManager?.isProviderEnabled(LocationManager.GPS_PROVIDER) == true ||
+                locationManager?.isProviderEnabled(LocationManager.NETWORK_PROVIDER) == true
+    }
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -293,7 +304,28 @@ fun HomeScreen(
                                     horizontalAlignment = Alignment.CenterHorizontally,
                                     modifier = Modifier
                                         .width(itemWidth)
-                                        .clickable { navController.navigate(feature.route) }
+                                        .clickable {
+                                            when (feature.title) {
+                                                "Masjid" -> {
+                                                    if (isLocationEnabled(context)) {
+                                                        val gmmIntentUri = Uri.parse("geo:0,0?q=masjid near me")
+                                                        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri).apply {
+                                                            setPackage("com.google.android.apps.maps")
+                                                        }
+                                                        runCatching { context.startActivity(mapIntent) }.onFailure {
+                                                            context.startActivity(
+                                                                Intent(Intent.ACTION_VIEW,
+                                                                    Uri.parse("https://www.google.com/maps/search/masjid+near+me"))
+                                                            )
+                                                        }
+                                                    } else {
+                                                        Toast.makeText(context, "Location is off. Please enable it to view nearby masjids.", Toast.LENGTH_SHORT).show()
+                                                        context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                                                    }
+                                                }
+                                                else -> navController.navigate(feature.route)
+                                            }
+                                        }
                                 ) {
                                     Surface(
                                         tonalElevation = 1.dp,
