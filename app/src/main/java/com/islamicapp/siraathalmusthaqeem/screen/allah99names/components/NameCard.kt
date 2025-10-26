@@ -1,16 +1,22 @@
 package com.islamicapp.siraathalmusthaqeem.screen.allah99names.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.islamicapp.siraathalmusthaqeem.R
 
 /**
  * A reusable Composable UI component that displays one of Allah's 99 names
@@ -24,6 +30,8 @@ fun NameCard(
     transliteration: String,
     meaning: String
 ) {
+    val quranFont = FontFamily(Font(R.font.indo_pak_quran))
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(8.dp),
@@ -37,13 +45,58 @@ fun NameCard(
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = number.toString(), fontSize = 16.sp, fontWeight = FontWeight.Medium, color = Color(0xFF6B7280))
-            Spacer(modifier = Modifier.height(12.dp))
-            Text(text = arabic, fontSize = 32.sp, fontWeight = FontWeight.Normal, color = Color(0xFF111827))
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = transliteration, fontSize = 18.sp, fontWeight = FontWeight.Medium, color = Color(0xFF374151))
+            // Number inside a circle
+            Box(
+                modifier = Modifier
+                    .size(30.dp)
+                    .background(
+                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                        shape = CircleShape
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = number.toString(),
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Arabic text with Indo-Pak Quranic font
+            Text(
+                text = arabic,
+                fontSize = 46.sp,
+                fontWeight = FontWeight.Normal,
+                color = Color(0xFF111827),
+                fontFamily = quranFont,
+                textAlign = TextAlign.Center
+            )
+
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = meaning, fontSize = 16.sp, fontWeight = FontWeight.Normal, color = Color(0xFF6B7280))
+
+            // Transliteration
+            Text(
+                text = transliteration,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Medium,
+                color = Color(0xFF374151),
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            // Meaning
+            Text(
+                text = meaning,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Normal,
+                color = Color(0xFF6B7280),
+                textAlign = TextAlign.Center
+            )
         }
     }
 }
+
