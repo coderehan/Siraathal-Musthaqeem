@@ -10,6 +10,7 @@ import com.islamicapp.domain.hijricalendar.usecase.HijriCalendarUseCase
 import com.islamicapp.domain.prayertimes.usecase.PrayerTimesUseCase
 import com.islamicapp.domain.prophetsstories.usecase.ProphetsStoriesUseCase
 import com.islamicapp.domain.quran.usecase.QuranUseCase
+import com.islamicapp.domain.seerah.usecase.SeerahUseCase
 import org.koin.dsl.module
 
 // As 'UseCase' comes under 'Domain Module', it should come under 'Domain Module' level
@@ -31,5 +32,6 @@ val domainModule = module {
     factory { EmotionsDuasUseCase(get()) }
     factory { ProphetsDuasUseCase(get()) }
     factory { QuranicDuasUseCase(get()) }
+    factory { SeerahUseCase(get()) }
 
 }

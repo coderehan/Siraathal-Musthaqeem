@@ -11,6 +11,7 @@ import com.islamicapp.siraathalmusthaqeem.screen.prayertimes.PrayerTimesViewMode
 import com.islamicapp.siraathalmusthaqeem.screen.prophetsstories.ProphetsStoriesViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.quran.juz.JuzViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.quran.surah.SurahViewModel
+import com.islamicapp.siraathalmusthaqeem.screen.seerah.SeerahViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.tasbeeh.TasbeehViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.theme.ThemeViewModel
 import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
@@ -37,6 +38,7 @@ val appModule = module {
     viewModel { ProphetsDuasViewModel(get()) }
     viewModel { QuranicDuasViewModel(get()) }
     viewModel { ThemeViewModel(get()) }
+    viewModel { SeerahViewModel(get()) }
     single { PreferencesManager(get()) }
 
 }
