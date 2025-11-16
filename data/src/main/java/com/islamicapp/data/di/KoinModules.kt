@@ -38,6 +38,9 @@ import com.islamicapp.data.quran.source.QuranDataSource
 import com.islamicapp.data.quran.source.QuranDataSourceImpl
 import com.islamicapp.data.quran.source.network.QuranApi
 import com.islamicapp.data.quran.source.network.QuranNetworkDataSource
+import com.islamicapp.data.seerah.repository.SeerahRepositoryImpl
+import com.islamicapp.data.seerah.source.local.SeerahDataSource
+import com.islamicapp.data.seerah.source.local.SeerahDataSourceImpl
 import com.islamicapp.domain.allah99names.repository.Allah99NamesRepository
 import com.islamicapp.domain.duas.emotionsduas.repository.EmotionsDuasRepository
 import com.islamicapp.domain.duas.prophetsduas.repository.ProphetsDuasRepository
@@ -48,6 +51,7 @@ import com.islamicapp.domain.hijricalendar.repository.HijriCalendarRepository
 import com.islamicapp.domain.prayertimes.repository.PrayerTimesRepository
 import com.islamicapp.domain.prophetsstories.repository.ProphetsStoriesRepository
 import com.islamicapp.domain.quran.repository.QuranRepository
+import com.islamicapp.domain.seerah.repository.SeerahRepository
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -188,6 +192,9 @@ val dataModule = module {
     factory<QuranicDuasDataSource> {
         QuranicDuasDataSourceImpl(get())
     }
+    factory<SeerahDataSource> {
+        SeerahDataSourceImpl(get())
+    }
 
 
     /**
@@ -224,6 +231,9 @@ val dataModule = module {
     }
     factory<QuranicDuasRepository> {
         QuranicDuasRepositoryImpl(get())
+    }
+    factory<SeerahRepository> {
+        SeerahRepositoryImpl(get())
     }
 
 }

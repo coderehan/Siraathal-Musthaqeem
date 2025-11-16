@@ -25,7 +25,8 @@ import com.islamicapp.siraathalmusthaqeem.screen.profile.ProfileScreen
 import com.islamicapp.siraathalmusthaqeem.screen.prophetsstories.ProphetsStoriesDetailScreen
 import com.islamicapp.siraathalmusthaqeem.screen.prophetsstories.ProphetsStoriesListScreen
 import com.islamicapp.siraathalmusthaqeem.screen.quran.QuranScreen
-import com.islamicapp.siraathalmusthaqeem.screen.seerah.SeerahScreen
+import com.islamicapp.siraathalmusthaqeem.screen.seerah.SeerahListScreen
+import com.islamicapp.siraathalmusthaqeem.screen.seerah.SeerahDetailScreen
 import com.islamicapp.siraathalmusthaqeem.screen.tasbeeh.TasbeehScreen
 import com.islamicapp.siraathalmusthaqeem.screen.zakath.ZakathScreen
 import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
@@ -117,9 +118,27 @@ fun Navigation(preferencesManager: PreferencesManager) {
             )
         }
 
-        // Seerah
+        // Seerah List Screen
         composable(NavigationItem.Seerah.route) {
-            SeerahScreen(navController = navController)
+            SeerahListScreen(navController = navController)
+        }
+
+        // Seerah Detail Screen
+        composable(
+            route = "seerah_detail/{chapterTitle}/{fileName}",
+            arguments = listOf(
+                navArgument("chapterTitle") { type = NavType.StringType },
+                navArgument("fileName") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val chapterTitle = backStackEntry.arguments?.getString("chapterTitle") ?: ""
+            val fileName = backStackEntry.arguments?.getString("fileName") ?: ""
+
+            SeerahDetailScreen(
+                navController = navController,
+                chapterTitle = chapterTitle,
+                fileName = fileName
+            )
         }
 
         // Prophets
