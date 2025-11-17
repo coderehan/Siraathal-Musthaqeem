@@ -25,7 +25,7 @@ fun ProphetsStoriesListScreen(
     navController: NavController
 ) {
     val prophetsList = listOf(
-        Prophets("Prophet Adam (AS)", R.drawable.ic_android, "prophets_stories_1_prophet_adam.json"),
+        Prophets("Prophet Adam (AS)", R.drawable.prophet_stories_adam, "prophets_stories_1_prophet_adam.json"),
         Prophets("Prophet Nuh (AS)", R.drawable.ic_android, "prophets_stories_2_prophet_nuh.json"),
         Prophets("Prophet Hud (AS)", R.drawable.ic_android, "prophets_stories_3_prophet_hud.json"),
         Prophets("Prophet Saleh (AS)", R.drawable.ic_android, "prophets_stories_4_prophet_saleh.json"),

@@ -12,8 +12,10 @@ import com.islamicapp.siraathalmusthaqeem.R
 import com.islamicapp.siraathalmusthaqeem.screen.tasbeeh.model.TasbeehData
 import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -24,6 +26,9 @@ class TasbeehViewModel(
 
     private val _tasbeehState = MutableStateFlow(TasbeehData())
     val tasbeehState: StateFlow<TasbeehData> = _tasbeehState
+
+    private val _toastEvent = MutableSharedFlow<String>()
+    val toastEvent = _toastEvent.asSharedFlow()
 
     private var soundPool: SoundPool? = null
     private var soundId: Int? = null
@@ -52,12 +57,32 @@ class TasbeehViewModel(
 
     fun incrementCount(context: Context) {
         val current = _tasbeehState.value
-        val updated = current.copy(count = current.count + 1)
-        _tasbeehState.value = updated
-        viewModelScope.launch { preferencesManager.saveTasbeehData(updated) }
 
+        // 1. Always play feedback on tap, regardless of count
         viewModelScope.launch {
             playFeedback(context, current.soundEnabled, current.vibrationEnabled)
+        }
+
+        // 2. Check if we should increment the count
+        if (current.count < current.target) {
+            // We are below target, so increment
+            val newCount = current.count + 1
+            val updated = current.copy(count = newCount)
+            _tasbeehState.value = updated
+            viewModelScope.launch { preferencesManager.saveTasbeehData(updated) }
+
+            // 3. Check if we *just* hit the target
+            if (newCount == current.target) {
+                viewModelScope.launch {
+                    _toastEvent.emit("Congratulations, you have achieved the target count!")
+                }
+            }
+        } else {
+            // We are at or above target, don't increment
+            // Just emit a "target already met" toast
+            viewModelScope.launch {
+                _toastEvent.emit("You have already reached your target.")
+            }
         }
     }
 

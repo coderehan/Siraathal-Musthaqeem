@@ -1,16 +1,43 @@
 package com.islamicapp.siraathalmusthaqeem.screen.tasbeeh
 
+import android.widget.Toast
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.Create
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Vibration
+import androidx.compose.material.icons.filled.VolumeOff
+import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -28,10 +55,10 @@ import com.islamicapp.siraathalmusthaqeem.R
 import com.islamicapp.siraathalmusthaqeem.screen.tasbeeh.components.CustomTargetDialog
 import com.islamicapp.siraathalmusthaqeem.utils.CommonActionBar
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TasbeehScreen(
     navController: NavController,
@@ -40,7 +67,13 @@ fun TasbeehScreen(
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
-    LaunchedEffect(Unit) { viewModel.init(context) }
+    // Listen for toast events from the ViewModel
+    LaunchedEffect(Unit) {
+        viewModel.init(context)
+        viewModel.toastEvent.collectLatest { message ->
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
+    }
 
     val state by viewModel.tasbeehState.collectAsState()
     var showCustomDialog by remember { mutableStateOf(false) }
@@ -67,7 +100,7 @@ fun TasbeehScreen(
 
                 // Quran Verse (Arabic + Translation)
                 Text(
-                    text = "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",
+                    text = "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",
                     style = TextStyle(
                         fontFamily = arabicFont,
                         fontSize = 28.sp,
@@ -131,7 +164,7 @@ fun TasbeehScreen(
                 var tapScale by remember { mutableStateOf(1f) }
                 val animatedScale by animateFloatAsState(targetValue = tapScale)
                 val borderColor by animateColorAsState(
-                    targetValue = if (state.count % state.target == 0 && state.count != 0)
+                    targetValue = if (state.count == state.target && state.count != 0)
                         Color(0xFF10B981)
                     else Color(0xFF2563EB)
                 )

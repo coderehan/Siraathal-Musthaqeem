@@ -56,9 +56,9 @@ fun SplashScreen(navController: NavHostController, preferencesManager: Preferenc
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Image(
-                painter = painterResource(id = R.drawable.ic_android),
+                painter = painterResource(id = R.drawable.splash),
                 contentDescription = "App Logo",
-                modifier = Modifier.size(100.dp)
+                modifier = Modifier.size(200.dp)
             )
 
             Spacer(modifier = Modifier.height(16.dp))
