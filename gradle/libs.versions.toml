@@ -65,6 +65,9 @@ quranVerses = "2.0"
 
 appcompat = "1.7.1"
 
+# Firebase Bom
+firebase-bom = "34.6.0"
+
 # ==============================
 # Libraries
 # ==============================
@@ -158,9 +161,14 @@ quranVerses = { module = "com.github.mosamabinomar:quranVerses", version.ref = "
 
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 
+# Firebase Crashlytics
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
+
 
 # ==============================
-# Plugin Referencesli
+# Plugin References
 # ==============================
 
 [plugins]

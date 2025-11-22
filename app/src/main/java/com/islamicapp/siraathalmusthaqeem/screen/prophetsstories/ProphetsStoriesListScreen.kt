@@ -25,10 +25,10 @@ fun ProphetsStoriesListScreen(
     navController: NavController
 ) {
     val prophetsList = listOf(
-        Prophets("Prophet Adam (AS)", R.drawable.prophet_stories_adam, "prophets_stories_1_prophet_adam.json"),
-        Prophets("Prophet Nuh (AS)", R.drawable.ic_android, "prophets_stories_2_prophet_nuh.json"),
+        Prophets("Prophet Adam (AS)", R.drawable.prophet_stories_1, "prophets_stories_1_prophet_adam.json"),
+        Prophets("Prophet Nuh (AS)", R.drawable.prophet_stories_2, "prophets_stories_2_prophet_nuh.json"),
         Prophets("Prophet Hud (AS)", R.drawable.ic_android, "prophets_stories_3_prophet_hud.json"),
-        Prophets("Prophet Saleh (AS)", R.drawable.ic_android, "prophets_stories_4_prophet_saleh.json"),
+        Prophets("Prophet Saleh (AS)", R.drawable.prophet_stories_4, "prophets_stories_4_prophet_saleh.json"),
         Prophets("Prophet Ibrahim (AS)", R.drawable.ic_android, "prophets_stories_5_prophet_ibrahim.json"),
         Prophets("Prophet Lut (AS)", R.drawable.ic_android, "prophets_stories_6_prophet_lut.json"),
         Prophets("Prophet Yousuf (AS)", R.drawable.ic_android, "prophets_stories_7_prophet_yousuf.json"),
@@ -46,7 +46,7 @@ fun ProphetsStoriesListScreen(
             .fillMaxSize()
             .background(Color(0xFFF9FAFB))
     ) {
-        CommonActionBar(title = "Prophets Stories", navController = navController)
+        CommonActionBar(title = "Prophets Stories Mentioned In Quran", navController = navController)
 
         Spacer(modifier = Modifier.height(8.dp))
 
