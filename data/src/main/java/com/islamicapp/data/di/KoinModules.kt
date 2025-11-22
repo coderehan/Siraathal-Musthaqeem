@@ -8,6 +8,9 @@ import com.islamicapp.data.allah99names.source.network.Allah99NamesNetworkDataSo
 import com.islamicapp.data.duas.emotionsduas.local.EmotionsDuasDataSource
 import com.islamicapp.data.duas.emotionsduas.local.EmotionsDuasDataSourceImpl
 import com.islamicapp.data.duas.emotionsduas.repository.EmotionsDuasRepositoryImpl
+import com.islamicapp.data.duas.masnoonduas.local.MasnoonDuasDataSource
+import com.islamicapp.data.duas.masnoonduas.local.MasnoonDuasDataSourceImpl
+import com.islamicapp.data.duas.masnoonduas.repository.MasnoonDuasRepositoryImpl
 import com.islamicapp.data.duas.prophetsduas.local.ProphetsDuasDataSource
 import com.islamicapp.data.duas.prophetsduas.local.ProphetsDuasDataSourceImpl
 import com.islamicapp.data.duas.prophetsduas.repository.ProphetsDuasRepositoryImpl
@@ -43,6 +46,7 @@ import com.islamicapp.data.seerah.source.local.SeerahDataSource
 import com.islamicapp.data.seerah.source.local.SeerahDataSourceImpl
 import com.islamicapp.domain.allah99names.repository.Allah99NamesRepository
 import com.islamicapp.domain.duas.emotionsduas.repository.EmotionsDuasRepository
+import com.islamicapp.domain.duas.masnoonduas.repository.MasnoonDuasRepository
 import com.islamicapp.domain.duas.prophetsduas.repository.ProphetsDuasRepository
 import com.islamicapp.domain.duas.quranicduas.repository.QuranicDuasRepository
 import com.islamicapp.domain.duas.rabbanaduas.repository.RabbanaDuasRepository
@@ -192,6 +196,9 @@ val dataModule = module {
     factory<QuranicDuasDataSource> {
         QuranicDuasDataSourceImpl(get())
     }
+    factory<MasnoonDuasDataSource> {
+        MasnoonDuasDataSourceImpl(get())
+    }
     factory<SeerahDataSource> {
         SeerahDataSourceImpl(get())
     }
@@ -231,6 +238,9 @@ val dataModule = module {
     }
     factory<QuranicDuasRepository> {
         QuranicDuasRepositoryImpl(get())
+    }
+    factory<MasnoonDuasRepository> {
+        MasnoonDuasRepositoryImpl(get())
     }
     factory<SeerahRepository> {
         SeerahRepositoryImpl(get())

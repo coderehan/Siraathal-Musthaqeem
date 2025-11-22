@@ -68,6 +68,12 @@ appcompat = "1.7.1"
 # Firebase Bom
 firebase-bom = "34.6.0"
 
+# Google Services
+google-services = "4.4.4"
+
+# Firebase Crashlytics
+firebase-crashlytics = "3.0.6"
+
 # ==============================
 # Libraries
 # ==============================
@@ -177,3 +183,5 @@ android-library = { id = "com.android.library" }                                
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }        # Kotlin Android plugin
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" } # Jetpack Compose plugin
 ksp = { id = "com.google.devtools.ksp", version = "1.9.25-1.0.20" }                     # Kotlin Symbol Processing
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics" }

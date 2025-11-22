@@ -10,6 +10,11 @@ plugins {
 
     // KSP (Kotlin Symbol Processing) - faster than kapt
     alias(libs.plugins.ksp)
+
+    // Google Services for Firebase Crashlytics
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
+
 }
 
 android {
