@@ -2,6 +2,7 @@ package com.islamicapp.siraathalmusthaqeem.di
 
 import com.islamicapp.siraathalmusthaqeem.screen.allah99names.Allah99NamesViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.dua.emotionsduas.EmotionsDuasViewModel
+import com.islamicapp.siraathalmusthaqeem.screen.dua.masnoonduas.MasnoonDuasViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.dua.prophetsduas.ProphetsDuasViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.dua.quranicduas.QuranicDuasViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.dua.rabbanaduas.RabbanaDuasViewModel
@@ -39,6 +40,7 @@ val appModule = module {
     viewModel { QuranicDuasViewModel(get()) }
     viewModel { ThemeViewModel(get()) }
     viewModel { SeerahViewModel(get()) }
+    viewModel { MasnoonDuasViewModel(get()) }
     single { PreferencesManager(get()) }
 
 }

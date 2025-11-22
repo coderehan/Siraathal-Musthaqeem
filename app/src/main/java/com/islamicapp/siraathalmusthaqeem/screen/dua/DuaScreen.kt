@@ -34,7 +34,7 @@ fun DuaScreen(navController: NavHostController) {
 
         CommonTabLayout(tabTitles = duaTabs) { index, title ->
             when (index) {
-                0 -> MasnoonDuasScreen(title = title)
+                0 -> MasnoonDuasScreen()
                 1 -> EmotionsDuasScreen(navController = navController)
                 2 -> RabbanaDuasScreen()
                 3 -> QuranicDuasScreen(navController = navController)
