@@ -57,15 +57,15 @@ fun HomeScreen(
     var selectedBottom by remember { mutableStateOf<BottomNavItem>(BottomNavItem.Home) }
 
     val features = listOf(
-        Feature("Prayer Times", R.drawable.ic_android, "prayer_times"),
-        Feature("Qibla", R.drawable.ic_android, "qibla"),
-        Feature("Masjid Near Me", R.drawable.ic_android, "masjid"),
-        Feature("Allah 99 Names", R.drawable.ic_android, "allah_99_names"),
-        Feature("Zakath", R.drawable.ic_android, "zakath"),
-        Feature("Pilgrimage", R.drawable.ic_android, "pilgrimage"),
-        Feature("Hadith", R.drawable.ic_android, "hadith"),
-        Feature("Seerah", R.drawable.ic_android, "seerah"),
-        Feature("Prophets", R.drawable.ic_android, "prophets"),
+        Feature("Prayer Times", R.drawable.ic_android, NavigationItem.PrayerTimes.route),
+        Feature("Qibla", R.drawable.ic_android, NavigationItem.Qibla.route),
+        Feature("Masjid Near Me", R.drawable.ic_android, NavigationItem.MasjidNearMe.route),
+        Feature("Allah 99 Names", R.drawable.ic_android, NavigationItem.Allah99Names.route),
+        Feature("Zakath", R.drawable.ic_android, NavigationItem.Zakath.route),
+        Feature("Pilgrimage", R.drawable.ic_android, NavigationItem.Pilgrimage.route),
+        Feature("Hadith", R.drawable.ic_android, NavigationItem.Hadith.route),
+        Feature("Seerah", R.drawable.ic_android, NavigationItem.Seerah.route),
+        Feature("Prophets", R.drawable.ic_android, NavigationItem.Prophets.route),
     )
 
     @Suppress("DEPRECATION")
@@ -82,7 +82,7 @@ fun HomeScreen(
             ModalDrawerSheet {
                 // Drawer header image
                 Image(
-                    painter = painterResource(id = R.drawable.ic_android),
+                    painter = painterResource(id = R.drawable.splash),
                     contentDescription = "Drawer Header",
                     modifier = Modifier
                         .fillMaxWidth()
@@ -213,7 +213,10 @@ fun HomeScreen(
                     },
                     navigationIcon = {
                         IconButton(onClick = { scope.launch { drawerState.open() } }) {
-                            Icon(imageVector = Icons.Filled.Menu, contentDescription = "Open drawer")
+                            Icon(
+                                imageVector = Icons.Filled.Menu,
+                                contentDescription = "Open drawer"
+                            )
                         }
                     }
                 )
@@ -289,13 +292,20 @@ fun HomeScreen(
 
                     // Responsive Features Grid
                     BoxWithConstraints(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 0.dp) // REMOVE any extra padding here if needed, but it seems fine.
                     ) {
                         val itemSpacing = 16.dp
                         val columns = 3
+
+                        // FIX: Use a slightly safer calculation to ensure 3 items fit on all screens.
+                        // We deduct the total required space for gaps (itemSpacing * 2)
+                        // and divide the remainder by 3.
                         val itemWidth = (maxWidth - (itemSpacing * (columns - 1))) / columns
 
                         FlowRow(
+                            // Enforcing 3 items per row to solve the wrapping issue
                             maxItemsInEachRow = columns,
                             horizontalArrangement = Arrangement.spacedBy(itemSpacing),
                             verticalArrangement = Arrangement.spacedBy(20.dp),
@@ -304,27 +314,44 @@ fun HomeScreen(
                             features.forEach { feature ->
                                 Column(
                                     horizontalAlignment = Alignment.CenterHorizontally,
+                                    // Apply the calculated width
                                     modifier = Modifier
                                         .width(itemWidth)
                                         .clickable {
-                                            when (feature.title) {
-                                                "Masjid" -> {
+                                            when (feature.route) {
+                                                NavigationItem.MasjidNearMe.route -> {
                                                     if (isLocationEnabled(context)) {
-                                                        val gmmIntentUri = Uri.parse("geo:0,0?q=masjid near me")
-                                                        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri).apply {
+                                                        val gmmIntentUri =
+                                                            Uri.parse("geo:0,0?q=masjid near me")
+                                                        val mapIntent = Intent(
+                                                            Intent.ACTION_VIEW,
+                                                            gmmIntentUri
+                                                        ).apply {
                                                             setPackage("com.google.android.apps.maps")
                                                         }
-                                                        runCatching { context.startActivity(mapIntent) }.onFailure {
+                                                        runCatching {
                                                             context.startActivity(
-                                                                Intent(Intent.ACTION_VIEW,
-                                                                    Uri.parse("https://www.google.com/maps/search/masjid+near+me"))
+                                                                mapIntent
+                                                            )
+                                                        }.onFailure {
+                                                            // Fallback to browser if Maps app is not installed
+                                                            context.startActivity(
+                                                                Intent(
+                                                                    Intent.ACTION_VIEW,
+                                                                    Uri.parse("https://www.google.com/maps/search/masjid+near+me")
+                                                                )
                                                             )
                                                         }
                                                     } else {
-                                                        Toast.makeText(context, "Location is off. Please enable it to view nearby masjids.", Toast.LENGTH_SHORT).show()
+                                                        Toast.makeText(
+                                                            context,
+                                                            "Location is off. Please enable it to view nearby masjids.",
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
                                                         context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
                                                     }
                                                 }
+                                                // Default case: Navigate for all other features with defined internal routes
                                                 else -> navController.navigate(feature.route)
                                             }
                                         }

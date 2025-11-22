@@ -23,28 +23,17 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Composable
 fun DailySlider() {
     val items = listOf("Hadith of the Day", "Verse of the Day", "Daily Wisdom")
     val pagerState = rememberPagerState(initialPage = 0, pageCount = { items.size })
-    val scope = rememberCoroutineScope()
-
-    LaunchedEffect(pagerState.currentPage) {
-        delay(5000)
-        val nextPage = (pagerState.currentPage + 1) % items.size
-        scope.launch { pagerState.animateScrollToPage(nextPage) }
-    }
 
     Column(
         modifier = Modifier
