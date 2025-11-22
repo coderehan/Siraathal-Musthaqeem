@@ -59,7 +59,7 @@ fun HomeScreen(
     val features = listOf(
         Feature("Prayer Times", R.drawable.ic_android, "prayer_times"),
         Feature("Qibla", R.drawable.ic_android, "qibla"),
-        Feature("Masjid", R.drawable.ic_android, "masjid"),
+        Feature("Masjid Near Me", R.drawable.ic_android, "masjid"),
         Feature("Allah 99 Names", R.drawable.ic_android, "allah_99_names"),
         Feature("Zakath", R.drawable.ic_android, "zakath"),
         Feature("Pilgrimage", R.drawable.ic_android, "pilgrimage"),

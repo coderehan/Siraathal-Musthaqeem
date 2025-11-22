@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "86419715660",
+    "project_id": "siraathalmusthaqeem-7bc9e",
+    "storage_bucket": "siraathalmusthaqeem-7bc9e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:86419715660:android:6132a9bcaefed7fad0a6e9",
+        "android_client_info": {
+          "package_name": "com.islamicapp.siraathalmusthaqeem"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAC7XlR3olLviit0by7DKJtxU__WXN1YMI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

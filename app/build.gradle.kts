@@ -170,5 +170,12 @@ dependencies {
     // Daily Slider
     implementation(libs.quranVerses)
 
+    // Firebase BOM
+    implementation(platform(libs.firebase.bom))
 
+    // Firebase Analytics (The BOM will decide the version)
+    implementation(libs.firebase.analytics)
+
+    // Firebase Crashlytics (The BOM will decide the version)
+    implementation(libs.firebase.crashlytics)
 }
