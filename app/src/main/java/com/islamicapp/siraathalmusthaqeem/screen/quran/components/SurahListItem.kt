@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -50,7 +51,7 @@ fun SurahListItem(
             modifier = Modifier
                 .size(40.dp)
                 .background(
-                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                    color = colorResource(id = R.color.green),
                     shape = CircleShape
                 ),
             contentAlignment = Alignment.Center
@@ -59,7 +60,7 @@ fun SurahListItem(
                 text = surah.surahNumber.toString(),
                 style = MaterialTheme.typography.bodyMedium.copy(
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
+                    color = colorResource(id = R.color.white)
                 )
             )
         }
@@ -71,7 +72,7 @@ fun SurahListItem(
                 text = surah.surahNameEnglish,
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.SemiBold,
-                    color = Color(0xFF1F2937)
+                    color = colorResource(id = R.color.black)
                 )
             )
             Text(
@@ -89,7 +90,7 @@ fun SurahListItem(
                 fontWeight = FontWeight.Bold,
                 fontSize = 32.sp,
                 letterSpacing = 2.sp,
-                color = MaterialTheme.colorScheme.primary
+                color = colorResource(id = R.color.green)
             ),
             textAlign = TextAlign.End
         )

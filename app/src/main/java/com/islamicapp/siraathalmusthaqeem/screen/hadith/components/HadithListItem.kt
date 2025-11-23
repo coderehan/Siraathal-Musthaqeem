@@ -17,11 +17,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.islamicapp.core.utils.HadithCollectionType
 import com.islamicapp.domain.hadith.model.Hadith
+import com.islamicapp.siraathalmusthaqeem.R
 
 @Composable
 fun HadithListItem(
@@ -47,7 +49,7 @@ fun HadithListItem(
             modifier = Modifier
                 .size(36.dp)
                 .background(
-                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
+                    color = colorResource(id = R.color.green),
                     shape = CircleShape
                 ),
             contentAlignment = Alignment.Center
@@ -56,7 +58,7 @@ fun HadithListItem(
                 text = hadith.sectionId,
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
+                color = colorResource(id = R.color.white)
             )
         }
 

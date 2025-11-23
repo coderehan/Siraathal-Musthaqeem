@@ -17,12 +17,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.islamicapp.domain.duas.prophetsduas.model.ProphetsDuas
+import com.islamicapp.siraathalmusthaqeem.R
 
 @Composable
 fun ProphetsDuasItem(
@@ -37,7 +39,7 @@ fun ProphetsDuasItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    color = MaterialTheme.colorScheme.primary,
+                    color = colorResource(id = R.color.green),
                     shape = RoundedCornerShape(12.dp)
                 )
                 .padding(vertical = 14.dp, horizontal = 16.dp),
@@ -83,9 +85,9 @@ fun ProphetsDuasItem(
                         text = dua.arabic_dua,
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontFamily = quranFont,
-                            fontSize = 34.sp,
-                            color = MaterialTheme.colorScheme.primary,
-                            lineHeight = 42.sp
+                            fontSize = 42.sp,
+                            color = colorResource(id = R.color.green),
+                            lineHeight = 60.sp
                         ),
                         modifier = Modifier
                             .fillMaxWidth()

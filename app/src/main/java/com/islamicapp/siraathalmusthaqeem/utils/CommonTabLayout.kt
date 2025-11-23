@@ -10,18 +10,20 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.islamicapp.siraathalmusthaqeem.R
 import kotlinx.coroutines.launch
 
 @Composable
 fun CommonTabLayout(
     modifier: Modifier = Modifier,
     tabTitles: List<String>,
-    backgroundColor: Color = Color.White,
-    selectedColor: Color = MaterialTheme.colorScheme.primary,
+    backgroundColor: Color = colorResource(id = R.color.white),
+    selectedColor: Color = colorResource(id = R.color.green),
     unselectedColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-    indicatorColor: Color = MaterialTheme.colorScheme.primary,
+    indicatorColor: Color = colorResource(id = R.color.green),
     isScrollable: Boolean = true,
     content: @Composable (pageIndex: Int, title: String) -> Unit
 ) {

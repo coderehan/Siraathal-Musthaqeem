@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -85,15 +86,15 @@ fun MasnoonDuasItem(
                         text = dua.arabic,
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontFamily = quranFont,
-                            fontSize = 32.sp,
-                            color = Color.White,
-                            lineHeight = 40.sp
+                            fontSize = 42.sp,
+                            color = colorResource(id = R.color.white),
+                            lineHeight = 60.sp
                         ),
                         textAlign = TextAlign.End,
                         modifier = Modifier
                             .fillMaxWidth()
                             .heightIn(min = 60.dp)
-                            .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(8.dp))
+                            .background(colorResource(id = R.color.green), RoundedCornerShape(8.dp))
                             .padding(12.dp)
                     )
                 }

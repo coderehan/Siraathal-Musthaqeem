@@ -27,8 +27,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.islamicapp.siraathalmusthaqeem.R
 
 @Composable
 fun DailySlider() {
@@ -57,7 +59,7 @@ fun DailySlider() {
                 .clip(RoundedCornerShape(16.dp))
                 .border(
                     width = 1.5.dp,
-                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+                    color = colorResource(id = R.color.green),
                     shape = RoundedCornerShape(16.dp)
                 )
                 .background(Color.White)
@@ -117,7 +119,7 @@ fun DailySlider() {
                         .size(if (selected) 12.dp else 8.dp)
                         .background(
                             if (selected)
-                                MaterialTheme.colorScheme.primary
+                                colorResource(id = R.color.green)
                             else
                                 MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
                             shape = CircleShape

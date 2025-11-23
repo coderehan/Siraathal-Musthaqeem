@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.PlaceholderVerticalAlign
 import androidx.compose.ui.text.buildAnnotatedString
@@ -157,7 +158,7 @@ fun SurahDetailScreen(
                                             text = bismillahText,
                                             style = MaterialTheme.typography.titleLarge.copy(
                                                 fontFamily = quranFont,
-                                                color = MaterialTheme.colorScheme.primary,
+                                                color =  colorResource(id = R.color.green),
                                                 fontSize = 38.sp
                                             ),
                                             textAlign = TextAlign.Center

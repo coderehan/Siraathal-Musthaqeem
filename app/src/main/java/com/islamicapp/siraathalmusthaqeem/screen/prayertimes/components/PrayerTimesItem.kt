@@ -17,10 +17,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.islamicapp.domain.prayertimes.model.PrayerTimes
+import com.islamicapp.siraathalmusthaqeem.R
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -137,7 +139,7 @@ fun PrayerTimesItem(
         Box(
             modifier = Modifier
                 .size(150.dp)
-                .border(3.dp, Color(0xFFCBD5E1), CircleShape)
+                .border(3.dp, colorResource(id = R.color.green), CircleShape)
                 .background(Color.White, CircleShape),
             contentAlignment = Alignment.Center
         ) {
@@ -171,7 +173,7 @@ fun PrayerTimesItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.White, RoundedCornerShape(8.dp))
+                .background(colorResource(id = R.color.green), RoundedCornerShape(8.dp))
                 .padding(vertical = 8.dp, horizontal = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -186,11 +188,12 @@ fun PrayerTimesItem(
                 Text(
                     text = date,
                     fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = colorResource(id = R.color.white),
                 )
                 Text(
                     text = hijriDate,
-                    style = MaterialTheme.typography.bodySmall.copy(color = Color.Gray)
+                    style = MaterialTheme.typography.bodySmall.copy(colorResource(id = R.color.white))
                 )
             }
         }
@@ -217,7 +220,7 @@ fun PrayerTimesItem(
             Text(
                 text = "Note: The above timings denote the starting time of the Prayer (Azaan time).",
                 style = MaterialTheme.typography.bodySmall.copy(
-                    color = Color(0xFF6B7280),
+                    color =  colorResource(id = R.color.black),
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Medium
                 ),

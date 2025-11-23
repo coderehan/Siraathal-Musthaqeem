@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -45,7 +46,7 @@ fun RabbanaDuasItem(dua: RabbanaDuas) {
                 Text(
                     text = dua.header!!,
                     style = MaterialTheme.typography.titleMedium.copy(
-                        color = Color(0xFF1E3A8A),
+                        color = colorResource(id = R.color.black),
                         fontWeight = FontWeight.Bold
                     )
                 )
@@ -57,14 +58,14 @@ fun RabbanaDuasItem(dua: RabbanaDuas) {
                 text = dua.arabicText,
                 style = MaterialTheme.typography.titleLarge.copy(
                     fontFamily = quranFont,
-                    fontSize = 32.sp,
+                    fontSize = 42.sp,
                     color = Color.White,
-                    lineHeight = 40.sp
+                    lineHeight = 60.sp
                 ),
                 textAlign = TextAlign.End,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(8.dp))
+                    .background(colorResource(id = R.color.green), RoundedCornerShape(8.dp))
                     .padding(12.dp)
             )
 
