@@ -10,9 +10,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.islamicapp.siraathalmusthaqeem.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,13 +34,14 @@ fun CommonActionBar(
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Back"
+                    contentDescription = "Back",
+                    tint = colorResource(id = R.color.white)
                 )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.White,
-            titleContentColor = Color(0xFF1F2937)
+            containerColor = colorResource(id = R.color.green),
+            titleContentColor = colorResource(id = R.color.white)
         )
     )
 }

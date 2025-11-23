@@ -12,9 +12,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.islamicapp.siraathalmusthaqeem.R
 import com.islamicapp.siraathalmusthaqeem.screen.quran.components.QuickAccessSurahs
 import com.islamicapp.siraathalmusthaqeem.screen.quran.juz.JuzListScreen
 import com.islamicapp.siraathalmusthaqeem.screen.quran.surah.SurahListScreen
@@ -40,9 +42,9 @@ fun QuranScreen(
             text = "Quick Access",
             style = MaterialTheme.typography.titleMedium.copy(
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF111827)
+                color = colorResource(id = R.color.black),
             ),
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
         )
 
         QuickAccessSurahs(navController = navController)

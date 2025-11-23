@@ -39,6 +39,7 @@ import com.islamicapp.siraathalmusthaqeem.screen.home.components.DailySlider
 import kotlinx.coroutines.launch
 import com.islamicapp.siraathalmusthaqeem.screen.navigation.NavigationItem
 import android.provider.Settings
+import androidx.compose.ui.res.colorResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -211,6 +212,11 @@ fun HomeScreen(
                             style = MaterialTheme.typography.titleMedium
                         )
                     },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = colorResource(id = R.color.green),
+                        titleContentColor = colorResource(id = R.color.white),
+                        navigationIconContentColor = colorResource(id = R.color.white)
+                    ),
                     navigationIcon = {
                         IconButton(onClick = { scope.launch { drawerState.open() } }) {
                             Icon(
@@ -222,7 +228,12 @@ fun HomeScreen(
                 )
             },
             bottomBar = {
-                NavigationBar {
+                NavigationBar(
+                    // Apply Green Background to NavigationBar
+                    containerColor = colorResource(id = R.color.green),
+                    // Apply custom colors for content
+                    contentColor = colorResource(id = R.color.white) // This sets the default color for unselected items
+                ) {
                     listOf(
                         BottomNavItem.Home,
                         BottomNavItem.Quran,
@@ -245,7 +256,15 @@ fun HomeScreen(
                                     contentDescription = item.title
                                 )
                             },
-                            label = { Text(item.title) }
+                            label = { Text(item.title) },
+                            // Customizing item colors using the NavigationBarItemDefaults
+                            colors = NavigationBarItemDefaults.colors(
+                                indicatorColor = colorResource(id = R.color.white).copy(alpha = 0.2f), // Subtle white indicator for selection
+                                selectedIconColor = colorResource(id = R.color.white), // White icon when selected
+                                unselectedIconColor = colorResource(id = R.color.white).copy(alpha = 0.7f), // Less visible white icon when unselected
+                                selectedTextColor = colorResource(id = R.color.white), // White label when selected
+                                unselectedTextColor = colorResource(id = R.color.white).copy(alpha = 0.7f) // Less visible white label when unselected
+                            )
                         )
                     }
                 }

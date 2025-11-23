@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -37,7 +38,7 @@ fun NameCard(
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        border = BorderStroke(1.dp, Color(0xFFE5E7EB))
+        border = BorderStroke(1.dp, colorResource(id = R.color.green))
     ) {
         Column(
             modifier = Modifier
@@ -50,7 +51,7 @@ fun NameCard(
                 modifier = Modifier
                     .size(30.dp)
                     .background(
-                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                        color = colorResource(id = R.color.green),
                         shape = CircleShape
                     ),
                 contentAlignment = Alignment.Center
@@ -59,7 +60,7 @@ fun NameCard(
                     text = number.toString(),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
+                    color = colorResource(id = R.color.white)
                 )
             }
 

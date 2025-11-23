@@ -10,10 +10,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.islamicapp.domain.duas.masnoonduas.model.MasnoonDuas
+import com.islamicapp.siraathalmusthaqeem.R
 import com.islamicapp.siraathalmusthaqeem.screen.dua.masnoonduas.components.MasnoonDuasItem
 import com.islamicapp.siraathalmusthaqeem.utils.SpinKitLoader
 import com.islamicapp.siraathalmusthaqeem.utils.UIState
@@ -64,7 +66,7 @@ fun MasnoonDuasScreen() {
                                         .padding(vertical = 12.dp),
                                     shape = RoundedCornerShape(12.dp),
                                     elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-                                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary) // Blue background
+                                    colors = CardDefaults.cardColors( colorResource(id = R.color.green)) // Blue background
                                 ) {
                                     Box(
                                         modifier = Modifier

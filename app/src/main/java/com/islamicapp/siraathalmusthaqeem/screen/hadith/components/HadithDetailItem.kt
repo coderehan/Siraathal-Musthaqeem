@@ -20,8 +20,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.islamicapp.siraathalmusthaqeem.R
@@ -52,7 +54,7 @@ fun HadithDetailItem(
                 text = "Hadith No: ${hadithNumber.toInt()}",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
+                color = colorResource(id = R.color.green)
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -61,7 +63,8 @@ fun HadithDetailItem(
                 text = hadithText,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.9f),
-                lineHeight = 20.sp
+                lineHeight = 20.sp,
+                textAlign = TextAlign.Justify
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -72,7 +75,7 @@ fun HadithDetailItem(
                 Icon(
                     painter = painterResource(id = R.drawable.ic_book),
                     contentDescription = "Reference",
-                    tint = MaterialTheme.colorScheme.primary,
+                    tint = colorResource(id = R.color.green),
                     modifier = Modifier.size(18.dp)
                 )
                 Spacer(modifier = Modifier.width(6.dp))

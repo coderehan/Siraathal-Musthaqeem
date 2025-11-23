@@ -1,5 +1,6 @@
 package com.islamicapp.siraathalmusthaqeem.screen.quran.components
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.res.colorResource
+import com.islamicapp.siraathalmusthaqeem.R
 
 @Composable
 fun QuickAccessSurahs(navController: NavController) {
@@ -59,10 +62,15 @@ fun QuickAccessCard(
         modifier = Modifier
             .width(150.dp)
             .height(80.dp)
-            .clickable { onClick() },
+            .clickable { onClick() }
+            .border(
+                width = 1.5.dp,
+                color = colorResource(id = R.color.green),
+                shape = RoundedCornerShape(16.dp)
+            ),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column(
             modifier = Modifier

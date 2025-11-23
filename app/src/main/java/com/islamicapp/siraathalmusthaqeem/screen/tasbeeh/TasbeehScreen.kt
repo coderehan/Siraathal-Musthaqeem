@@ -43,6 +43,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -103,10 +104,10 @@ fun TasbeehScreen(
                     text = "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",
                     style = TextStyle(
                         fontFamily = arabicFont,
-                        fontSize = 28.sp,
+                        fontSize = 42.sp,
                         lineHeight = 36.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color(0xFF1E3A8A),
+                        color = colorResource(id = R.color.green),
                         textAlign = TextAlign.Center
                     ),
                     textAlign = TextAlign.Center
@@ -118,7 +119,7 @@ fun TasbeehScreen(
                     text = "“Indeed, in the remembrance of Allah do hearts find peace.”",
                     style = MaterialTheme.typography.bodyLarge.copy(
                         fontWeight = FontWeight.SemiBold,
-                        color = Color(0xFF1E3A8A),
+                        color = colorResource(id = R.color.black),
                         textAlign = TextAlign.Center,
                         lineHeight = 22.sp
                     ),

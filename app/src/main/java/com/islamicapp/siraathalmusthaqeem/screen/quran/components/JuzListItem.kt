@@ -19,12 +19,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.islamicapp.siraathalmusthaqeem.R
 
 @Composable
 fun JuzListItem(
@@ -45,7 +47,7 @@ fun JuzListItem(
             modifier = Modifier
                 .size(40.dp)
                 .background(
-                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                    color = colorResource(id = R.color.green),
                     shape = CircleShape
                 ),
             contentAlignment = Alignment.Center
@@ -54,7 +56,7 @@ fun JuzListItem(
                 text = juzNumber.toString(),
                 style = MaterialTheme.typography.bodyMedium.copy(
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
+                    color =  colorResource(id = R.color.white)
                 )
             )
         }
@@ -75,7 +77,7 @@ fun JuzListItem(
             style = MaterialTheme.typography.titleLarge.copy(
                 fontFamily = quranFont,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary,
+                color =  colorResource(id = R.color.green),
                 fontSize = 32.sp,
                 letterSpacing = 2.sp
             ),
