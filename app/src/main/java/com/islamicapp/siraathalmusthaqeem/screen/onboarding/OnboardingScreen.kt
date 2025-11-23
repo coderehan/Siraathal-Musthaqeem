@@ -11,12 +11,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -26,6 +28,7 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
+import com.islamicapp.siraathalmusthaqeem.R
 import com.islamicapp.siraathalmusthaqeem.screen.navigation.NavigationItem
 import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
 import kotlinx.coroutines.launch
@@ -60,8 +63,8 @@ fun OnboardingScreen(navController: NavHostController, preferencesManager: Prefe
         ) {
             HorizontalPagerIndicator(
                 pagerState = pagerState,
-                activeColor = Color.Black,
-                inactiveColor = Color.Gray,
+                activeColor = colorResource(id = R.color.green),
+                inactiveColor = colorResource(id = R.color.gray),
                 modifier = Modifier
                     .padding(16.dp)
             )
@@ -80,7 +83,10 @@ fun OnboardingScreen(navController: NavHostController, preferencesManager: Prefe
                             popUpTo(NavigationItem.Onboarding.route) { inclusive = true }
                         }
                     }
-                }
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(id = R.color.green)
+                )
             ) {
                 Text(
                     text = if (pagerState.currentPage == onboardingPages.size - 1)

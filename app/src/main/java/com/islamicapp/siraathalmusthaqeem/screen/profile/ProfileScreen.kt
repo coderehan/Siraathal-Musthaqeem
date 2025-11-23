@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -20,8 +21,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.islamicapp.siraathalmusthaqeem.R
 import com.islamicapp.siraathalmusthaqeem.screen.navigation.NavigationItem
 import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
 import kotlinx.coroutines.launch
@@ -81,7 +84,10 @@ fun ProfileScreen(navController: NavHostController, preferencesManager: Preferen
                 },
                 // Button is enabled only when the name is not empty (after trimming spaces)
                 enabled = name.trim().isNotEmpty(),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(id = R.color.green)
+                )
             ) {
                 Text("NEXT")
             }
