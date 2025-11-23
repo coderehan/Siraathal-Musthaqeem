@@ -15,44 +15,50 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.islamicapp.siraathalmusthaqeem.R
 import com.islamicapp.siraathalmusthaqeem.screen.quran.components.JuzListItem
-import com.islamicapp.siraathalmusthaqeem.utils.CommonActionBar
+
+// Define a data class to hold Juz information
+data class JuzInfo(
+    val arabicName: String,
+    val englishName: String
+)
 
 @Composable
 fun JuzListScreen(navController: NavController) {
 
     val quranFont = FontFamily(Font(R.font.indo_pak_quran))
 
-    val juzList = listOf(
-        "آلمَ",
-        "سَيَقُولُ",
-        "تِلْكَ ٱلْرُّسُلَُ",
-        "لَنْ تَنَالُوْ الْبِرَّ",
-        "وَٱلْمُحْصَنَاتُ",
-        "لَا يُحِبُّ ٱللهَُ",
-        "وَإِذَا سَمِعُوا",
-        "وَلَوْ أَنَّنَاَ",
-        "قَالَ ٱلْمَلَأُ",
-        "وَٱعْلَمُواْ",
-        "يَعْتَذِرُونََ",
-        "وَمَا مِنْ دَآبَّةٍ",
-        "وَمَا أُبَرِّئَُ",
-        "رُبَمَا",
-        "سُبْحَانَ ٱلَّذِى",
-        "قَالَ أَلَمَْ",
-        "ٱقْتَرَبَ لِلْنَّاسِ",
-        "قَدْ أَفْلَحََ",
-        "وَقَالَ ٱلَّذِينَ",
-        "أَمَّنْ خَلَقَ",
-        "أُتْلُ مَاأُوْحِیََ",
-        "وَمَنْ يَّقْنُتْ",
-        "وَمَآ ليَ",
-        "فَمَنْ أَظْلَمُ",
-        "إِلَيْهِ يُرَدُّ",
-        "حمَ",
-        "قَالَ فَمَا خَطْبُكُم",
-        "قَدْ سَمِعَ ٱللهَُ",
-        "تَبَارَكَ ٱلَّذِى",
-        "عَمَّ",
+    // FIX: Create a list of JuzInfo objects containing both names
+    val juzInfoList = listOf(
+        JuzInfo("آلمَ", "Alif Laam Meem"),
+        JuzInfo("سَيَقُولُ", "Sayaqoolu"),
+        JuzInfo("تِلْكَ ٱلْرُّسُلَُ", "Tilkar Rusulu"),
+        JuzInfo("لَنْ تَنَالُوْ الْبِرَّ", "Lan Tanaalu"),
+        JuzInfo("وَٱلْمُحْصَنَاتُ", "Wal Muhsanaatu"),
+        JuzInfo("لَا يُحِبُّ ٱللهَُ", "La Yuhibbullahu"),
+        JuzInfo("وَإِذَا سَمِعُوا", "Waiza Samiu"),
+        JuzInfo("وَلَوْ أَنَّنَاَ", "Wa Lau Annana"),
+        JuzInfo("قَالَ ٱلْمَلَأُ", "Qaalal Malau"),
+        JuzInfo("وَٱعْلَمُواْ", "Wa'lamu"),
+        JuzInfo("يَعْتَذِرُونََ", "Ya'taziroon"),
+        JuzInfo("وَمَا مِنْ دَآبَّةٍ", "Wa Ma Min Daabbatin"),
+        JuzInfo("وَمَا أُبَرِّئَُ", "Wa Ma Ubarriu"),
+        JuzInfo("رُبَمَا", "Rubama"),
+        JuzInfo("سُبْحَانَ ٱلَّذِى", "Sub'haanallazi"),
+        JuzInfo("قَالَ أَلَمَْ", "Qaal Alam"),
+        JuzInfo("ٱقْتَرَبَ لِلْنَّاسِ", "Iqtaraba Linnaasi"),
+        JuzInfo("قَدْ أَفْلَحََ", "Qad Aflaha"),
+        JuzInfo("وَقَالَ ٱلَّذِينَ", "Waqaalallazeen"),
+        JuzInfo("أَمَّنْ خَلَقَ", "Amman Khalaqa"),
+        JuzInfo("أُتْلُ مَاأُوْحِیََ", "Utlu Maa Uhiya"),
+        JuzInfo("وَمَنْ يَّقْنُتْ", "Wamay Yaqnut"),
+        JuzInfo("وَمَآ ليَ", "Wamaaliya"),
+        JuzInfo("فَمَنْ أَظْلَمُ", "Faman Azlamu"),
+        JuzInfo("إِلَيْهِ يُرَدُّ", "Ilaihi Yuraddu"),
+        JuzInfo("حمَ", "Haa Meem"),
+        JuzInfo("قَالَ فَمَا خَطْبُكُم", "Qaala Fama Khatbukum"),
+        JuzInfo("قَدْ سَمِعَ ٱللهَُ", "Qad Sami'allahu"),
+        JuzInfo("تَبَارَكَ ٱلَّذِى", "Tabaarakallazi"),
+        JuzInfo("عَمَّ", "Amma")
     )
 
     Scaffold { padding ->
@@ -61,14 +67,15 @@ fun JuzListScreen(navController: NavController) {
                 .fillMaxSize()
                 .background(Color(0xFFF9FAFB))
                 .padding(padding)
-                .padding(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+                .padding(horizontal = 8.dp, vertical = 4.dp),
+            verticalArrangement = Arrangement.spacedBy(1.dp)
         ) {
-            items(juzList.size) { index ->
+            items(juzInfoList.size) { index ->
                 val juzNumber = index + 1
                 JuzListItem(
                     juzNumber = juzNumber,
-                    arabicName = juzList[index],
+                    arabicName = juzInfoList[index].arabicName,
+                    englishName = juzInfoList[index].englishName,
                     navController = navController,
                     quranFont = quranFont
                 )
