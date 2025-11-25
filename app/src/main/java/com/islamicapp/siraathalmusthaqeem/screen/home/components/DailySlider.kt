@@ -47,7 +47,7 @@ fun DailySlider() {
         Text(
             text = items[pagerState.currentPage],
             style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-            color = MaterialTheme.colorScheme.primary,
+            color = colorResource(id = R.color.green),
             modifier = Modifier.padding(bottom = 8.dp)
         )
 

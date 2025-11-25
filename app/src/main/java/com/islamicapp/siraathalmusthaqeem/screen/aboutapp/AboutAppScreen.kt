@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -43,7 +44,7 @@ fun AboutAppScreen(navController: NavController) {
 
             // App Logo
             Image(
-                painter = painterResource(id = R.drawable.ic_android),
+                painter = painterResource(id = R.drawable.app_icon),
                 contentDescription = "App Logo",
                 modifier = Modifier
                     .size(120.dp)
@@ -54,7 +55,7 @@ fun AboutAppScreen(navController: NavController) {
                 text = "Siraathal Musthaqeem",
                 style = MaterialTheme.typography.titleLarge.copy(
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
+                    color = colorResource(id = R.color.green)
                 )
             )
 
@@ -83,7 +84,7 @@ fun AboutAppScreen(navController: NavController) {
                     color = Color(0xFF111827),
                     lineHeight = 22.sp
                 ),
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Justify
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -94,8 +95,8 @@ fun AboutAppScreen(navController: NavController) {
                 text = "ٱهۡدِنَا ٱلصِّرَ ٰ⁠طَ ٱلۡمُسۡتَقِیمَ",
                 style = MaterialTheme.typography.titleLarge.copy(
                     fontFamily = quranFont,
-                    fontSize = 34.sp,
-                    color = MaterialTheme.colorScheme.primary,
+                    fontSize = 42.sp,
+                    color = colorResource(id = R.color.green),
                     textAlign = TextAlign.Center,
                     lineHeight = 40.sp
                 ),
@@ -108,7 +109,7 @@ fun AboutAppScreen(navController: NavController) {
             Text(
                 text = "“Guide us to the Straight Path” — Qur’an 1:6",
                 style = MaterialTheme.typography.bodyMedium.copy(
-                    color = Color(0xFF111827),
+                    color = colorResource(id = R.color.black),
                     fontWeight = FontWeight.Medium,
                     textAlign = TextAlign.Center
                 ),
@@ -123,7 +124,7 @@ fun AboutAppScreen(navController: NavController) {
                 text = "Have feedback or ideas?",
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Medium,
-                    color = MaterialTheme.colorScheme.primary
+                    color = colorResource(id = R.color.green)
                 )
             )
 
@@ -131,7 +132,7 @@ fun AboutAppScreen(navController: NavController) {
 
             Text(
                 text = "Reach out at:",
-                style = MaterialTheme.typography.bodyMedium.copy(color = Color(0xFF374151))
+                style = MaterialTheme.typography.bodyMedium.copy(color = colorResource(id = R.color.gray))
             )
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -139,7 +140,7 @@ fun AboutAppScreen(navController: NavController) {
             Text(
                 text = "mohammedrehanm1137@gmail.com",
                 style = MaterialTheme.typography.bodyMedium.copy(
-                    color = MaterialTheme.colorScheme.primary,
+                    color = colorResource(id = R.color.black),
                     fontWeight = FontWeight.SemiBold
                 )
             )

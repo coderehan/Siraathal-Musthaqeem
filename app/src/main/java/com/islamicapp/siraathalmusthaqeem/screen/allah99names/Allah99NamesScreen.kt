@@ -32,7 +32,7 @@ fun Allah99NamesScreen(
 
     Scaffold(
         topBar = {
-            CommonActionBar(title = "Allah 99 Names", navController = navController)
+            CommonActionBar(title = "Names of Allah", navController = navController)
         }
     ) { paddingValues ->
         Box(

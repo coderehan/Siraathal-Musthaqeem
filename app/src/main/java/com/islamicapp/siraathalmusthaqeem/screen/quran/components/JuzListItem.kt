@@ -88,8 +88,8 @@ fun JuzListItem(
                 fontFamily = quranFont,
                 fontWeight = FontWeight.Bold,
                 color = colorResource(id = R.color.green),
-                fontSize = 32.sp,
-                letterSpacing = 2.sp
+                fontSize = 40.sp,
+                letterSpacing = 6.sp
             ),
             textAlign = TextAlign.End,
             modifier = Modifier

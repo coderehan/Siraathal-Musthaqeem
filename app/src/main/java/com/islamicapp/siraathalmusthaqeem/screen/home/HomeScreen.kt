@@ -61,7 +61,7 @@ fun HomeScreen(
         Feature("Prayer Times", R.drawable.ic_android, NavigationItem.PrayerTimes.route),
         Feature("Qibla", R.drawable.ic_android, NavigationItem.Qibla.route),
         Feature("Masjid Near Me", R.drawable.ic_android, NavigationItem.MasjidNearMe.route),
-        Feature("Allah 99 Names", R.drawable.ic_android, NavigationItem.Allah99Names.route),
+        Feature("Names of Allah", R.drawable.ic_android, NavigationItem.Allah99Names.route),
         Feature("Zakath", R.drawable.ic_android, NavigationItem.Zakath.route),
         Feature("Pilgrimage", R.drawable.ic_android, NavigationItem.Pilgrimage.route),
         Feature("Hadith", R.drawable.ic_android, NavigationItem.Hadith.route),

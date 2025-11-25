@@ -88,8 +88,8 @@ fun SurahListItem(
             style = MaterialTheme.typography.titleLarge.copy(
                 fontFamily = quranFont,
                 fontWeight = FontWeight.Bold,
-                fontSize = 32.sp,
-                letterSpacing = 2.sp,
+                fontSize = 40.sp,
+                letterSpacing = 6.sp,
                 color = colorResource(id = R.color.green)
             ),
             textAlign = TextAlign.End

@@ -12,6 +12,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -64,7 +65,13 @@ fun ProfileScreen(navController: NavHostController, preferencesManager: Preferen
                 },
                 label = { Text("Name") },
                 modifier = Modifier.fillMaxWidth(),
-                singleLine = true
+                singleLine = true,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = colorResource(id = R.color.green),
+                    unfocusedBorderColor = colorResource(id = R.color.green),
+                    focusedLabelColor = colorResource(id = R.color.green),
+                    cursorColor = colorResource(id = R.color.green)
+                )
             )
 
             Spacer(modifier = Modifier.height(24.dp))

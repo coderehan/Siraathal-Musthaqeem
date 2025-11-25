@@ -33,7 +33,8 @@ fun QuickAccessSurahs(navController: NavController) {
         Triple("Surah Yaseen", "Every Morning", 36),
         Triple("Surah Waqiah", "Every Night", 56),
         Triple("Surah Mulk", "Every Night", 67),
-        Triple("Surah Kahaf", "Every Friday", 18)
+        Triple("Surah Kahaf", "Every Friday", 18),
+        Triple("Surah Rahman", "Everyday", 55)
     )
 
     LazyRow(
