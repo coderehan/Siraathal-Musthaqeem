@@ -15,6 +15,7 @@ import com.islamicapp.siraathalmusthaqeem.screen.quran.surah.SurahViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.seerah.SeerahViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.tasbeeh.TasbeehViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.theme.ThemeViewModel
+import com.islamicapp.siraathalmusthaqeem.screen.zakath.ZakathViewModel
 import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
 import org.koin.dsl.module
 import org.koin.core.module.dsl.viewModel
@@ -41,6 +42,7 @@ val appModule = module {
     viewModel { ThemeViewModel(get()) }
     viewModel { SeerahViewModel(get()) }
     viewModel { MasnoonDuasViewModel(get()) }
+    viewModel { ZakathViewModel() }
     single { PreferencesManager(get()) }
 
 }
