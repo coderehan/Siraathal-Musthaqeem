@@ -28,6 +28,8 @@ import com.islamicapp.siraathalmusthaqeem.utils.SpinKitLoader
 import com.islamicapp.siraathalmusthaqeem.utils.UIState
 import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
+import com.islamicapp.siraathalmusthaqeem.utils.NoInternetScreen
+import com.islamicapp.core.utils.isNetworkAvailable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("MissingPermission")
@@ -44,6 +46,8 @@ fun PrayerTimesScreen(
 
     var hasLocationPermission by remember { mutableStateOf(false) }
     var locationEnabled by remember { mutableStateOf(false) }
+    // Initialize state using the core function
+    var networkAvailable by remember { mutableStateOf(isNetworkAvailable(context)) }
     var locationFetched by remember { mutableStateOf(false) }
     var permissionRequested by remember { mutableStateOf(false) }
 
@@ -52,8 +56,10 @@ fun PrayerTimesScreen(
         onResult = { granted ->
             hasLocationPermission = granted
             if (granted) {
+                // If permission granted, force re-check all statuses immediately
                 locationEnabled = isLocationEnabled(locationManager)
-                if (locationEnabled) {
+                networkAvailable = isNetworkAvailable(context)
+                if (locationEnabled && networkAvailable) {
                     fetchAndLoadPrayerTimes(fusedLocationClient, viewModel) {
                         locationFetched = true
                     }
@@ -62,52 +68,43 @@ fun PrayerTimesScreen(
         }
     )
 
-    // Initial permission check
+    // Combined Status Polling and Initial Check/Fetch Logic
     LaunchedEffect(Unit) {
+        // Initial permission check
         hasLocationPermission =
             ActivityCompat.checkSelfPermission(
                 context, Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
 
-        locationEnabled = isLocationEnabled(locationManager)
-
-        when {
-            !hasLocationPermission && !permissionRequested -> {
-                permissionRequested = true
-                permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-            }
-
-            hasLocationPermission && locationEnabled -> {
-                fetchAndLoadPrayerTimes(fusedLocationClient, viewModel) {
-                    locationFetched = true
-                }
-            }
+        if (!hasLocationPermission && !permissionRequested) {
+            permissionRequested = true
+            permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
-    }
 
-    // Real-time GPS state observer (polls every 2s)
-    LaunchedEffect(hasLocationPermission) {
-        if (hasLocationPermission) {
-            while (true) {
-                delay(2000)
-                val isEnabledNow = isLocationEnabled(locationManager)
+        // Continuous polling loop for all statuses
+        while (true) {
+            val isNetworkOk = isNetworkAvailable(context)
+            val isLocationOn = isLocationEnabled(locationManager)
 
-                // User turned ON GPS
-                if (isEnabledNow && !locationEnabled) {
-                    locationEnabled = true
+            // 1. Update states
+            networkAvailable = isNetworkOk
+            locationEnabled = isLocationOn
+
+            // 2. Attempt to fetch if ready and not fetched yet
+            if (hasLocationPermission && isLocationOn && isNetworkOk) {
+                if (!locationFetched) {
                     fetchAndLoadPrayerTimes(fusedLocationClient, viewModel) {
                         locationFetched = true
                     }
                 }
-
-                // User turned OFF GPS
-                if (!isEnabledNow && locationEnabled) {
-                    locationEnabled = false
-                    locationFetched = false
-                }
+            } else {
+                locationFetched = false // Reset fetch status if any dependency is missing
             }
+
+            delay(2000) // Poll every 2 seconds
         }
     }
+
 
     Scaffold(
         topBar = { CommonActionBar(title = "Prayer Times", navController = navController) }
@@ -119,7 +116,20 @@ fun PrayerTimesScreen(
                 .padding(paddingValues)
         ) {
             when {
-                // No permission
+                // 1. NO INTERNET (Highest Priority)
+                !networkAvailable -> {
+                    // Use NoInternetScreen, the button inside handles opening settings
+                    NoInternetScreen(
+                        modifier = Modifier.align(Alignment.Center),
+                        onTryAgain = {
+                            // Manual trigger to check network status immediately
+                            // The LaunchedEffect loop will handle the status update shortly after
+                            context.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
+                        }
+                    )
+                }
+
+                // 2. No permission
                 !hasLocationPermission -> {
                     Column(
                         modifier = Modifier.align(Alignment.Center),
@@ -142,7 +152,7 @@ fun PrayerTimesScreen(
                     }
                 }
 
-                // GPS off
+                // 3. GPS off
                 hasLocationPermission && !locationEnabled -> {
                     Column(
                         modifier = Modifier
@@ -169,7 +179,7 @@ fun PrayerTimesScreen(
                     }
                 }
 
-                // Loading
+                // 4. Loading
                 uiState is UIState.Loading<*> -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
@@ -179,13 +189,13 @@ fun PrayerTimesScreen(
                     }
                 }
 
-                // Success
+                // 5. Success
                 uiState is UIState.Success<*> -> {
                     val prayerTimes = (uiState as UIState.Success<PrayerTimes>).data
                     PrayerTimesItem(prayerTimes)
                 }
 
-                // Empty
+                // 6. Empty / Error
                 uiState is UIState.Empty<*> -> {
                     Text(
                         text = "No data available",
@@ -194,7 +204,6 @@ fun PrayerTimesScreen(
                     )
                 }
 
-                // Error
                 uiState is UIState.Failure<*> -> {
                     val errorMessage = (uiState as UIState.Failure).throwable.message
                     Text(
@@ -208,13 +217,13 @@ fun PrayerTimesScreen(
     }
 }
 
-// Check if GPS is ON
+// Check if GPS is ON (retains existing logic)
 private fun isLocationEnabled(locationManager: LocationManager): Boolean {
     return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
             locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 }
 
-// Fetch location + load timings
+// Fetch location + load timings (retains existing logic)
 @SuppressLint("MissingPermission")
 private fun fetchAndLoadPrayerTimes(
     fusedLocationClient: com.google.android.gms.location.FusedLocationProviderClient,
