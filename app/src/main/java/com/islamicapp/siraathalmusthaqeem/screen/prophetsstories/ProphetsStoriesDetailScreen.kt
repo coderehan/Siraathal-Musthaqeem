@@ -32,12 +32,16 @@ fun ProphetsStoriesDetailScreen(
         viewModel.loadProphetStory(fileName)
     }
 
+    val actionBarTitle = remember(prophetName) {
+        prophetName.replace("\n", " ")
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFF9FAFB))
     ) {
-        CommonActionBar(title = prophetName, navController = navController)
+        CommonActionBar(title = actionBarTitle, navController = navController)
 
         when (uiState) {
             is UIState.Loading -> Box(Modifier.fillMaxSize(), Alignment.Center) {

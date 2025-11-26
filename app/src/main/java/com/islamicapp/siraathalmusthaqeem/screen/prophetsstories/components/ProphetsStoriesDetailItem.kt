@@ -53,7 +53,8 @@ fun ProphetsStoriesDetailItem(
                 text = content,
                 style = MaterialTheme.typography.bodyMedium.copy(
                     color = Color(0xFF374151),
-                    lineHeight = 22.sp
+                    lineHeight = 22.sp,
+                    textAlign = TextAlign.Justify
                 ),
                 modifier = Modifier.padding(12.dp)
             )

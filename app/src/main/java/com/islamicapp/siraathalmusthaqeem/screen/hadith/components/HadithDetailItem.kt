@@ -1,5 +1,8 @@
 package com.islamicapp.siraathalmusthaqeem.screen.hadith.components
 
+import android.content.Context
+import android.content.Intent
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,16 +13,18 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Book
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -33,8 +38,11 @@ fun HadithDetailItem(
     hadithNumber: Double,
     hadithText: String,
     referenceBook: Int,
-    referenceHadith: Int
+    referenceHadith: Int,
+    collectionName: String
 ) {
+    val context = LocalContext.current // Get context for sharing
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -50,12 +58,39 @@ fun HadithDetailItem(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Text(
-                text = "Hadith No: ${hadithNumber.toInt()}",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = colorResource(id = R.color.green)
-            )
+            // --- Hadith Number and Share Button Row ---
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Hadith No: ${hadithNumber.toInt()}",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = colorResource(id = R.color.green)
+                )
+
+                IconButton(
+                    onClick = {
+                        shareHadith(
+                            context,
+                            collectionName,
+                            hadithNumber,
+                            hadithText,
+                            referenceBook,
+                            referenceHadith
+                        )
+                    },
+                    modifier = Modifier.size(24.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Share,
+                        contentDescription = "Share Hadith",
+                        tint = colorResource(id = R.color.green)
+                    )
+                }
+            }
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -80,6 +115,8 @@ fun HadithDetailItem(
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Text(
+                    // Displaying the Hadith Collection Name/Book is recommended here too,
+                    // but it's not available in this function yet.
                     text = "Reference: Book $referenceBook, Hadith $referenceHadith",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
@@ -87,4 +124,34 @@ fun HadithDetailItem(
             }
         }
     }
+}
+
+// Helper function to handle sharing logic
+private fun shareHadith(
+    context: Context,
+    collectionName: String,
+    hadithNumber: Double,
+    hadithText: String,
+    referenceBook: Int,
+    referenceHadith: Int
+) {
+    val appPackageName = context.packageName
+    val playStoreLink = "https://play.google.com/store/apps/details?id=$appPackageName"
+
+    // --- UPDATED SHARE TEXT to include Hadith Collection Name ---
+    val shareText = "Hadith Collection: $collectionName\n" + // ADDED THIS LINE
+            "Hadith No: ${hadithNumber.toInt()}\n" +
+            "Reference: Book $referenceBook, Hadith $referenceHadith\n\n" +
+            hadithText +
+            "\n\n— Shared via Siraathal Musthaqeem App\n" +
+            "Download Siraathal Musthaqeem App from Playstore:\n$playStoreLink"
+
+    val sendIntent: Intent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_TEXT, shareText)
+        type = "text/plain"
+    }
+
+    val shareIntent = Intent.createChooser(sendIntent, null)
+    context.startActivity(shareIntent)
 }
