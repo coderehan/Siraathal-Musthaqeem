@@ -7,7 +7,6 @@ import com.islamicapp.domain.duas.prophetsduas.usecase.ProphetsDuasUseCase
 import com.islamicapp.domain.duas.quranicduas.usecase.QuranicDuasUseCase
 import com.islamicapp.domain.duas.rabbanaduas.usecase.RabbanaDuasUseCase
 import com.islamicapp.domain.hadith.usecase.HadithUseCase
-import com.islamicapp.domain.hijricalendar.usecase.HijriCalendarUseCase
 import com.islamicapp.domain.prayertimes.usecase.PrayerTimesUseCase
 import com.islamicapp.domain.prophetsstories.usecase.ProphetsStoriesUseCase
 import com.islamicapp.domain.quran.usecase.QuranUseCase
@@ -24,7 +23,6 @@ val domainModule = module {
      * - Depends on: Allah99NamesRepository (provided by data module).
      */
     factory { Allah99NamesUseCase(get()) }
-    factory { HijriCalendarUseCase(get()) }
     factory { HadithUseCase(get()) }
     factory { QuranUseCase(get()) }
     factory { PrayerTimesUseCase(get()) }
