@@ -108,7 +108,8 @@ fun TasbeehScreen(
                         lineHeight = 36.sp,
                         fontWeight = FontWeight.Bold,
                         color = colorResource(id = R.color.green),
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        letterSpacing = 4.sp
                     ),
                     textAlign = TextAlign.Center
                 )
@@ -166,8 +167,8 @@ fun TasbeehScreen(
                 val animatedScale by animateFloatAsState(targetValue = tapScale)
                 val borderColor by animateColorAsState(
                     targetValue = if (state.count == state.target && state.count != 0)
-                        Color(0xFF10B981)
-                    else Color(0xFF2563EB)
+                        colorResource(id = R.color.green)
+                    else colorResource(id = R.color.green)
                 )
 
                 Box(
@@ -208,7 +209,7 @@ fun TasbeehScreen(
                         Icon(
                             Icons.Default.Create,
                             contentDescription = "Custom Target",
-                            tint = Color(0xFF2563EB)
+                            tint = colorResource(id = R.color.green)
                         )
                     }
 

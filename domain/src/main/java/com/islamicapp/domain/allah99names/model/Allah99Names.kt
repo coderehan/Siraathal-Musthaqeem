@@ -8,9 +8,9 @@ package com.islamicapp.domain.allah99names.model
  */
 
 data class Allah99Names(
-    val englishMeaning: String,
-    val arabicName: String,
-    val number: Int,
-    val englishTransliteration: String
+    val arabic: String,
+    val transliteration: String,
+    val translation: String,
+    val number: Int = 0 // Default value allows direct deserialization from JSON
 )
 

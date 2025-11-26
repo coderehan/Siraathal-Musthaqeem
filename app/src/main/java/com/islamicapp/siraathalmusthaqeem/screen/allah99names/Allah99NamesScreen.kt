@@ -1,11 +1,19 @@
 package com.islamicapp.siraathalmusthaqeem.screen.allah99names
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -64,9 +72,10 @@ fun Allah99NamesScreen(
                         items(names) { name ->
                             NameCard(
                                 number = name.number,
-                                arabic = name.arabicName,
-                                transliteration = name.englishTransliteration,
-                                meaning = name.englishMeaning
+                                // Updated field names to match the new domain model
+                                arabic = name.arabic,
+                                transliteration = name.transliteration,
+                                meaning = name.translation
                             )
                         }
                     }

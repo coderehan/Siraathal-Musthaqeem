@@ -14,7 +14,10 @@ import com.islamicapp.domain.allah99names.repository.Allah99NamesRepository
 class Allah99NamesUseCase(
     private val repository: Allah99NamesRepository
 ) {
-    suspend operator fun invoke(): List<Allah99Names> {
-        return repository.getAllah99Names()
+    suspend operator fun invoke(): List<Allah99Names>? {
+        return repository.getAllah99Names()?.mapIndexed { index, name ->
+            // Map the simple model to the final model, calculating the 'number' (1-based index)
+            name.copy(number = index + 1)
+        }
     }
 }

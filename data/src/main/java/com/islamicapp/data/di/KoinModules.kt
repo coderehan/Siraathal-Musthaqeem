@@ -1,10 +1,9 @@
 package com.islamicapp.data.di
 
 import com.islamicapp.core.utils.Constants
-import com.islamicapp.data.allah99names.source.Allah99NamesDataSource
-import com.islamicapp.data.allah99names.source.Allah99NamesDataSourceImpl
-import com.islamicapp.data.allah99names.source.network.Allah99NamesApi
-import com.islamicapp.data.allah99names.source.network.Allah99NamesNetworkDataSource
+import com.islamicapp.data.allah99names.repository.Allah99NamesRepositoryImpl
+import com.islamicapp.data.allah99names.source.local.Allah99NamesDataSource
+import com.islamicapp.data.allah99names.source.local.Allah99NamesDataSourceImpl
 import com.islamicapp.data.duas.emotionsduas.local.EmotionsDuasDataSource
 import com.islamicapp.data.duas.emotionsduas.local.EmotionsDuasDataSourceImpl
 import com.islamicapp.data.duas.emotionsduas.repository.EmotionsDuasRepositoryImpl
@@ -151,7 +150,6 @@ val dataModule = module {
      * Example: Allah99NamesApi uses ALLAH_99_NAMES_RETROFIT instance.
      */
     single { get<Retrofit>(named(PRAYER_TIMES_RETROFIT)).create(PrayerTimesApi::class.java) }
-    single { get<Retrofit>(named(ALLAH_99_NAMES_RETROFIT)).create(Allah99NamesApi::class.java) }
     single { get<Retrofit>(named(HADITH_RETROFIT)).create(HadithApi::class.java) }
     single { get<Retrofit>(named(QURAN_SURAH_BASE_RETROFIT)).create(QuranApi::class.java) }
     single { get<Retrofit>(named(QURAN_JUZ_BASE_RETROFIT)).create(QuranApi::class.java) }
@@ -168,9 +166,6 @@ val dataModule = module {
      */
     factory<PrayerTimesDataSource> {
         PrayerTimesNetworkDataSource(get())
-    }
-    factory<Allah99NamesDataSource> {
-        Allah99NamesNetworkDataSource(get())
     }
     factory<HadithDataSource> {
         HadithNetworkDataSource(get(), get())
@@ -202,6 +197,9 @@ val dataModule = module {
     factory<SeerahDataSource> {
         SeerahDataSourceImpl(get())
     }
+    factory<Allah99NamesDataSource> {
+        Allah99NamesDataSourceImpl(get())
+    }
 
 
     /**
@@ -211,9 +209,6 @@ val dataModule = module {
      */
     factory<PrayerTimesRepository> {
         PrayerTimesDataSourceImpl(get())
-    }
-    factory<Allah99NamesRepository> {
-        Allah99NamesDataSourceImpl(get())
     }
     factory<HadithRepository> {
         HadithDataSourceImpl(get())
@@ -244,6 +239,9 @@ val dataModule = module {
     }
     factory<SeerahRepository> {
         SeerahRepositoryImpl(get())
+    }
+    factory<Allah99NamesRepository> {
+        Allah99NamesRepositoryImpl(get())
     }
 
 }

@@ -1,0 +1,497 @@
+[
+  {
+    "arabic": "ٱلرَّحْمَـٰنُ",
+    "transliteration": "Ar‑Rahmān",
+    "translation": "The All‑Compassionate"
+  },
+  {
+    "arabic": "ٱلرَّحِيمُ",
+    "transliteration": "Ar‑Raḥīm",
+    "translation": "The All‑Merciful"
+  },
+  {
+    "arabic": "ٱلْمَلِكُ",
+    "transliteration": "Al‑Malik",
+    "translation": "The Ultimate King"
+  },
+  {
+    "arabic": "ٱلْقُدُّوسُ",
+    "transliteration": "Al‑Quddūs",
+    "translation": "The Most Holy, The Most Pure"
+  },
+  {
+    "arabic": "ٱلسَّلَامُ",
+    "transliteration": "As‑Salām",
+    "translation": "The Peace and Blessing"
+  },
+  {
+    "arabic": "ٱلْمُؤْمِنُ",
+    "transliteration": "Al‑Mu’min",
+    "translation": "The Granter of Security"
+  },
+  {
+    "arabic": "ٱلْمُهَيْمِنُ",
+    "transliteration": "Al‑Muhaymin",
+    "translation": "The Guardian"
+  },
+  {
+    "arabic": "ٱلْعَزِيزُ",
+    "transliteration": "Al‑Azīz",
+    "translation": "The Almighty"
+  },
+  {
+    "arabic": "ٱلْجَبَّارُ",
+    "transliteration": "Al‑Jabbār",
+    "translation": "The Compeller"
+  },
+  {
+    "arabic": "ٱلْمُتَكَبِّرُ",
+    "transliteration": "Al‑Mutakabbir",
+    "translation": "The Tremendous"
+  },
+  {
+    "arabic": "ٱلْخَالِقُ",
+    "transliteration": "Al‑Khāliq",
+    "translation": "The Creator"
+  },
+  {
+    "arabic": "ٱلْبَارِئُ",
+    "transliteration": "Al‑Bāri’",
+    "translation": "The Originator"
+  },
+  {
+    "arabic": "ٱلْمُصَوِّرُ",
+    "transliteration": "Al‑Musawwir",
+    "translation": "The Fashioner of Forms"
+  },
+  {
+    "arabic": "ٱلْغَفَّارُ",
+    "transliteration": "Al‑Ghaffār",
+    "translation": "The Ever‑Forgiving"
+  },
+  {
+    "arabic": "ٱلْقَهَّارُ",
+    "transliteration": "Al‑Qahhār",
+    "translation": "The All‑Compelling Subduer"
+  },
+  {
+    "arabic": "ٱلْوَهَّابُ",
+    "transliteration": "Al‑Wahhāb",
+    "translation": "The Bestower"
+  },
+  {
+    "arabic": "ٱلرَّزَّاقُ",
+    "transliteration": "Ar‑Razzāq",
+    "translation": "The Ever Providing"
+  },
+  {
+    "arabic": "ٱلْفَتَّاحُ",
+    "transliteration": "Al‑Fattāḥ",
+    "translation": "The Opener"
+  },
+  {
+    "arabic": "ٱلْعَلِيمُ",
+    "transliteration": "Al‑‘Alīm",
+    "translation": "The All‑Knowing"
+  },
+  {
+    "arabic": "ٱلْقَابِضُ",
+    "transliteration": "Al‑Qābid",
+    "translation": "The Restrainer"
+  },
+  {
+    "arabic": "ٱلْبَاسِطُ",
+    "transliteration": "Al‑Bāsit",
+    "translation": "The Expander"
+  },
+  {
+    "arabic": "ٱلْخَافِضُ",
+    "transliteration": "Al‑Khāfid",
+    "translation": "The Abaser"
+  },
+  {
+    "arabic": "ٱلرَّافِعُ",
+    "transliteration": "Ar‑Rāfi‘",
+    "translation": "The Exalter"
+  },
+  {
+    "arabic": "ٱلْمُعِزُّ",
+    "transliteration": "Al‑Mu‘izz",
+    "translation": "The Giver of Honour"
+  },
+  {
+    "arabic": "ٱلْمُذِلُّ",
+    "transliteration": "Al‑Mudhill",
+    "translation": "The Giver of Dishonour"
+  },
+  {
+    "arabic": "ٱلسَّمِيعُ",
+    "transliteration": "As‑Samī‘",
+    "translation": "The All‑Hearing"
+  },
+  {
+    "arabic": "ٱلْبَصِيرُ",
+    "transliteration": "Al‑Basīr",
+    "translation": "The All‑Seeing"
+  },
+  {
+    "arabic": "ٱلْحَكَمُ",
+    "transliteration": "Al‑Ḥakam",
+    "translation": "The Judge"
+  },
+  {
+    "arabic": "ٱلْعَدْلُ",
+    "transliteration": "Al‑‘Adl",
+    "translation": "The Just One"
+  },
+  {
+    "arabic": "ٱلْلَّطِيفُ",
+    "transliteration": "Al‑Laṭīf",
+    "translation": "The Gentle"
+  },
+  {
+    "arabic": "ٱلْخَبِيرُ",
+    "transliteration": "Al‑Khabīr",
+    "translation": "The All‑Aware"
+  },
+  {
+    "arabic": "ٱلْحَلِيمُ",
+    "transliteration": "Al‑Ḥalīm",
+    "translation": "The Forbearing"
+  },
+  {
+    "arabic": "ٱلْعَظِيمُ",
+    "transliteration": "Al‑‘Aẓīm",
+    "translation": "The Magnificent"
+  },
+  {
+    "arabic": "ٱلْغَفُورُ",
+    "transliteration": "Al‑Ghafūr",
+    "translation": "The All‑Forgiving"
+  },
+  {
+    "arabic": "ٱلشَّكُورُ",
+    "transliteration": "Ash‑Shakūr",
+    "translation": "The Most Appreciative"
+  },
+  {
+    "arabic": "ٱلْعَلِيُّ",
+    "transliteration": "Al‑‘Aliyy",
+    "translation": "The Sublimely Exalted"
+  },
+  {
+    "arabic": "ٱلْكَبِيرُ",
+    "transliteration": "Al‑Kabīr",
+    "translation": "The Most Great"
+  },
+  {
+    "arabic": "ٱلْحَفِيظُ",
+    "transliteration": "Al‑Ḥafīẓ",
+    "translation": "The Preserver"
+  },
+  {
+    "arabic": "ٱلْمُقِيتُ",
+    "transliteration": "Al‑Muqīt",
+    "translation": "The Nourisher"
+  },
+  {
+    "arabic": "ٱلْحَسِيبُ",
+    "transliteration": "Al‑Ḥasīb",
+    "translation": "The Bringer of Judgment"
+  },
+  {
+    "arabic": "ٱلْجَلِيلُ",
+    "transliteration": "Al‑Jalīl",
+    "translation": "The Majestic"
+  },
+  {
+    "arabic": "ٱلْكَرِيمُ",
+    "transliteration": "Al‑Karīm",
+    "translation": "The Bountiful"
+  },
+  {
+    "arabic": "ٱلرَّقِيبُ",
+    "transliteration": "Ar‑Raqīb",
+    "translation": "The Watchful"
+  },
+  {
+    "arabic": "ٱلْمُجِيبُ",
+    "transliteration": "Al‑Mujīb",
+    "translation": "The Answerer"
+  },
+  {
+    "arabic": "ٱلْوَاسِعُ",
+    "transliteration": "Al‑Wāsi‘",
+    "translation": "The Vast"
+  },
+  {
+    "arabic": "ٱلْحَكِيمُ",
+    "transliteration": "Al‑Ḥakīm",
+    "translation": "The Wise"
+  },
+  {
+    "arabic": "ٱلْوُدُودُ",
+    "transliteration": "Al‑Wadūd",
+    "translation": "The Most Loving"
+  },
+  {
+    "arabic": "ٱلْمَجِيدُ",
+    "transliteration": "Al‑Majīd",
+    "translation": "The All‑Glorious"
+  },
+  {
+    "arabic": "ٱلْبَاعِثُ",
+    "transliteration": "Al‑Bā‘ith",
+    "translation": "The Raiser of the Dead"
+  },
+  {
+    "arabic": "ٱلشَّهِيدُ",
+    "transliteration": "Ash‑Shahīd",
+    "translation": "The Witness"
+  },
+  {
+    "arabic": "ٱلْحَقُّ",
+    "transliteration": "Al‑Ḥaqq",
+    "translation": "The Truth"
+  },
+  {
+    "arabic": "ٱلْوَكِيلُ",
+    "transliteration": "Al‑Wakīl",
+    "translation": "The Trustee"
+  },
+  {
+    "arabic": "ٱلْقَوِيُّ",
+    "transliteration": "Al‑Qawiyy",
+    "translation": "The Strong"
+  },
+  {
+    "arabic": "ٱلْمَتِينُ",
+    "transliteration": "Al‑Matīn",
+    "translation": "The Firm"
+  },
+  {
+    "arabic": "ٱلْوَلِيُّ",
+    "transliteration": "Al‑Waliyy",
+    "translation": "The Protecting Friend"
+  },
+  {
+    "arabic": "ٱلْحَمِيدُ",
+    "transliteration": "Al‑Ḥamīd",
+    "translation": "The Most Praiseworthy"
+  },
+  {
+    "arabic": "ٱلْمُحْصِي",
+    "transliteration": "Al‑Muhsi",
+    "translation": "The All‑Enumerating"
+  },
+  {
+    "arabic": "ٱلْمُبْدِئُ",
+    "transliteration": "Al‑Mubdi’",
+    "translation": "The Originator"
+  },
+  {
+    "arabic": "ٱلْمُعِيدُ",
+    "transliteration": "Al‑Mu‘id",
+    "translation": "The Restorer"
+  },
+  {
+    "arabic": "ٱلْمُحْيِي",
+    "transliteration": "Al‑Muhyi",
+    "translation": "The Giver of Life"
+  },
+  {
+    "arabic": "ٱلْمُمِيتُ",
+    "transliteration": "Al‑Mumīt",
+    "translation": "The Bringer of Death"
+  },
+  {
+    "arabic": "ٱلْحَيُّ",
+    "transliteration": "Al‑Ḥayy",
+    "translation": "The Ever‑Living"
+  },
+  {
+    "arabic": "ٱلْقَيُّومُ",
+    "transliteration": "Al‑Qayyūm",
+    "translation": "The Self‑Subsisting"
+  },
+  {
+    "arabic": "ٱلْوَاجِدُ",
+    "transliteration": "Al‑Wājid",
+    "translation": "The Perceiver"
+  },
+  {
+    "arabic": "ٱلْمَاجِدُ",
+    "transliteration": "Al‑Mājid",
+    "translation": "The Illustrious"
+  },
+  {
+    "arabic": "ٱلْوَاحِدُ",
+    "transliteration": "Al‑Wāhid",
+    "translation": "The Unique"
+  },
+  {
+    "arabic": "ٱلْأَحَدُ",
+    "transliteration": "Al‑’Aḥad",
+    "translation": "The One"
+  },
+  {
+    "arabic": "ٱلصَّمَدُ",
+    "transliteration": "As‑Ṣamad",
+    "translation": "The Self‑Sufficient"
+  },
+  {
+    "arabic": "ٱلْقَادِرُ",
+    "transliteration": "Al‑Qādir",
+    "translation": "The Almighty"
+  },
+  {
+    "arabic": "ٱلْمُقْتَدِرُ",
+    "transliteration": "Al‑Muqtadir",
+    "translation": "The Dominant"
+  },
+  {
+    "arabic": "ٱلْمُقَدِّمُ",
+    "transliteration": "Al‑Muqaddim",
+    "translation": "The Expediter"
+  },
+  {
+    "arabic": "ٱلْمُؤَخِّرُ",
+    "transliteration": "Al‑Mu’akhkhir",
+    "translation": "The Delayer"
+  },
+  {
+    "arabic": "ٱلْأَوَّلُ",
+    "transliteration": "Al‑’Awwal",
+    "translation": "The First"
+  },
+  {
+    "arabic": "ٱلْآخِرُ",
+    "transliteration": "Al‑’Akhir",
+    "translation": "The Last"
+  },
+  {
+    "arabic": "ٱلظَّاهِرُ",
+    "transliteration": "Aẓ‑Ẓāhir",
+    "translation": "The Manifest"
+  },
+  {
+    "arabic": "ٱلْبَاطِنُ",
+    "transliteration": "Al‑Bātin",
+    "translation": "The Hidden"
+  },
+  {
+    "arabic": "ٱلْوَالِي",
+    "transliteration": "Al‑Wāli",
+    "translation": "The Sole Governor"
+  },
+  {
+    "arabic": "ٱلْمُتَعَالِي",
+    "transliteration": "Al‑Mutā‘ālī",
+    "translation": "The Most Exalted"
+  },
+  {
+    "arabic": "ٱلْبَرُّ",
+    "transliteration": "Al‑Barr",
+    "translation": "The Source of All Goodness"
+  },
+  {
+    "arabic": "ٱلتَّوَّابُ",
+    "transliteration": "At‑Tawwāb",
+    "translation": "The Ever‑Pardoning"
+  },
+  {
+    "arabic": "ٱلْمُنتَقِمُ",
+    "transliteration": "Al‑Muntaqim",
+    "translation": "The Avenger"
+  },
+  {
+    "arabic": "ٱلْعَفُوُّ",
+    "transliteration": "Al‑‘Afūww",
+    "translation": "The Pardoner"
+  },
+  {
+    "arabic": "ٱلرَّءُوفُ",
+    "transliteration": "Ar‑Ra’ūf",
+    "translation": "The Compassionate"
+  },
+  {
+    "arabic": "مَالِكُ الْمُلْكِ",
+    "transliteration": "Mālik‑ul‑Mulk",
+    "translation": "The Owner of All Sovereignty"
+  },
+  {
+    "arabic": "ذُو ٱلْجَلَالِ وَٱلْإِكْرَامِ",
+    "transliteration": "Dhū‑l‑Jalāli wal‑’ikrām",
+    "translation": "The Lord of Glory and Honour"
+  },
+  {
+    "arabic": "الْمُقْسِطُ",
+    "transliteration": "Al‑Muqsit",
+    "translation": "The Just"
+  },
+  {
+    "arabic": "ٱلْجَامِعُ",
+    "transliteration": "Al‑Jāmi‘",
+    "translation": "The Gatherer"
+  },
+  {
+    "arabic": "ٱلْغَنِيُّ",
+    "transliteration": "Al‑Ghaniyy",
+    "translation": "The Self‑Sufficient"
+  },
+  {
+    "arabic": "ٱلْمُغْنِيُّ",
+    "transliteration": "Al‑Mughni",
+    "translation": "The Enricher"
+  },
+  {
+    "arabic": "ٱلْمَانِعُ",
+    "transliteration": "Al‑Māni‘",
+    "translation": "The Withholder"
+  },
+  {
+    "arabic": "ٱلضَّارَّ",
+    "transliteration": "Ad‑Dārr",
+    "translation": "The Distresser"
+  },
+  {
+    "arabic": "ٱلنَّافِعُ",
+    "transliteration": "An‑Nāfi‘",
+    "translation": "The Benefactor"
+  },
+  {
+    "arabic": "ٱلنُّورُ",
+    "transliteration": "An‑Nūr",
+    "translation": "The Light"
+  },
+  {
+    "arabic": "ٱلْهَادِي",
+    "transliteration": "Al‑Hādī",
+    "translation": "The Guide"
+  },
+  {
+    "arabic": "ٱلْبَدِيعُ",
+    "transliteration": "Al‑Badī‘",
+    "translation": "The Incomparable Originator"
+  },
+  {
+    "arabic": "ٱلْبَاقِي",
+    "transliteration": "Al‑Bāqī",
+    "translation": "The Ever‑Enduring"
+  },
+  {
+    "arabic": "ٱلْوَارِثُ",
+    "transliteration": "Al‑Wārith",
+    "translation": "The Inheritor"
+  },
+  {
+    "arabic": "ٱلرَّشِيدُ",
+    "transliteration": "Ar‑Rashīd",
+    "translation": "The Guide"
+  },
+  {
+    "arabic": "ٱلصَّبُورُ",
+    "transliteration": "As‑Sabūr",
+    "translation": "The Patient"
+  }
+]
