@@ -1,4 +1,4 @@
-package com.islamicapp.domain.hijricalendar.model
+package com.islamicapp.siraathalmusthaqeem.screen.hijricalendar
 
 data class HijriCalendar(
     val hijriDay: String,
@@ -7,5 +7,5 @@ data class HijriCalendar(
     val englishDay: String,
     val englishMonth: String,
     val englishYear: String,
-    val englishWeekday: String,
+    val englishWeekday: String
 )

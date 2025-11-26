@@ -7,6 +7,7 @@ import com.islamicapp.siraathalmusthaqeem.screen.dua.prophetsduas.ProphetsDuasVi
 import com.islamicapp.siraathalmusthaqeem.screen.dua.quranicduas.QuranicDuasViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.dua.rabbanaduas.RabbanaDuasViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.hadith.HadithViewModel
+import com.islamicapp.siraathalmusthaqeem.screen.hijricalendar.CalculateHijriDateUseCase
 import com.islamicapp.siraathalmusthaqeem.screen.hijricalendar.HijriCalendarViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.prayertimes.PrayerTimesViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.prophetsstories.ProphetsStoriesViewModel
@@ -44,5 +45,7 @@ val appModule = module {
     viewModel { MasnoonDuasViewModel(get()) }
     viewModel { ZakathViewModel() }
     single { PreferencesManager(get()) }
+    single { CalculateHijriDateUseCase() }
+
 
 }
