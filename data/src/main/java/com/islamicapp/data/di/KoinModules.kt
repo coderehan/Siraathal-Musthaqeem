@@ -66,7 +66,6 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 const val PRAYER_TIMES_RETROFIT = "PRAYER_TIMES_RETROFIT"
 const val QIBLA_RETROFIT = "QIBLA_RETROFIT"
-const val ALLAH_99_NAMES_RETROFIT = "ALLAH_99_NAMES_RETROFIT"
 const val HADITH_RETROFIT = "HADITH_RETROFIT"
 const val QURAN_SURAH_BASE_RETROFIT = "QURAN_SURAH_BASE_RETROFIT"
 const val QURAN_JUZ_BASE_RETROFIT = "QURAN_JUZ_BASE_RETROFIT"
@@ -93,14 +92,6 @@ val dataModule = module {
     single(named(QIBLA_RETROFIT)) {
         Retrofit.Builder()
             .baseUrl(Constants.QIBLA_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    // ALLAH_99_NAMES_RETROFIT instance
-    single(named(ALLAH_99_NAMES_RETROFIT)) {
-        Retrofit.Builder()
-            .baseUrl(Constants.ALLAH_99_NAMES_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
