@@ -40,6 +40,8 @@ import kotlinx.coroutines.launch
 import com.islamicapp.siraathalmusthaqeem.screen.navigation.NavigationItem
 import android.provider.Settings
 import androidx.compose.ui.res.colorResource
+import com.islamicapp.siraathalmusthaqeem.screen.quran.pdfmetadata.QuranPdfManager
+import kotlinx.coroutines.Dispatchers
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,6 +55,24 @@ fun HomeScreen(
 
     // Collect name from DataStore
     val userName by preferencesManager.userNameFlow.collectAsState(initial = "")
+
+    // ========== AUTO COPY PDF FROM ASSETS (ONE-TIME) ========== //
+    val pdfManager = remember { QuranPdfManager(context) }
+
+    // Silently copy PDF from assets to internal storage on first launch
+    LaunchedEffect(Unit) {
+        scope.launch(Dispatchers.IO) {
+            try {
+                if (!pdfManager.isPdfReady()) {
+                    // Copy from assets silently - no UI shown to user
+                    pdfManager.copyPdfFromAssets()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace() // Silent failure
+            }
+        }
+    }
+    // ========== END AUTO COPY PDF ========== //
 
     // Selected bottom nav item (simple state for preview/demo)
     var selectedBottom by remember { mutableStateOf<BottomNavItem>(BottomNavItem.Home) }

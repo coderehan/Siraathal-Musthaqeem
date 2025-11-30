@@ -31,11 +31,6 @@ import com.islamicapp.data.prayertimes.source.network.PrayerTimesNetworkDataSour
 import com.islamicapp.data.prophetsstories.repository.ProphetsStoriesRepositoryImpl
 import com.islamicapp.data.prophetsstories.source.local.ProphetsStoriesDataSource
 import com.islamicapp.data.prophetsstories.source.local.ProphetsStoriesDataSourceImpl
-import com.islamicapp.data.quran.mapper.QuranMapper
-import com.islamicapp.data.quran.source.QuranDataSource
-import com.islamicapp.data.quran.source.QuranDataSourceImpl
-import com.islamicapp.data.quran.source.network.QuranApi
-import com.islamicapp.data.quran.source.network.QuranNetworkDataSource
 import com.islamicapp.data.seerah.repository.SeerahRepositoryImpl
 import com.islamicapp.data.seerah.source.local.SeerahDataSource
 import com.islamicapp.data.seerah.source.local.SeerahDataSourceImpl
@@ -48,7 +43,6 @@ import com.islamicapp.domain.duas.rabbanaduas.repository.RabbanaDuasRepository
 import com.islamicapp.domain.hadith.repository.HadithRepository
 import com.islamicapp.domain.prayertimes.repository.PrayerTimesRepository
 import com.islamicapp.domain.prophetsstories.repository.ProphetsStoriesRepository
-import com.islamicapp.domain.quran.repository.QuranRepository
 import com.islamicapp.domain.seerah.repository.SeerahRepository
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -128,13 +122,10 @@ val dataModule = module {
      */
     single { get<Retrofit>(named(PRAYER_TIMES_RETROFIT)).create(PrayerTimesApi::class.java) }
     single { get<Retrofit>(named(HADITH_RETROFIT)).create(HadithApi::class.java) }
-    single { get<Retrofit>(named(QURAN_SURAH_BASE_RETROFIT)).create(QuranApi::class.java) }
-    single { get<Retrofit>(named(QURAN_JUZ_BASE_RETROFIT)).create(QuranApi::class.java) }
 //    single { get<Retrofit>(named(QURAN_AUDIO_BASE_RETROFIT)).create(QuranApi::class.java) }
 
     // Register mapper
     factory { HadithMapper() }
-    factory { QuranMapper() }
 
     /**
      * Register Network Data Source (API → Mapper → Domain model).
@@ -145,9 +136,6 @@ val dataModule = module {
     }
     factory<HadithDataSource> {
         HadithNetworkDataSource(get(), get())
-    }
-    factory<QuranDataSource> {
-        QuranNetworkDataSource(get(), get())
     }
     factory<ProphetsStoriesDataSource> {
         ProphetsStoriesDataSourceImpl(get())
@@ -185,9 +173,6 @@ val dataModule = module {
     }
     factory<HadithRepository> {
         HadithDataSourceImpl(get())
-    }
-    factory<QuranRepository> {
-        QuranDataSourceImpl(get())
     }
     factory<ProphetsStoriesRepository> {
         ProphetsStoriesRepositoryImpl(get())

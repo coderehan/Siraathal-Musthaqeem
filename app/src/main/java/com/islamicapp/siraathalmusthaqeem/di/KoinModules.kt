@@ -11,8 +11,6 @@ import com.islamicapp.siraathalmusthaqeem.screen.hijricalendar.CalculateHijriDat
 import com.islamicapp.siraathalmusthaqeem.screen.hijricalendar.HijriCalendarViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.prayertimes.PrayerTimesViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.prophetsstories.ProphetsStoriesViewModel
-import com.islamicapp.siraathalmusthaqeem.screen.quran.juz.JuzViewModel
-import com.islamicapp.siraathalmusthaqeem.screen.quran.surah.SurahViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.seerah.SeerahViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.tasbeeh.TasbeehViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.theme.ThemeViewModel
@@ -31,8 +29,6 @@ val appModule = module {
     viewModel { Allah99NamesViewModel(get()) }
     viewModel { HijriCalendarViewModel(get()) }
     viewModel { HadithViewModel(get()) }
-    viewModel { SurahViewModel(get()) }
-    viewModel { JuzViewModel(get()) }
     viewModel { PrayerTimesViewModel(get()) }
     viewModel { TasbeehViewModel(get()) }
     viewModel { ProphetsStoriesViewModel(get()) }

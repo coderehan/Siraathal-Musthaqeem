@@ -9,7 +9,6 @@ import com.islamicapp.domain.duas.rabbanaduas.usecase.RabbanaDuasUseCase
 import com.islamicapp.domain.hadith.usecase.HadithUseCase
 import com.islamicapp.domain.prayertimes.usecase.PrayerTimesUseCase
 import com.islamicapp.domain.prophetsstories.usecase.ProphetsStoriesUseCase
-import com.islamicapp.domain.quran.usecase.QuranUseCase
 import com.islamicapp.domain.seerah.usecase.SeerahUseCase
 import org.koin.dsl.module
 
@@ -24,7 +23,6 @@ val domainModule = module {
      */
     factory { Allah99NamesUseCase(get()) }
     factory { HadithUseCase(get()) }
-    factory { QuranUseCase(get()) }
     factory { PrayerTimesUseCase(get()) }
     factory { ProphetsStoriesUseCase(get()) }
     factory { RabbanaDuasUseCase(get()) }
