@@ -47,7 +47,10 @@ fun QuickAccessSurahs(navController: NavController) {
             QuickAccessCard(
                 title = name,
                 subtitle = note,
-                onClick = { navController.navigate("surah_detail/$number") }
+                onClick = {
+                    // Navigate to PDF viewer with surah number
+                    navController.navigate("quran_pdf_reader?surahNumber=$number")
+                }
             )
         }
     }

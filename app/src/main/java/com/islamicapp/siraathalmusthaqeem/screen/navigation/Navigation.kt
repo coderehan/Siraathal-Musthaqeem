@@ -31,8 +31,7 @@ import com.islamicapp.siraathalmusthaqeem.screen.tasbeeh.TasbeehScreen
 import com.islamicapp.siraathalmusthaqeem.screen.zakath.ZakathScreen
 import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
 import com.islamicapp.siraathalmusthaqeem.screen.qibla.QiblaScreen
-import com.islamicapp.siraathalmusthaqeem.screen.quran.juz.JuzDetailScreen
-import com.islamicapp.siraathalmusthaqeem.screen.quran.surah.SurahDetailScreen
+import com.islamicapp.siraathalmusthaqeem.screen.quran.QuranPdfReaderScreen
 import com.islamicapp.siraathalmusthaqeem.screen.theme.ThemeSelectorWrapper
 
 @Composable
@@ -170,32 +169,26 @@ fun Navigation(preferencesManager: PreferencesManager) {
             QuranScreen(navController = navController)
         }
 
-        // Surah Detail Screen
+        // PDF Viewer Screen with Surah/Juz support
         composable(
-            route = "surah_detail/{surahNumber}",
+            route = "quran_pdf_reader?surahNumber={surahNumber}&juzNumber={juzNumber}",
             arguments = listOf(
-                navArgument("surahNumber") { type = NavType.IntType }
+                navArgument("surahNumber") {
+                    type = NavType.IntType
+                    defaultValue = -1
+                },
+                navArgument("juzNumber") {
+                    type = NavType.IntType
+                    defaultValue = -1
+                }
             )
         ) { backStackEntry ->
-            val surahNumber = backStackEntry.arguments?.getInt("surahNumber") ?: 1
+            val surahNumber = backStackEntry.arguments?.getInt("surahNumber")?.takeIf { it != -1 }
+            val juzNumber = backStackEntry.arguments?.getInt("juzNumber")?.takeIf { it != -1 }
 
-            SurahDetailScreen(
+            QuranPdfReaderScreen(
                 navController = navController,
-                surahNumber = surahNumber
-            )
-        }
-
-        // Juz Detail Screen
-        composable(
-            route = "juz_detail/{juzNumber}",
-            arguments = listOf(
-                navArgument("juzNumber") { type = NavType.IntType }
-            )
-        ) { backStackEntry ->
-            val juzNumber = backStackEntry.arguments?.getInt("juzNumber") ?: 1
-
-            JuzDetailScreen(
-                navController = navController,
+                surahNumber = surahNumber,
                 juzNumber = juzNumber
             )
         }

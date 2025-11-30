@@ -16,49 +16,43 @@ import androidx.navigation.NavController
 import com.islamicapp.siraathalmusthaqeem.R
 import com.islamicapp.siraathalmusthaqeem.screen.quran.components.JuzListItem
 
-// Define a data class to hold Juz information
-data class JuzInfo(
-    val arabicName: String,
-    val englishName: String
-)
-
 @Composable
 fun JuzListScreen(navController: NavController) {
 
     val quranFont = FontFamily(Font(R.font.indo_pak_quran))
 
-    // FIX: Create a list of JuzInfo objects containing both names
-    val juzInfoList = listOf(
-        JuzInfo("آلمَ", "Alif Laam Meem"),
-        JuzInfo("سَيَقُولُ", "Sayaqoolu"),
-        JuzInfo("تِلْكَ ٱلْرُّسُلَُ", "Tilkar Rusulu"),
-        JuzInfo("لَنْ تَنَالُوْ الْبِرَّ", "Lan Tanaalu"),
-        JuzInfo("وَٱلْمُحْصَنَاتُ", "Wal Muhsanaatu"),
-        JuzInfo("لَا يُحِبُّ ٱللهَُ", "La Yuhibbullahu"),
-        JuzInfo("وَإِذَا سَمِعُوا", "Waiza Samiu"),
-        JuzInfo("وَلَوْ أَنَّنَاَ", "Wa Lau Annana"),
-        JuzInfo("قَالَ ٱلْمَلَأُ", "Qaalal Malau"),
-        JuzInfo("وَٱعْلَمُواْ", "Wa'lamu"),
-        JuzInfo("يَعْتَذِرُونََ", "Ya'taziroon"),
-        JuzInfo("وَمَا مِنْ دَآبَّةٍ", "Wa Ma Min Daabbatin"),
-        JuzInfo("وَمَا أُبَرِّئَُ", "Wa Ma Ubarriu"),
-        JuzInfo("رُبَمَا", "Rubama"),
-        JuzInfo("سُبْحَانَ ٱلَّذِى", "Sub'haanallazi"),
-        JuzInfo("قَالَ أَلَمَْ", "Qaal Alam"),
-        JuzInfo("ٱقْتَرَبَ لِلْنَّاسِ", "Iqtaraba Linnaasi"),
-        JuzInfo("قَدْ أَفْلَحََ", "Qad Aflaha"),
-        JuzInfo("وَقَالَ ٱلَّذِينَ", "Waqaalallazeen"),
-        JuzInfo("أَمَّنْ خَلَقَ", "Amman Khalaqa"),
-        JuzInfo("أُتْلُ مَاأُوْحِیََ", "Utlu Maa Uhiya"),
-        JuzInfo("وَمَنْ يَّقْنُتْ", "Wamay Yaqnut"),
-        JuzInfo("وَمَآ ليَ", "Wamaaliya"),
-        JuzInfo("فَمَنْ أَظْلَمُ", "Faman Azlamu"),
-        JuzInfo("إِلَيْهِ يُرَدُّ", "Ilaihi Yuraddu"),
-        JuzInfo("حمَ", "Haa Meem"),
-        JuzInfo("قَالَ فَمَا خَطْبُكُم", "Qaala Fama Khatbukum"),
-        JuzInfo("قَدْ سَمِعَ ٱللهَُ", "Qad Sami'allahu"),
-        JuzInfo("تَبَارَكَ ٱلَّذِى", "Tabaarakallazi"),
-        JuzInfo("عَمَّ", "Amma")
+    // FIX: Create a list of Juz objects containing both names
+    val JuzList = listOf(
+        Juz("آلمَ", "Alif Laam Meem"),
+        Juz("سَيَقُولُ", "Sayaqoolu"),
+        Juz("تِلْكَ ٱلْرُّسُلَُ", "Tilkar Rusulu"),
+        Juz("لَنْ تَنَالُوْ الْبِرَّ", "Lan Tanaalu"),
+        Juz("وَٱلْمُحْصَنَاتُ", "Wal Muhsanaatu"),
+        Juz("لَا يُحِبُّ ٱللهَُ", "La Yuhibbullahu"),
+        Juz("وَإِذَا سَمِعُوا", "Waiza Samiu"),
+        Juz("وَلَوْ أَنَّنَاَ", "Wa Lau Annana"),
+        Juz("قَالَ ٱلْمَلَأُ", "Qaalal Malau"),
+        Juz("وَٱعْلَمُواْ", "Wa'lamu"),
+        Juz("يَعْتَذِرُونََ", "Ya'taziroon"),
+        Juz("وَمَا مِنْ دَآبَّةٍ", "Wa Ma Min Daabbatin"),
+        Juz("وَمَا أُبَرِّئَُ", "Wa Ma Ubarriu"),
+        Juz("رُبَمَا", "Rubama"),
+        Juz("سُبْحَانَ ٱلَّذِى", "Sub'haanallazi"),
+        Juz("قَالَ أَلَمَْ", "Qaal Alam"),
+        Juz("ٱقْتَرَبَ لِلْنَّاسِ", "Iqtaraba Linnaasi"),
+        Juz("قَدْ أَفْلَحََ", "Qad Aflaha"),
+        Juz("وَقَالَ ٱلَّذِينَ", "Waqaalallazeen"),
+        Juz("أَمَّنْ خَلَقَ", "Amman Khalaqa"),
+        Juz("أُتْلُ مَاأُوْحِیََ", "Utlu Maa Uhiya"),
+        Juz("وَمَنْ يَّقْنُتْ", "Wamay Yaqnut"),
+        Juz("وَمَآ ليَ", "Wamaaliya"),
+        Juz("فَمَنْ أَظْلَمُ", "Faman Azlamu"),
+        Juz("إِلَيْهِ يُرَدُّ", "Ilaihi Yuraddu"),
+        Juz("حمَ", "Haa Meem"),
+        Juz("قَالَ فَمَا خَطْبُكُم", "Qaala Fama Khatbukum"),
+        Juz("قَدْ سَمِعَ ٱللهَُ", "Qad Sami'allahu"),
+        Juz("تَبَارَكَ ٱلَّذِى", "Tabaarakallazi"),
+        Juz("عَمَّ", "Amma")
     )
 
     Scaffold { padding ->
@@ -70,12 +64,12 @@ fun JuzListScreen(navController: NavController) {
                 .padding(horizontal = 8.dp, vertical = 4.dp),
             verticalArrangement = Arrangement.spacedBy(1.dp)
         ) {
-            items(juzInfoList.size) { index ->
+            items(JuzList.size) { index ->
                 val juzNumber = index + 1
                 JuzListItem(
                     juzNumber = juzNumber,
-                    arabicName = juzInfoList[index].arabicName,
-                    englishName = juzInfoList[index].englishName,
+                    arabicName = JuzList[index].arabicName,
+                    englishName = JuzList[index].englishName,
                     navController = navController,
                     quranFont = quranFont
                 )

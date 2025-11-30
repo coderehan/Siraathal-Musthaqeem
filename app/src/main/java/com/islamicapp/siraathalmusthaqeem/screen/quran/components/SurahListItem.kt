@@ -2,15 +2,7 @@ package com.islamicapp.siraathalmusthaqeem.screen.quran.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -26,8 +18,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.islamicapp.domain.quran.model.Surah
 import com.islamicapp.siraathalmusthaqeem.R
+import com.islamicapp.siraathalmusthaqeem.screen.quran.surah.Surah
 
 @Composable
 fun SurahListItem(
@@ -40,7 +32,8 @@ fun SurahListItem(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                navController.navigate("surah_detail/${surah.surahNumber}")
+                // Navigate to PDF viewer with surah number
+                navController.navigate("quran_pdf_reader?surahNumber=${surah.surahNumber}")
             }
             .background(Color.White)
             .padding(horizontal = 16.dp, vertical = 12.dp),
@@ -103,6 +96,5 @@ fun SurahListItem(
             .background(Color.LightGray.copy(alpha = 0.3f))
     )
 }
-
 
 
