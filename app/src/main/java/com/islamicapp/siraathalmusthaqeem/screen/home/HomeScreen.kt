@@ -6,7 +6,6 @@ import android.location.LocationManager
 import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
@@ -39,6 +38,9 @@ import com.islamicapp.siraathalmusthaqeem.screen.home.components.DailySlider
 import kotlinx.coroutines.launch
 import com.islamicapp.siraathalmusthaqeem.screen.navigation.NavigationItem
 import android.provider.Settings
+import androidx.compose.foundation.border
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import com.islamicapp.siraathalmusthaqeem.screen.quran.pdfmetadata.QuranPdfManager
 import kotlinx.coroutines.Dispatchers
@@ -56,7 +58,6 @@ fun HomeScreen(
     // Collect name from DataStore
     val userName by preferencesManager.userNameFlow.collectAsState(initial = "")
 
-    // ========== AUTO COPY PDF FROM ASSETS (ONE-TIME) ========== //
     val pdfManager = remember { QuranPdfManager(context) }
 
     // Silently copy PDF from assets to internal storage on first launch
@@ -64,29 +65,27 @@ fun HomeScreen(
         scope.launch(Dispatchers.IO) {
             try {
                 if (!pdfManager.isPdfReady()) {
-                    // Copy from assets silently - no UI shown to user
                     pdfManager.copyPdfFromAssets()
                 }
             } catch (e: Exception) {
-                e.printStackTrace() // Silent failure
+                e.printStackTrace()
             }
         }
     }
-    // ========== END AUTO COPY PDF ========== //
 
     // Selected bottom nav item (simple state for preview/demo)
     var selectedBottom by remember { mutableStateOf<BottomNavItem>(BottomNavItem.Home) }
 
     val features = listOf(
-        Feature("Prayer Times", R.drawable.ic_android, NavigationItem.PrayerTimes.route),
-        Feature("Qibla", R.drawable.ic_android, NavigationItem.Qibla.route),
-        Feature("Masjid Near Me", R.drawable.ic_android, NavigationItem.MasjidNearMe.route),
-        Feature("Names of Allah", R.drawable.ic_android, NavigationItem.Allah99Names.route),
-        Feature("Zakath", R.drawable.ic_android, NavigationItem.Zakath.route),
-        Feature("Pilgrimage", R.drawable.ic_android, NavigationItem.Pilgrimage.route),
-        Feature("Hadith", R.drawable.ic_android, NavigationItem.Hadith.route),
-        Feature("Seerah", R.drawable.ic_android, NavigationItem.Seerah.route),
-        Feature("Prophets", R.drawable.ic_android, NavigationItem.Prophets.route),
+        Feature("Prayer Times", R.drawable.home_icon_1, NavigationItem.PrayerTimes.route),
+        Feature("Qibla", R.drawable.home_icon_2, NavigationItem.Qibla.route),
+        Feature("Masjid Near Me", R.drawable.home_icon_3, NavigationItem.MasjidNearMe.route),
+        Feature("Names of Allah", R.drawable.home_icon_4, NavigationItem.Allah99Names.route),
+        Feature("Zakath", R.drawable.home_icon_5, NavigationItem.Zakath.route),
+        Feature("Pilgrimage", R.drawable.home_icon_6, NavigationItem.Pilgrimage.route),
+        Feature("Hadith", R.drawable.home_icon_7, NavigationItem.Hadith.route),
+        Feature("Seerah", R.drawable.home_icon_8, NavigationItem.Seerah.route),
+        Feature("Prophets", R.drawable.home_icon_9, NavigationItem.Prophets.route),
     )
 
     @Suppress("DEPRECATION")
@@ -103,12 +102,12 @@ fun HomeScreen(
             ModalDrawerSheet {
                 // Drawer header image
                 Image(
-                    painter = painterResource(id = R.drawable.splash),
+                    painter = painterResource(id = R.drawable.nav_header),
                     contentDescription = "Drawer Header",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(160.dp)
-                        .background(MaterialTheme.colorScheme.surfaceVariant)
+                        .height(280.dp),
+                    contentScale = ContentScale.Crop
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -120,12 +119,12 @@ fun HomeScreen(
 //                        launchSingleTop = true
 //                    }
 //                }
-                DrawerMenuItem("Edit Profile", R.drawable.ic_android) {
+                DrawerMenuItem("Edit Profile", R.drawable.nav_drawer_1) {
                     scope.launch { drawerState.close() }
                     navController.navigate(NavigationItem.Profile.route)
                 }
                 // Request a feature
-                DrawerMenuItem("Request a feature", R.drawable.ic_android) {
+                DrawerMenuItem("Request a feature", R.drawable.nav_drawer_2) {
                     scope.launch { drawerState.close() }
                     val intent = Intent(Intent.ACTION_SENDTO).apply {
                         data = Uri.parse("mailto:")
@@ -142,7 +141,7 @@ fun HomeScreen(
                 }
 
                 // Report a bug
-                DrawerMenuItem("Report a bug/issue", R.drawable.ic_android) {
+                DrawerMenuItem("Report a bug/issue", R.drawable.nav_drawer_3) {
                     scope.launch { drawerState.close() }
                     val intent = Intent(Intent.ACTION_SENDTO).apply {
                         data = Uri.parse("mailto:")
@@ -156,7 +155,7 @@ fun HomeScreen(
                 }
 
                 // Rate the app
-                DrawerMenuItem("Rate the App", R.drawable.ic_android) {
+                DrawerMenuItem("Rate the App", R.drawable.nav_drawer_4) {
                     scope.launch {
                         drawerState.close()
                         val appPackageName = context.packageName
@@ -182,7 +181,7 @@ fun HomeScreen(
                 }
 
                 // Share the app
-                DrawerMenuItem("Share the App", R.drawable.ic_android) {
+                DrawerMenuItem("Share the App", R.drawable.nav_drawer_5) {
                     scope.launch {
                         drawerState.close()
                         val shareIntent = Intent(Intent.ACTION_SEND).apply {
@@ -206,7 +205,7 @@ fun HomeScreen(
                     }
                 }
 
-                DrawerMenuItem("About the App", R.drawable.ic_android) {
+                DrawerMenuItem("About the App", R.drawable.nav_drawer_6) {
                     scope.launch {
                         drawerState.close()
                         navController.navigate("about")
@@ -260,8 +259,15 @@ fun HomeScreen(
                         BottomNavItem.Dua,
                         BottomNavItem.Tasbeeh
                     ).forEach { item ->
+                        val isSelected = selectedBottom == item
+                        val iconColor = if (isSelected) {
+                            colorResource(id = R.color.white) // White when selected
+                        } else {
+                            colorResource(id = R.color.white).copy(alpha = 0.7f) // Dimmed white when unselected
+                        }
+
                         NavigationBarItem(
-                            selected = selectedBottom == item,
+                            selected = isSelected,
                             onClick = {
                                 selectedBottom = item
                                 navController.navigate(item.route) {
@@ -271,19 +277,22 @@ fun HomeScreen(
                                 }
                             },
                             icon = {
-                                Icon(
+                                Image(
                                     painter = painterResource(id = item.icon),
-                                    contentDescription = item.title
+                                    contentDescription = item.title,
+                                    modifier = Modifier.size(24.dp), // Adjust size as needed
+                                    colorFilter = ColorFilter.tint(iconColor)
                                 )
                             },
                             label = { Text(item.title) },
-                            // Customizing item colors using the NavigationBarItemDefaults
+                            // Keep colors for text/indicator but the Icon colors are now controlled above
                             colors = NavigationBarItemDefaults.colors(
-                                indicatorColor = colorResource(id = R.color.white).copy(alpha = 0.2f), // Subtle white indicator for selection
-                                selectedIconColor = colorResource(id = R.color.white), // White icon when selected
-                                unselectedIconColor = colorResource(id = R.color.white).copy(alpha = 0.7f), // Less visible white icon when unselected
-                                selectedTextColor = colorResource(id = R.color.white), // White label when selected
-                                unselectedTextColor = colorResource(id = R.color.white).copy(alpha = 0.7f) // Less visible white label when unselected
+                                indicatorColor = colorResource(id = R.color.white).copy(alpha = 0.2f),
+                                // Set IconColors to transparent/default since we handle them in the Image composable now
+                                selectedIconColor = colorResource(id = R.color.white), // Keep these for good measure/consistency
+                                unselectedIconColor = colorResource(id = R.color.white).copy(alpha = 0.7f),
+                                selectedTextColor = colorResource(id = R.color.white),
+                                unselectedTextColor = colorResource(id = R.color.white).copy(alpha = 0.7f)
                             )
                         )
                     }
@@ -319,8 +328,8 @@ fun HomeScreen(
                             },
                             modifier = Modifier.size(48.dp)
                         ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_azaan_speaker),
+                            Image(
+                                painter = painterResource(id = R.drawable.adhan),
                                 contentDescription = "Play Azaan",
                                 modifier = Modifier.size(40.dp)
                             )
@@ -400,12 +409,17 @@ fun HomeScreen(
                                         shape = MaterialTheme.shapes.medium,
                                         modifier = Modifier
                                             .size(itemWidth * 0.7f)
+                                            .border(
+                                                width = 1.dp,
+                                                color = colorResource(id = R.color.green),
+                                                shape = MaterialTheme.shapes.medium
+                                            )
                                     ) {
                                         Box(contentAlignment = Alignment.Center) {
                                             Image(
                                                 painter = painterResource(id = feature.imageRes),
                                                 contentDescription = feature.title,
-                                                modifier = Modifier.size(itemWidth * 0.4f)
+                                                modifier = Modifier.size(itemWidth * 0.85f)
                                             )
                                         }
                                     }
@@ -442,7 +456,13 @@ private fun DrawerMenuItem(
         label = { Text(text = label) },
         selected = false,
         onClick = onClick,
-        icon = { Icon(painter = painterResource(id = iconRes), contentDescription = label) },
+        icon = {
+            Icon(
+                painter = painterResource(id = iconRes),
+                contentDescription = label,
+                modifier = Modifier.size(28.dp)
+            )
+        },
         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
     )
 }
@@ -454,8 +474,8 @@ data class Feature(
 )
 
 sealed class BottomNavItem(val title: String, val icon: Int, val route: String) {
-    object Home : BottomNavItem("Home", R.drawable.ic_android, "home")
-    object Quran : BottomNavItem("Quran", R.drawable.ic_android, "quran")
-    object Dua : BottomNavItem("Dua", R.drawable.ic_android, "dua")
-    object Tasbeeh : BottomNavItem("Tasbeeh", R.drawable.ic_android, "tasbeeh")
+    object Home : BottomNavItem("Home", R.drawable.home, "home")
+    object Quran : BottomNavItem("Quran", R.drawable.quran, "quran")
+    object Dua : BottomNavItem("Dua", R.drawable.dua, "dua")
+    object Tasbeeh : BottomNavItem("Tasbeeh", R.drawable.tasbeeh, "tasbeeh")
 }

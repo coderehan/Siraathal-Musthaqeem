@@ -1,13 +1,16 @@
 package com.islamicapp.siraathalmusthaqeem.screen.quran.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,7 +28,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.compose.foundation.lazy.items
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import com.islamicapp.siraathalmusthaqeem.R
+import androidx.compose.ui.graphics.ColorFilter
 
 @Composable
 fun QuickAccessSurahs(navController: NavController) {
@@ -50,7 +55,8 @@ fun QuickAccessSurahs(navController: NavController) {
                 onClick = {
                     // Navigate to PDF viewer with surah number
                     navController.navigate("quran_pdf_reader?surahNumber=$number")
-                }
+                },
+                iconRes = R.drawable.quran
             )
         }
     }
@@ -60,11 +66,12 @@ fun QuickAccessSurahs(navController: NavController) {
 fun QuickAccessCard(
     title: String,
     subtitle: String,
+    iconRes: Int,
     onClick: () -> Unit
 ) {
     Card(
         modifier = Modifier
-            .width(150.dp)
+            .width(180.dp)
             .height(80.dp)
             .clickable { onClick() }
             .border(
@@ -76,26 +83,41 @@ fun QuickAccessCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(8.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+                .padding(horizontal = 8.dp, vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleSmall.copy(
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color(0xFF111827)
-                ),
-                textAlign = TextAlign.Center
+            Image(
+                painter = painterResource(id = iconRes),
+                contentDescription = title,
+                modifier = Modifier.size(24.dp),
+                colorFilter = ColorFilter.tint(colorResource(id = R.color.green))
             )
-            Text(
-                text = subtitle,
-                style = MaterialTheme.typography.bodySmall.copy(color = Color.Gray),
-                textAlign = TextAlign.Center
-            )
+
+            Column(
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleSmall.copy(
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color(0xFF111827)
+                    ),
+                    textAlign = TextAlign.Start,
+                    maxLines = 1
+                )
+                Text(
+                    text = subtitle,
+                    style = MaterialTheme.typography.bodySmall.copy(color = Color.Gray),
+                    textAlign = TextAlign.Start,
+                    maxLines = 1
+                )
+            }
         }
     }
 }
