@@ -29,6 +29,7 @@ fun PilgrimageScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
+            .padding(bottom = 16.dp)
     ) {
         // Common Action Bar
         CommonActionBar(title = "Pilgrimage", navController = navController)
