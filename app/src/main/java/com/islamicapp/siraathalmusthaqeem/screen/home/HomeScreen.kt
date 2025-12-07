@@ -34,16 +34,18 @@ import androidx.navigation.NavHostController
 import com.islamicapp.siraathalmusthaqeem.R
 import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
 import com.islamicapp.siraathalmusthaqeem.screen.hijricalendar.HijriCalendarScreen
-import com.islamicapp.siraathalmusthaqeem.screen.home.components.DailySlider
+import com.islamicapp.siraathalmusthaqeem.screen.home.components.dailyslider.DailySlider
 import kotlinx.coroutines.launch
 import com.islamicapp.siraathalmusthaqeem.screen.navigation.NavigationItem
 import android.provider.Settings
 import androidx.compose.foundation.border
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import com.islamicapp.siraathalmusthaqeem.screen.quran.pdfmetadata.QuranPdfManager
 import kotlinx.coroutines.Dispatchers
+import com.islamicapp.siraathalmusthaqeem.screen.home.components.HomeDrawerContent
+import com.islamicapp.siraathalmusthaqeem.screen.home.components.HomeBottomBar
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,9 +75,6 @@ fun HomeScreen(
         }
     }
 
-    // Selected bottom nav item (simple state for preview/demo)
-    var selectedBottom by remember { mutableStateOf<BottomNavItem>(BottomNavItem.Home) }
-
     val features = listOf(
         Feature("Prayer Times", R.drawable.home_icon_1, NavigationItem.PrayerTimes.route),
         Feature("Qibla", R.drawable.home_icon_2, NavigationItem.Qibla.route),
@@ -97,137 +96,15 @@ fun HomeScreen(
 
     ModalNavigationDrawer(
         drawerState = drawerState,
-        drawerContent = {
-            // Navigation Drawer
-            ModalDrawerSheet {
-                // Drawer header image
-                Image(
-                    painter = painterResource(id = R.drawable.nav_header),
-                    contentDescription = "Drawer Header",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(280.dp),
-                    contentScale = ContentScale.Crop
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // Drawer menu items
-//                DrawerMenuItem("Theme", R.drawable.ic_android) {
-//                    scope.launch { drawerState.close() }
-//                    navController.navigate("theme") {
-//                        launchSingleTop = true
-//                    }
-//                }
-                DrawerMenuItem("Edit Profile", R.drawable.nav_drawer_1) {
-                    scope.launch { drawerState.close() }
-                    navController.navigate(NavigationItem.Profile.route)
-                }
-                // Request a feature
-                DrawerMenuItem("Request a feature", R.drawable.nav_drawer_2) {
-                    scope.launch { drawerState.close() }
-                    val intent = Intent(Intent.ACTION_SENDTO).apply {
-                        data = Uri.parse("mailto:")
-                        putExtra(Intent.EXTRA_EMAIL, arrayOf("mohammedrehanm1137@gmail.com"))
-                        putExtra(
-                            Intent.EXTRA_SUBJECT,
-                            "Feature Request - Siraathal Musthaqeem App"
-                        )
-                    }
-                    // Use runCatching to avoid crashes if no email app is found
-                    runCatching {
-                        context.startActivity(Intent.createChooser(intent, "Send email"))
-                    }
-                }
-
-                // Report a bug
-                DrawerMenuItem("Report a bug/issue", R.drawable.nav_drawer_3) {
-                    scope.launch { drawerState.close() }
-                    val intent = Intent(Intent.ACTION_SENDTO).apply {
-                        data = Uri.parse("mailto:")
-                        putExtra(Intent.EXTRA_EMAIL, arrayOf("mohammedrehanm1137@gmail.com"))
-                        putExtra(Intent.EXTRA_SUBJECT, "Bug Report - Siraathal Musthaqeem App")
-                    }
-                    // Use runCatching to avoid crashes if no email app is found
-                    runCatching {
-                        context.startActivity(Intent.createChooser(intent, "Send email"))
-                    }
-                }
-
-                // Rate the app
-                DrawerMenuItem("Rate the App", R.drawable.nav_drawer_4) {
-                    scope.launch {
-                        drawerState.close()
-                        val appPackageName = context.packageName
-                        val playStoreIntent = Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse("market://details?id=$appPackageName")
-                        ).apply {
-                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        }
-
-                        runCatching {
-                            context.startActivity(playStoreIntent)
-                        }.onFailure {
-                            // fallback to browser
-                            context.startActivity(
-                                Intent(
-                                    Intent.ACTION_VIEW,
-                                    Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
-                                )
-                            )
-                        }
-                    }
-                }
-
-                // Share the app
-                DrawerMenuItem("Share the App", R.drawable.nav_drawer_5) {
-                    scope.launch {
-                        drawerState.close()
-                        val shareIntent = Intent(Intent.ACTION_SEND).apply {
-                            type = "text/plain"
-                            putExtra(
-                                Intent.EXTRA_TEXT,
-                                "✨ Discover *Siraathal Musthaqeem* — your complete Islamic companion app.\n" +
-                                        "Read Quran, explore powerful Duas, track Salah times and much more.\n\n" +
-                                        "Download now and stay connected to Allah:\n" +
-                                        "https://play.google.com/store/apps/details?id=${context.packageName}"
-                            )
-                        }
-                        runCatching {
-                            context.startActivity(
-                                Intent.createChooser(
-                                    shareIntent,
-                                    "Share App via"
-                                )
-                            )
-                        }
-                    }
-                }
-
-                DrawerMenuItem("About the App", R.drawable.nav_drawer_6) {
-                    scope.launch {
-                        drawerState.close()
-                        navController.navigate("about")
-                    }
-                }
-
-                Spacer(modifier = Modifier.weight(1f))
-                Text(
-                    text = "v 1.0",
-                    modifier = Modifier.padding(16.dp),
-                    style = MaterialTheme.typography.bodySmall,
-                    textAlign = TextAlign.Center
-                )
-            }
-        }
+        // Navigation Drawer
+        drawerContent = { HomeDrawerContent(navController, drawerState) }
     ) {
         Scaffold(
             topBar = {
                 TopAppBar(
                     title = {
                         Text(
-                            text = "Assalamu Alaikum, ${if (userName.isNotEmpty()) userName else "Believer"}!",
+                            text = "Assalamu Alaikum, ${if (userName.isNotEmpty()) userName else ""}!",
                             style = MaterialTheme.typography.titleMedium
                         )
                     },
@@ -246,58 +123,10 @@ fun HomeScreen(
                     }
                 )
             },
-            bottomBar = {
-                NavigationBar(
-                    // Apply Green Background to NavigationBar
-                    containerColor = colorResource(id = R.color.green),
-                    // Apply custom colors for content
-                    contentColor = colorResource(id = R.color.white) // This sets the default color for unselected items
-                ) {
-                    listOf(
-                        BottomNavItem.Home,
-                        BottomNavItem.Quran,
-                        BottomNavItem.Dua,
-                        BottomNavItem.Tasbeeh
-                    ).forEach { item ->
-                        val isSelected = selectedBottom == item
-                        val iconColor = if (isSelected) {
-                            colorResource(id = R.color.white) // White when selected
-                        } else {
-                            colorResource(id = R.color.white).copy(alpha = 0.7f) // Dimmed white when unselected
-                        }
+            // Bottom Navigation
+            bottomBar = { HomeBottomBar(navController = navController) },
 
-                        NavigationBarItem(
-                            selected = isSelected,
-                            onClick = {
-                                selectedBottom = item
-                                navController.navigate(item.route) {
-                                    popUpTo(BottomNavItem.Home.route) { saveState = true }
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
-                            },
-                            icon = {
-                                Image(
-                                    painter = painterResource(id = item.icon),
-                                    contentDescription = item.title,
-                                    modifier = Modifier.size(24.dp), // Adjust size as needed
-                                    colorFilter = ColorFilter.tint(iconColor)
-                                )
-                            },
-                            label = { Text(item.title) },
-                            // Keep colors for text/indicator but the Icon colors are now controlled above
-                            colors = NavigationBarItemDefaults.colors(
-                                indicatorColor = colorResource(id = R.color.white).copy(alpha = 0.2f),
-                                // Set IconColors to transparent/default since we handle them in the Image composable now
-                                selectedIconColor = colorResource(id = R.color.white), // Keep these for good measure/consistency
-                                unselectedIconColor = colorResource(id = R.color.white).copy(alpha = 0.7f),
-                                selectedTextColor = colorResource(id = R.color.white),
-                                unselectedTextColor = colorResource(id = R.color.white).copy(alpha = 0.7f)
-                            )
-                        )
-                    }
-                }
-            },
+            // Main Content
             content = { innerPadding ->
                 Column(
                     modifier = Modifier
@@ -338,88 +167,79 @@ fun HomeScreen(
 
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    // Responsive Features Grid
+                    // Responsive Features Grid 3*3
                     BoxWithConstraints(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 0.dp) // REMOVE any extra padding here if needed, but it seems fine.
+                        modifier = Modifier.fillMaxWidth()
                     ) {
-                        val itemSpacing = 16.dp
                         val columns = 3
-
-                        // FIX: Use a slightly safer calculation to ensure 3 items fit on all screens.
-                        // We deduct the total required space for gaps (itemSpacing * 2)
-                        // and divide the remainder by 3.
-                        val itemWidth = (maxWidth - (itemSpacing * (columns - 1))) / columns
+                        val spacing = 16.dp
+                        val itemWidth = (maxWidth - spacing * (columns - 1)) / columns
 
                         FlowRow(
-                            // Enforcing 3 items per row to solve the wrapping issue
                             maxItemsInEachRow = columns,
-                            horizontalArrangement = Arrangement.spacedBy(itemSpacing),
+                            horizontalArrangement = Arrangement.spacedBy(spacing),
                             verticalArrangement = Arrangement.spacedBy(20.dp),
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             features.forEach { feature ->
+
                                 Column(
                                     horizontalAlignment = Alignment.CenterHorizontally,
-                                    // Apply the calculated width
                                     modifier = Modifier
-                                        .width(itemWidth)
+                                        .width(itemWidth)           // Forces EXACT width → ensures 3 items per row
                                         .clickable {
                                             when (feature.route) {
                                                 NavigationItem.MasjidNearMe.route -> {
                                                     if (isLocationEnabled(context)) {
-                                                        val gmmIntentUri =
-                                                            Uri.parse("geo:0,0?q=masjid near me")
-                                                        val mapIntent = Intent(
-                                                            Intent.ACTION_VIEW,
-                                                            gmmIntentUri
-                                                        ).apply {
+                                                        val gmmIntentUri = Uri.parse("geo:0,0?q=masjid near me")
+                                                        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri).apply {
                                                             setPackage("com.google.android.apps.maps")
                                                         }
-                                                        runCatching {
-                                                            context.startActivity(
-                                                                mapIntent
-                                                            )
-                                                        }.onFailure {
-                                                            // Fallback to browser if Maps app is not installed
-                                                            context.startActivity(
-                                                                Intent(
-                                                                    Intent.ACTION_VIEW,
-                                                                    Uri.parse("https://www.google.com/maps/search/masjid+near+me")
+                                                        runCatching { context.startActivity(mapIntent) }
+                                                            .onFailure {
+                                                                context.startActivity(
+                                                                    Intent(
+                                                                        Intent.ACTION_VIEW,
+                                                                        Uri.parse("https://www.google.com/maps/search/masjid+near+me")
+                                                                    )
                                                                 )
-                                                            )
-                                                        }
+                                                            }
                                                     } else {
                                                         Toast.makeText(
                                                             context,
-                                                            "Location is off. Please enable it to view nearby masjids.",
+                                                            "Location is off. Please enable it.",
                                                             Toast.LENGTH_SHORT
                                                         ).show()
                                                         context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
                                                     }
                                                 }
-                                                // Default case: Navigate for all other features with defined internal routes
                                                 else -> navController.navigate(feature.route)
                                             }
                                         }
                                 ) {
+
+                                    // This is card size height and width i.e. outer part
                                     Surface(
                                         tonalElevation = 1.dp,
                                         shape = MaterialTheme.shapes.medium,
                                         modifier = Modifier
-                                            .size(itemWidth * 0.7f)
+                                            .size(itemWidth * 0.8f)
                                             .border(
-                                                width = 1.dp,
+                                                width = 2.dp,
                                                 color = colorResource(id = R.color.green),
                                                 shape = MaterialTheme.shapes.medium
-                                            )
+                                            ),
+                                        color = Color.White
                                     ) {
-                                        Box(contentAlignment = Alignment.Center) {
+                                        Box(
+                                            modifier = Modifier.fillMaxSize(),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            // This is inner part i.e. image size
                                             Image(
                                                 painter = painterResource(id = feature.imageRes),
                                                 contentDescription = feature.title,
-                                                modifier = Modifier.size(itemWidth * 0.85f)
+                                                modifier = Modifier.size(itemWidth * 0.9f)
                                             )
                                         }
                                     }
@@ -447,7 +267,7 @@ fun HomeScreen(
 }
 
 @Composable
-private fun DrawerMenuItem(
+fun DrawerMenuItem(
     label: String,
     iconRes: Int,
     onClick: () -> Unit

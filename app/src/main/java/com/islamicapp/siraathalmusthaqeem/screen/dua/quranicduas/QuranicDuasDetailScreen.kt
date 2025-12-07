@@ -63,6 +63,7 @@ fun QuranicDuasDetailScreen(
 
                     LazyColumn(
                         verticalArrangement = Arrangement.spacedBy(12.dp),
+                        contentPadding = PaddingValues(bottom = 40.dp),
                         modifier = Modifier.fillMaxSize()
                     ) {
                         itemsIndexed(duas) { index, dua ->

@@ -1,4 +1,4 @@
-package com.islamicapp.siraathalmusthaqeem.screen.home.components
+package com.islamicapp.siraathalmusthaqeem.screen.home.components.dailyslider
 
 import android.view.LayoutInflater
 import androidx.compose.runtime.Composable

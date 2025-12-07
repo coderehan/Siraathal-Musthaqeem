@@ -1,4 +1,4 @@
-package com.islamicapp.siraathalmusthaqeem.screen.home.components
+package com.islamicapp.siraathalmusthaqeem.screen.home.components.dailyslider
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

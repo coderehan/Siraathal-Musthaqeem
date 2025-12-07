@@ -1,0 +1,171 @@
+{
+  "title": "Umrah Guide",
+  "description": "Complete guide for performing Umrah with step-by-step instructions",
+  "steps": [
+    {
+      "step_number": 1,
+      "title": "Ihram - Before reaching Meeqat",
+      "sections": [
+        {
+          "subtitle": "Before Ihram",
+          "instructions": [
+            "Remove unwanted hair",
+            "Trim nails",
+            "Make ghusl (bath) & wudhu (ablution) or at least wudhu",
+            "Put on clothes of Ihram - 2 white un-sewn pieces of cloth for men and regular clothes for women",
+            "Women should not cover their faces during Ihram",
+            "Men should not cover their heads during Ihram"
+          ]
+        },
+        {
+          "subtitle": "On entering state of Ihram",
+          "niyyah": {
+            "description": "Intention in any language to enter into Ihram or recite:",
+            "arabic": "لَبَّيْكَ اللَّهُمَّ بِعُمْرَة",
+            "transliteration": "Labbaik Allahumma bi-'Umrah",
+            "translation": "Here I am O Allah, (in response to Your call) making Umrah."
+          }
+        },
+        {
+          "subtitle": "Going to Masjid Al-Haram (Ka'bah)",
+          "instruction": "Men to recite Talbiyah loudly (women quietly)",
+          "talbiyah": {
+            "title": "Talbiyah Recitation (Hajj prayer supplication)",
+            "arabic": "لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لَا شَرِيْكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ لَا شَرِيْكَ لَكَ",
+            "transliteration": "Labbayk Allahumma Labbayk, Labbayk la sharika laka Labbayk, Innal hamda wanni'mata laka walmulk La sharika lak",
+            "translation": "Here I am O Allah, (in response to Your call), here I am. Here I am, You have no partner, here I am. Indeed all the Praise, Grace and Sovereignty belong to You. You have no partner."
+          }
+        },
+        {
+          "subtitle": "Entering Masjid Al-Haram (Sacred Mosque) in Makkah",
+          "instruction": "Enter with the right foot and recite:",
+          "dua": {
+            "arabic": "اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ",
+            "transliteration": "Allahumma aftah lee abwaaba rahmatika",
+            "translation": "O Allah, open the doors of Your Mercy for me."
+          }
+        }
+      ]
+    },
+    {
+      "step_number": 2,
+      "title": "Tawaaf (Circling the Ka'bah 7 times)",
+      "sections": [
+        {
+          "subtitle": "Preparation",
+          "instructions": [
+            "Before proceeding to the starting point of Tawaaf, Al-Hajarul-Aswad (The Black Stone), men only - uncover right shoulder by placing Ihram underneath right arm-pit (this is known as Idhtiba)"
+          ]
+        },
+        {
+          "subtitle": "Beginning Each Circuit",
+          "instruction": "When beginning each circuit, make a sign with your right hand towards al-Hajarul-Aswad (The Black Stone) and recite:",
+          "takbir": {
+            "arabic": "اللهُ أَكْبَر",
+            "transliteration": "Allahu Akbar",
+            "translation": "Allah is the Greatest"
+          },
+          "notes": [
+            "If possible, touch The Black Stone with the right hand and also kiss it; if not, simply make a sign towards it with the right hand"
+          ]
+        },
+        {
+          "subtitle": "During Tawaaf",
+          "instructions": [
+            "Men should walk briskly (Raml) during first 3 circuits only",
+            "The remaining 4 circuits are done at a normal pace",
+            "Complete 7 circuits around the Ka'bah",
+            "No particular supplication (Dua) is essential during Tawaaf"
+          ],
+          "special_dua": {
+            "location": "Between Ar-Ruknul-Yamani (Yemeni Corner) and Al-Hajarul-Aswad",
+            "instruction": "It is Sunnah to recite the following:",
+            "arabic": "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي اآلخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّار",
+            "transliteration": "Rabbanaa aatinaa fid-dunyaa hasanatan wa feel aakhirati hasanatan wa qinaa 'adhaaban naar",
+            "translation": "Our Lord! Give us in this world that which is good and in the Hereafter that which is good, and save us from the torment of the Fire!"
+          },
+          "notes": [
+            "If possible, touch Ar-Ruknul-Yamani (Yemeni Corner) each time - this is best; if not, then do not make any sign towards it",
+            "There is no specific Du'aa during the walk around the Ka'bah, apart from what has been mentioned for between The Yemeni Corner to The Black Stone. You can therefore recite the Quran or any Dua as you please"
+          ]
+        },
+        {
+          "subtitle": "After Completing Tawaaf",
+          "instructions": [
+            "Cover your right shoulder",
+            "Offer 2 rakaats anywhere behind the Station of Ibraheem - or anywhere in the Haram",
+            "Recite Surat al-Kafirun in 1st rakaa and Surat al-Ikhlas in the 2nd rakaa",
+            "Drink Zamzam water - Make Dua"
+          ]
+        }
+      ]
+    },
+    {
+      "step_number": 3,
+      "title": "Sa'ee (Completion of 7 rounds between Safa & Marwah)",
+      "sections": [
+        {
+          "subtitle": "Instructions",
+          "instructions": [
+            "Begin Sa'ee at as-Safa",
+            "Complete walk from as-Safa to al-Marwah (one circuit)",
+            "Then al-Marwah to as-Safa (second circuit)",
+            "Continue for seven circuits, finishing at al-Marwah",
+            "Upon encountering green lights, men only - run from one light to other light"
+          ]
+        },
+        {
+          "subtitle": "At the foot of as-Safa recite",
+          "dua": {
+            "arabic": "إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَآئِرِ اللهِ فَمَنْ حَجَّ الْبَيْتَ أَوِ اعْتَمَرَ فَلاَ جُنَاحَ عَلَيْهِ أَن يَطَّوَّفَ بِهِمَا وَمَن تَطَوَّعَ خَيْراً فَإِنَّ اللهَ شَاكِرٌ عَلِيْمٌ",
+            "transliteration": "Innas-safaa wal marwata min sha'aa'irillaahi faman hajjal baita 'awi'tamara falaa junaaha 'alaihi an yattawwafa bihimaa wa man tatawwa'a khiran fa'innAllaha shaakirun 'aleemun",
+            "translation": "Verily! As-Safa and al-Marwah are of the Symbols of Allah. So it is not a sin on him who performs Hajj or 'Umrah of the House to perform the Tawaf between them. And whoever does good voluntarily, then verily, Allah is All-Recognizer, All-Knower."
+          }
+        },
+        {
+          "subtitle": "Each time you complete one round (Safa and Marwah) recite",
+          "dua": {
+            "arabic": "اللهُ أَكْبَرُ، اللهُ أَكْبَرُ، اللهُ أَكْبَرُ، لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيْكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ يُحْيِي وَيُمِيْتُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيْرٌ؛ لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيْكَ لَهُ، أَنْجَزَ وَعْدَهُ وَنَصَرَ عَبْدَهُ وَهَزَمَ الأَحْزَابَ وَحْدَهُ",
+            "transliteration": "Allahu Akbar Allahu Akbar Allahu Akbar - laa illaaha illallahu wahdau laa shareekalah - lahul mulku wa lahul hamdu - yuhyee wa yumeetu wa huwa 'alaa kulli shai'in qadeer - laa ilaaha illallahu wahdahu laa shareekalah - anjaza wa'dahu wa nasara 'abdahu wa hazamal ahzaaba wahdahu",
+            "translation": "Allah is the Greatest, Allah is the Greatest, Allah is the Greatest. There is none truly worthy of worship except Allah alone, without partner. To Him belongs all Sovereignty and all Praise. He alone gives life and causes death, He is Omnipotent over all things. There is none truly worthy of worship except Allah alone, without partner. He has fulfilled His promise, and helped His slave, and He alone has defeated the confederates."
+          }
+        }
+      ]
+    },
+    {
+      "step_number": 4,
+      "title": "Shaving Head/Trimming",
+      "subtitle": "After completing Sa'ee",
+      "instructions": [
+        "Men: shaving entire head is preferable or cut hair equally from all over head",
+        "Women: cut one-third finger-length of hair"
+      ],
+      "leaving_masjid": {
+        "instruction": "Upon leaving al-Masjid ul-Haraam with the left foot, recite:",
+        "dua": {
+          "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ",
+          "transliteration": "Allahumma innee 'as'aluka min fadhlika",
+          "translation": "O Allah, verily I ask You from Your Favor."
+        }
+      },
+      "completion": "Remove Ihram, as all restrictions are now lifted. Umrah is now complete."
+    }
+  ],
+  "additional_info": {
+    "visiting_madina": {
+      "title": "Visiting Madina - Masjid-Al-Nabawi – Masjid Quba",
+      "is_obligatory": false,
+      "description": "Visiting Madina is not an obligatory act for either Hajj or Umrah, but there is great value in visiting Al Masjid-Al-Nabawi (the Prophet's Mosque).",
+      "hadith": [
+        {
+          "text": "One prayer in this mosque (Madina) of mine is better than 1,000 prayers offered anywhere else except the Masjid Al-Haram (Makkah), and one prayer in Masjid Al-Haram is better than 100,000 prayers in any other mosque.",
+          "narrator": "Prophet Muhammad (sallallahu alayhi wa sallam)"
+        },
+        {
+          "text": "Whoever makes ablutions at home and then goes and prays in Masjid Quba (the first mosque built in Islam), will have a reward like that of an Umrah.",
+          "narrator": "Prophet Muhammad (sallallahu alayhi wa sallam)"
+        }
+      ]
+    }
+  }
+}

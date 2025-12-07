@@ -1,4 +1,4 @@
-package com.islamicapp.siraathalmusthaqeem.screen.home.components
+package com.islamicapp.siraathalmusthaqeem.screen.home.components.dailyslider
 
 import android.view.LayoutInflater
 import androidx.compose.runtime.Composable
@@ -9,19 +9,14 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.islamicapp.siraathalmusthaqeem.R
 
 @Composable
-fun RandomQuranVerseView(modifier: Modifier = Modifier) {
+fun HadithOfDayView(modifier: Modifier = Modifier) {
     val context = LocalContext.current
-
     val view = remember {
         LayoutInflater.from(context)
-            .inflate(R.layout.view_quran_verse, null, false)
+            .inflate(R.layout.view_hadith_of_day, null, false)
     }
-
     AndroidView(
         modifier = modifier,
         factory = { view }
     )
 }
-
-
-

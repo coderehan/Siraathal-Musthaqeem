@@ -24,6 +24,9 @@ import com.islamicapp.data.hadith.source.HadithDataSource
 import com.islamicapp.data.hadith.source.HadithDataSourceImpl
 import com.islamicapp.data.hadith.source.network.HadithApi
 import com.islamicapp.data.hadith.source.network.HadithNetworkDataSource
+import com.islamicapp.data.pilgrimage.repository.PilgrimageRepositoryImpl
+import com.islamicapp.data.pilgrimage.source.local.PilgrimageDataSource
+import com.islamicapp.data.pilgrimage.source.local.PilgrimageDataSourceImpl
 import com.islamicapp.data.prayertimes.source.PrayerTimesDataSource
 import com.islamicapp.data.prayertimes.source.PrayerTimesDataSourceImpl
 import com.islamicapp.data.prayertimes.source.network.PrayerTimesApi
@@ -41,6 +44,7 @@ import com.islamicapp.domain.duas.prophetsduas.repository.ProphetsDuasRepository
 import com.islamicapp.domain.duas.quranicduas.repository.QuranicDuasRepository
 import com.islamicapp.domain.duas.rabbanaduas.repository.RabbanaDuasRepository
 import com.islamicapp.domain.hadith.repository.HadithRepository
+import com.islamicapp.domain.pilgrimage.repository.PilgrimageRepository
 import com.islamicapp.domain.prayertimes.repository.PrayerTimesRepository
 import com.islamicapp.domain.prophetsstories.repository.ProphetsStoriesRepository
 import com.islamicapp.domain.seerah.repository.SeerahRepository
@@ -54,10 +58,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  * Each feature has its own base URL and Retrofit binding.
  */
 const val PRAYER_TIMES_RETROFIT = "PRAYER_TIMES_RETROFIT"
-const val QIBLA_RETROFIT = "QIBLA_RETROFIT"
 const val HADITH_RETROFIT = "HADITH_RETROFIT"
-const val QURAN_SURAH_BASE_RETROFIT = "QURAN_SURAH_BASE_RETROFIT"
-const val QURAN_JUZ_BASE_RETROFIT = "QURAN_JUZ_BASE_RETROFIT"
 const val QURAN_AUDIO_BASE_RETROFIT = "QURAN_AUDIO_BASE_RETROFIT"
 
 // As 'API interfaces', 'Network Data Source', 'Data Source Impl' comes under 'Data Module', it should be declared in 'Data Module' level
@@ -76,34 +77,10 @@ val dataModule = module {
             .build()
     }
 
-    // QIBLA_RETROFIT instance
-    single(named(QIBLA_RETROFIT)) {
-        Retrofit.Builder()
-            .baseUrl(Constants.QIBLA_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
     // HADITH_RETROFIT instance
     single(named(HADITH_RETROFIT)) {
         Retrofit.Builder()
             .baseUrl(Constants.HADITH_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    // QURAN_SURAH_BASE_RETROFIT instance
-    single(named(QURAN_SURAH_BASE_RETROFIT)) {
-        Retrofit.Builder()
-            .baseUrl(Constants.QURAN_SURAH_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    // QURAN_JUZ_BASE_RETROFIT instance
-    single(named(QURAN_JUZ_BASE_RETROFIT)) {
-        Retrofit.Builder()
-            .baseUrl(Constants.QURAN_JUZ_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -161,6 +138,9 @@ val dataModule = module {
     factory<Allah99NamesDataSource> {
         Allah99NamesDataSourceImpl(get())
     }
+    factory<PilgrimageDataSource> {
+        PilgrimageDataSourceImpl(get())
+    }
 
 
     /**
@@ -197,6 +177,9 @@ val dataModule = module {
     }
     factory<Allah99NamesRepository> {
         Allah99NamesRepositoryImpl(get())
+    }
+    factory<PilgrimageRepository> {
+        PilgrimageRepositoryImpl(get())
     }
 
 }
