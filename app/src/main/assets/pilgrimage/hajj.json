@@ -1,0 +1,268 @@
+{
+  "title": "Hajj Guide",
+  "description": "Complete guide for performing Hajj with step-by-step instructions for all days",
+  "types_of_hajj": {
+    "description": "Any person intending to perform Hajj opts for either one of the three types of Hajj",
+    "types": [
+      {
+        "name": "Tamattu",
+        "description": "Making Umrah then Hajj in the prescribed months of Hajj. It is considered the best of the three forms of Hajj that the Prophet Muhammad (Pbuh) urged his followers to perform.",
+        "requires_sacrifice": true
+      },
+      {
+        "name": "Qiraan",
+        "description": "Making Umrah and Hajj at the same time.",
+        "requires_sacrifice": true
+      },
+      {
+        "name": "Ifraad",
+        "description": "Making Hajj only without Umrah.",
+        "requires_sacrifice": false
+      }
+    ],
+    "note": "If you select Tamattu or Qiraan you must perform the Udhiya (Sacrifice), (Qurbani in Urdu)."
+  },
+  "preparation": {
+    "before_departure": [
+      "Pay all debts",
+      "Redress all wrongs",
+      "Write your will"
+    ],
+    "upon_arrival_makkah": "Make Tawaf"
+  },
+  "days": [
+    {
+      "day": "8th Dhul-Hijjah",
+      "name": "Yawmut-Tarwiyah",
+      "title": "Wearing The Ihram & Stay In Mina",
+      "sections": [
+        {
+          "subtitle": "Enter state of Ihram",
+          "location": "From wherever you are residing - hotel, house, etc.",
+          "niyyah": {
+            "instruction": "Make intention for Hajj, reciting:",
+            "arabic": "لَبَّيْكَ اللَّهُمَّ بِحَجّ",
+            "transliteration": "Labbayk Allahumma bi-hajjah",
+            "translation": "Here I am O Allah, (in response to Your call) making Hajj."
+          },
+          "talbiyah": {
+            "instruction": "Standing, face the Qiblah recite the Talbiyah:",
+            "arabic": "لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لَا شَرِيْكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ لَا شَرِيْكَ لَكَ",
+            "transliteration": "Labbayk Allahumma Labbayk, Labbayk la sharika laka Labbayk, Innal hamda wanni'mata laka walmulk La sharika lak",
+            "translation": "Here I am O Allah, (in response to Your call), here I am. Here I am, You have no partner, here I am. Indeed all the Praise, Grace and Sovereignty belong to You. You have no partner."
+          }
+        },
+        {
+          "subtitle": "Travel to Mina",
+          "instruction": "Between the time period after Fajr until before Zhuhur go to Mina (preferably in Morning)"
+        },
+        {
+          "subtitle": "Stay in Mina",
+          "activities": [
+            "Pray Dhuhr, 'Asr, Maghrib and 'Isha at Mina",
+            "Engage in Ibadah (worship) all day"
+          ],
+          "prayer_note": "Pray two Fard each for Zhuhur, 'Asr and 'Isha. Maghrib is not shortened, and remains three Fard. 'Isha to be followed by Witr."
+        }
+      ]
+    },
+    {
+      "day": "9th Dhul-Hijjah",
+      "name": "Yawmu 'Arafah",
+      "title": "Stay In Arafah & Stay In Muzdalifah",
+      "sections": [
+        {
+          "subtitle": "Morning in Mina",
+          "instruction": "Pray Fajr in Mina"
+        },
+        {
+          "subtitle": "Travel to Arafat",
+          "instructions": [
+            "Go to Arafat any time after sunrise",
+            "Stopover if possible at Namirah (place close to 'Arafah - there is now a Masjid there)",
+            "Remain there until after Zawaal (sun at highest point - no shadow) and listen to the Khutbah",
+            "If this is not possible, it is permissible to proceed to 'Arafah, remaining there until sunset",
+            "Stand upon the rocks at the bottom of the Mount of Mercy (Jabalur-Rahmah); if not, then all of 'Arafah is a standing place"
+          ]
+        },
+        {
+          "subtitle": "During Arafah",
+          "activities": [
+            "Pray Dhuhr & Asr at Arafah",
+            "Perform WUQUF (stand and pray), make dua (supplications) and seek forgiveness until sunset",
+            "Facing the Qiblah, with raised hands, supplicate and also recite the Talbiyah"
+          ],
+          "best_supplication": {
+            "instruction": "It is encouraged to frequently recite the following - this is the best supplication to recite on this great day:",
+            "arabic": "لَا إِلَهَ إِلَّ اللهُ وَحْدَهُ لَا شَرِيْكَ لَهُ، لَهُ الْمُلْكُ، وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيْرٌ",
+            "transliteration": "La ilaha ill Allahu wahdahu laa shareeka lahu lahul mulk wa lahul hamdu wa huwa 'alaa kulli shay 'in qadeer",
+            "translation": "There is none truly worthy of worship except Allah alone, without partner. To Him belongs all Sovereignty and all Praise, and He is Omnipotent over all things."
+          }
+        },
+        {
+          "subtitle": "Travel to Muzdalifah",
+          "instruction": "After sunset go to Muzdalifah"
+        },
+        {
+          "subtitle": "Stay in Muzdalifah",
+          "activities": [
+            "Pray Maghrib & Isha together at Muzdalifah",
+            "In Muzdalifah or Mina, collect 70 pebbles for stoning",
+            "Spend the night in Ibadah (worship) or go to sleep until Fajr"
+          ],
+          "pebble_note": "They are all the same in size. You can also pick the pebbles in Mina. You will need only 7 pebbles on the 10th, and 42 afterwards (49 total). You will need 21 extra pebbles if you are staying for the 13th of Dhul-Hijjah (70 total). They must not be bigger than a chick-pea. (Approximately 1cm across = 0.39 inches)."
+        }
+      ]
+    },
+    {
+      "day": "10th Dhul-Hijjah",
+      "name": "Yawmun-Nahr",
+      "title": "Stoning The Pillars, Performing The Udhiya (Sacrifice), Shave Head, Tawaaful-Ifaadhah",
+      "sections": [
+        {
+          "subtitle": "Morning in Muzdalifah",
+          "instruction": "Pray Fajr in Muzdalifah, then leave for Mina after Fajr"
+        },
+        {
+          "subtitle": "Stoning at Jamaratul-'Aqabah al-Kubraa",
+          "timing": "Between the time periods of after sunrise until the night",
+          "instructions": [
+            "Calmly proceed to Jamaratul-'Aqabah al-Kubraa for stoning",
+            "Facing Jamarah, with Makkah to your left and Mina to your right",
+            "Throw seven stones at Jamarah"
+          ],
+          "recitation": {
+            "instruction": "Recite after each throw:",
+            "arabic": "اللهُ أَكْبَر",
+            "transliteration": "Allahu Akbar",
+            "translation": "Allah is the Greatest"
+          }
+        },
+        {
+          "subtitle": "Performing the Udhiya (Sacrifice)",
+          "instructions": [
+            "If a sacrificial ticket has been purchased, this is a permissible alternative",
+            "Otherwise, calmly proceed to slaughter house in Mina for sacrifice"
+          ]
+        },
+        {
+          "subtitle": "Shave/Trim Hair",
+          "instruction": "After the sacrifice:",
+          "men": "Shaving head is preferable, or cut hair equally from all over head",
+          "women": "Cut one-third finger length of hair",
+          "note": "Remove Ihram, as all restrictions are now lifted"
+        },
+        {
+          "subtitle": "Go to Makkah to perform Tawaaful-Ifaadhah",
+          "timing": "Can be performed anytime up to sunset of 12th Dhul Hijjah",
+          "instructions": [
+            "Upon entering al-Masjid ul-Haraam with the right foot, recite Dua entering Masjid",
+            "No Ihram required",
+            "Start at al-Hajarul-Aswad (Black Stone)",
+            "Once Tawaaf is complete, offer 2 rakaats anywhere behind the Station of Ibraheem - or anywhere in the Haram",
+            "Recite Surat al-Kafirun in 1st raka'a and Surat al-Ikhlas in the 2nd raka'a",
+            "Drink Zamzam water - Make Du'aa",
+            "Perform Sa'ee",
+            "Upon the completion of the Sa'ee, all restrictions are now lifted",
+            "Return back to Mina"
+          ],
+          "leaving": {
+            "instruction": "Upon leaving al-Masjid ul-Haraam with the left foot, recite dua of leaving the Masjid",
+            "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ",
+            "transliteration": "Allahumma innee 'as'aluka min fadhlika",
+            "translation": "O Allah, verily I ask You from Your Favor."
+          },
+          "women_note": "Women should allow extra days for Tawaf in Makkah in case of menses."
+        }
+      ]
+    },
+    {
+      "day": "11th Dhul-Hijjah",
+      "title": "Stay in Mina for Stoning",
+      "sections": [
+        {
+          "subtitle": "If Tawaf Ifaadhah was not performed yesterday",
+          "instruction": "Go to Makkah and perform Tawaf. Then pray 2 rakaats, drink from Zam Zam and perform Sa'ee. Return to Mina.",
+          "note": "Tawaaful-Ifaadhah (Tawaaf ul Ziyarrat in Urdu) can be performed on the 10th."
+        },
+        {
+          "subtitle": "Stoning all three Jamarats",
+          "timing": "From the time period between after Zawaal (sun at highest point - no shadow) until the night",
+          "total_stones": "21 required per day",
+          "sequence": [
+            {
+              "jamarah": "First Jamarah (smallest)",
+              "position": "Facing first Jamarah, with Makkah to your left and Mina to your right",
+              "stones": 7,
+              "recitation": {
+                "arabic": "اللهُ أَكْبَر",
+                "transliteration": "Allahu Akbar",
+                "translation": "Allah is the Greatest (after each throw)"
+              },
+              "after_stoning": "Face Qiblah (with first Jamarah to your right), raise hands and supplicate as you wish"
+            },
+            {
+              "jamarah": "Second Jamarah (middle one)",
+              "position": "Facing second Jamarah, with Makkah to your left and Mina to your right",
+              "stones": 7,
+              "recitation": {
+                "arabic": "اللهُ أَكْبَر",
+                "transliteration": "Allahu Akbar",
+                "translation": "Allah is the Greatest (after each throw)"
+              },
+              "after_stoning": "Face Qiblah (with second Jamarah to your right), raise hands and supplicate as you wish"
+            },
+            {
+              "jamarah": "Third Jamarah (Al-'Aqabah al-Kubraa)",
+              "position": "Facing third Jamarah, with Makkah to your left and Mina to your right",
+              "stones": 7,
+              "recitation": {
+                "arabic": "اللهُ أَكْبَر",
+                "transliteration": "Allahu Akbar",
+                "translation": "Allah is the Greatest (after each throw)"
+              },
+              "after_stoning": "Move onwards without supplicating"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day": "12th Dhul-Hijjah",
+      "title": "Stoning & Option to Leave Mina",
+      "sections": [
+        {
+          "subtitle": "If Tawaf Ifaadhah has still not been performed",
+          "instruction": "Go to Makkah and perform Tawaf. Pray 2 rakaats, drink from Zam Zam and perform Sa'ee. Return back to Mina."
+        },
+        {
+          "subtitle": "Stoning all 3 Jamarat",
+          "timing": "From the time period between after Zawaal (after mid-day) until the night",
+          "instruction": "Stone all 3 Jamarat with 7 pebbles for each one",
+          "leaving_option": "Leave Mina for Makkah before Sunset if possible. If you can't leave - Stay at Mina.",
+          "note": "It is permissible to perform Tawaaful-Wadaa' on 12th day of Dhul-Hijjah (as long as you leave Mina before sunset), thus missing the recommended (but not compulsory) day of stoning."
+        }
+      ]
+    },
+    {
+      "day": "13th Dhul-Hijjah",
+      "title": "Final Stoning & Departure (if stayed in Mina)",
+      "sections": [
+        {
+          "subtitle": "If you didn't leave Mina",
+          "instructions": [
+            "Beginning after Fajr, stone all 3 Jamarat with 7 pebbles for each Jamarat",
+            "Leave for Makkah"
+          ]
+        },
+        {
+          "subtitle": "Before final departure from Makkah",
+          "instruction": "Perform Tawaaful-Wadaa' (Farewell Tawaf) as your last act"
+        }
+      ]
+    }
+  ],
+  "conclusion": {
+    "dua": "Hajj Mabrur (An accepted Hajj). May Allah (SWT) accept your Hajj."
+  }
+}

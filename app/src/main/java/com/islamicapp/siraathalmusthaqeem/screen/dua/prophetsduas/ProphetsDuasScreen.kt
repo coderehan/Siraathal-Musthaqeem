@@ -33,7 +33,6 @@ fun ProphetsDuasScreen(viewModel: ProphetsDuasViewModel = koinViewModel()) {
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color(0xFFF9FAFB))
-                .padding(padding)
         ) {
             when (val state = uiState) {
                 is UIState.Loading -> Box(
@@ -46,7 +45,12 @@ fun ProphetsDuasScreen(viewModel: ProphetsDuasViewModel = koinViewModel()) {
 
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(16.dp),
+                        contentPadding = PaddingValues(
+                            top = padding.calculateTopPadding(),
+                            bottom = padding.calculateBottomPadding(),
+                            start = 16.dp,
+                            end = 16.dp
+                        ),
                         verticalArrangement = Arrangement.spacedBy(24.dp)
                     ) {
                         items(prophets) { prophet ->

@@ -61,7 +61,20 @@ fun EmotionsDuasDetailItem(dua: EmotionsDuas, index: Int) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Translation (bold label only)
+            // Transliteration
+            Text(
+                text = buildAnnotatedString {
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                        append("Transliteration: ")
+                    }
+                    append(dua.transliteration)
+                },
+                style = MaterialTheme.typography.bodyMedium.copy(color = Color(0xFF374151))
+            )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            // Translation
             Text(
                 text = buildAnnotatedString {
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
@@ -74,7 +87,7 @@ fun EmotionsDuasDetailItem(dua: EmotionsDuas, index: Int) {
 
             Spacer(modifier = Modifier.height(4.dp))
 
-            // Reference (bold label only)
+            // Reference
             Text(
                 text = buildAnnotatedString {
                     withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {

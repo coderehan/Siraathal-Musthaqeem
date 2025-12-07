@@ -22,6 +22,9 @@ import com.islamicapp.siraathalmusthaqeem.screen.quran.juz.JuzListScreen
 import com.islamicapp.siraathalmusthaqeem.screen.quran.surah.SurahListScreen
 import com.islamicapp.siraathalmusthaqeem.utils.CommonActionBar
 import com.islamicapp.siraathalmusthaqeem.utils.CommonTabLayout
+import androidx.compose.material3.Scaffold
+import androidx.navigation.NavHostController
+import com.islamicapp.siraathalmusthaqeem.screen.home.components.HomeBottomBar
 
 @Composable
 fun QuranScreen(
@@ -29,36 +32,43 @@ fun QuranScreen(
 ) {
     val quranTabs = listOf("Surah", "Juz")
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-    ) {
-        // Common Action Bar
-        CommonActionBar(title = "Quran", navController = navController)
+    Scaffold(
+        topBar = {
+            CommonActionBar(title = "Quran", navController = navController)
+        },
+        bottomBar = {
+            HomeBottomBar(navController = navController as NavHostController)
+        }
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White)
+                .padding(padding)
+        ) {
+            // Quick Access section (ABOVE tab layout)
+            Text(
+                text = "Quick Access",
+                style = MaterialTheme.typography.titleMedium.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = colorResource(id = R.color.black),
+                ),
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+            )
 
-        // Quick Access section (ABOVE tab layout)
-        Text(
-            text = "Quick Access",
-            style = MaterialTheme.typography.titleMedium.copy(
-                fontWeight = FontWeight.Bold,
-                color = colorResource(id = R.color.black),
-            ),
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
-        )
+            QuickAccessSurahs(navController = navController)
 
-        QuickAccessSurahs(navController = navController)
+            Spacer(modifier = Modifier.height(8.dp))
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Tabs for Surah / Juz
-        CommonTabLayout(
-            tabTitles = quranTabs,
-            isScrollable = false
-        ) { index, _ ->
-            when (index) {
-                0 -> SurahListScreen(navController)
-                1 -> JuzListScreen(navController)
+            // Tabs for Surah / Juz
+            CommonTabLayout(
+                tabTitles = quranTabs,
+                isScrollable = false
+            ) { index, _ ->
+                when (index) {
+                    0 -> SurahListScreen(navController)
+                    1 -> JuzListScreen(navController)
+                }
             }
         }
     }

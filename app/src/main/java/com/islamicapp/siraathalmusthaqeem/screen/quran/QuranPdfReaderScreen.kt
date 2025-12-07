@@ -6,10 +6,11 @@ import android.os.ParcelFileDescriptor
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.pager.VerticalPager
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -21,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
@@ -97,15 +99,23 @@ fun QuranPdfReaderScreen(
                     surahNumber != null -> {
                         val metadata = QuranMetadataProvider.getSurahMetadata(surahNumber)
                         val page = (metadata?.startPage ?: 1) - 1 // Convert to 0-indexed
-                        Log.d("QuranPDF", "Surah $surahNumber -> Page ${metadata?.startPage} (0-indexed: $page)")
+                        Log.d(
+                            "QuranPDF",
+                            "Surah $surahNumber -> Page ${metadata?.startPage} (0-indexed: $page)"
+                        )
                         page
                     }
+
                     juzNumber != null -> {
                         val metadata = QuranMetadataProvider.getJuzMetadata(juzNumber)
                         val page = (metadata?.startPage ?: 1) - 1
-                        Log.d("QuranPDF", "Juz $juzNumber -> Page ${metadata?.startPage} (0-indexed: $page)")
+                        Log.d(
+                            "QuranPDF",
+                            "Juz $juzNumber -> Page ${metadata?.startPage} (0-indexed: $page)"
+                        )
                         page
                     }
+
                     else -> 0
                 }.coerceIn(0, totalPages - 1)
 
@@ -174,7 +184,9 @@ fun QuranPdfReaderScreen(
 
                 errorMessage != null -> {
                     Column(
-                        modifier = Modifier.align(Alignment.Center).padding(32.dp),
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(32.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(errorMessage ?: "Error", color = Color.Red)
@@ -196,9 +208,11 @@ fun QuranPdfReaderScreen(
                         pageCount = { totalPages }
                     )
 
-                    VerticalPager(
+                    // Ensure this HorizontalPager block is correctly implemented:
+                    HorizontalPager(
                         state = pagerState,
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
+                        reverseLayout = true
                     ) { pageIndex ->
                         PdfPageRenderer(
                             pdfRenderer = pdfRenderer!!,
@@ -223,8 +237,12 @@ fun PdfPageRenderer(
     var offsetY by remember { mutableStateOf(0f) }
     val scope = rememberCoroutineScope()
 
-    // Load bitmap when this page is shown
     LaunchedEffect(pageIndex) {
+        // Reset zoom/pan when page changes
+        scale = 1f
+        offsetX = 0f
+        offsetY = 0f
+
         if (bitmap == null && !isRendering) {
             isRendering = true
             scope.launch(Dispatchers.IO) {
@@ -232,9 +250,12 @@ fun PdfPageRenderer(
                     var pageBitmap: Bitmap? = null
                     synchronized(pdfRenderer) {
                         val page = pdfRenderer.openPage(pageIndex)
+                        val originalWidth = page.width
+                        val originalHeight = page.height
+
                         pageBitmap = Bitmap.createBitmap(
-                            page.width * 2,
-                            page.height * 2,
+                            originalWidth * 2,
+                            originalHeight * 2,
                             Bitmap.Config.ARGB_8888
                         )
                         page.render(pageBitmap!!, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
@@ -273,22 +294,21 @@ fun PdfPageRenderer(
                         translationX = offsetX,
                         translationY = offsetY
                     )
+                    // ZOOM gesture - always available for pinch zoom
                     .pointerInput(pageIndex) {
                         detectTransformGestures { _, pan, zoom, _ ->
-                            val newScale = (scale * zoom).coerceIn(1f, 4f)
+                            if (zoom != 1f) {
+                                val newScale = (scale * zoom).coerceIn(1f, 4f)
+                                val maxOffsetX = (size.width * (newScale - 1) / 2f)
+                                val maxOffsetY = (size.height * (newScale - 1) / 2f)
 
-                            if (newScale > 1.01f) {
-                                val maxOffset = 400f * newScale
-                                offsetX = (offsetX + pan.x).coerceIn(-maxOffset, maxOffset)
-                                offsetY = (offsetY + pan.y).coerceIn(-maxOffset, maxOffset)
+                                offsetX = (offsetX + pan.x).coerceIn(-maxOffsetX, maxOffsetX)
+                                offsetY = (offsetY + pan.y).coerceIn(-maxOffsetY, maxOffsetY)
                                 scale = newScale
-                            } else {
-                                scale = 1f
-                                offsetX = 0f
-                                offsetY = 0f
                             }
                         }
                     }
+                    // DOUBLE TAP to zoom
                     .pointerInput(pageIndex) {
                         detectTapGestures(
                             onDoubleTap = {
@@ -302,6 +322,25 @@ fun PdfPageRenderer(
                             }
                         )
                     }
+                    // DRAG gesture - ONLY add when zoomed in
+                    .then(
+                        if (scale > 1f) {
+                            Modifier.pointerInput(pageIndex, scale) {
+                                detectDragGestures { change, dragAmount ->
+                                    change.consume()
+
+                                    val maxOffsetX = (size.width * (scale - 1) / 2f)
+                                    val maxOffsetY = (size.height * (scale - 1) / 2f)
+
+                                    offsetX = (offsetX + dragAmount.x).coerceIn(-maxOffsetX, maxOffsetX)
+                                    offsetY = (offsetY + dragAmount.y).coerceIn(-maxOffsetY, maxOffsetY)
+                                }
+                            }
+                        } else {
+                            Modifier // Empty modifier when not zoomed - allows HorizontalPager to work
+                        }
+                    ),
+                contentScale = ContentScale.Fit
             )
         } ?: if (isRendering) {
             CircularProgressIndicator(

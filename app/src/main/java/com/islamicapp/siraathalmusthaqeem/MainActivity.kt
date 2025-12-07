@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.core.view.WindowCompat
 import com.islamicapp.siraathalmusthaqeem.screen.navigation.Navigation
 import com.islamicapp.siraathalmusthaqeem.screen.theme.ThemeViewModel
 import com.islamicapp.siraathalmusthaqeem.ui.theme.SiraathalMusthaqeemTheme
@@ -22,6 +23,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        // Set system navigation bar to black (home button, back button, recent button)
+        window.navigationBarColor = android.graphics.Color.BLACK
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            isAppearanceLightNavigationBars = false // false = white icons for system nav bar
+        }
 
         preferencesManager = PreferencesManager(applicationContext)
 

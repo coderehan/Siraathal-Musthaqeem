@@ -16,7 +16,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Refresh
@@ -52,7 +54,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.islamicapp.siraathalmusthaqeem.R
+import com.islamicapp.siraathalmusthaqeem.screen.home.components.HomeBottomBar
 import com.islamicapp.siraathalmusthaqeem.screen.tasbeeh.components.CustomTargetDialog
 import com.islamicapp.siraathalmusthaqeem.utils.CommonActionBar
 import kotlinx.coroutines.delay
@@ -83,7 +87,11 @@ fun TasbeehScreen(
     val arabicFont = FontFamily(Font(R.font.indo_pak_quran))
 
     Scaffold(
-        topBar = { CommonActionBar(title = "Tasbeeh", navController = navController) }
+        topBar = { CommonActionBar(title = "Tasbeeh", navController = navController) },
+        // Add Bottom Navigation Bar
+        bottomBar = {
+            HomeBottomBar(navController = navController as NavHostController)
+        }
     ) { padding ->
         Box(
             modifier = Modifier
@@ -95,7 +103,8 @@ fun TasbeehScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 24.dp, vertical = 16.dp),
+                    .padding(horizontal = 24.dp, vertical = 16.dp)
+                    .verticalScroll(rememberScrollState()), // Add scroll to prevent content cutoff
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
@@ -237,6 +246,9 @@ fun TasbeehScreen(
                         )
                     }
                 }
+
+                // Extra bottom spacing to ensure content isn't hidden by bottom bar
+                Spacer(modifier = Modifier.height(16.dp))
             }
 
             // Dialogs

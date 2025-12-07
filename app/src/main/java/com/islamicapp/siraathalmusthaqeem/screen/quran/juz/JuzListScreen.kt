@@ -2,10 +2,9 @@ package com.islamicapp.siraathalmusthaqeem.screen.quran.juz
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -55,25 +54,27 @@ fun JuzListScreen(navController: NavController) {
         Juz("عَمَّ", "Amma")
     )
 
-    Scaffold { padding ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color(0xFFF9FAFB))
-                .padding(padding)
-                .padding(horizontal = 8.dp, vertical = 4.dp),
-            verticalArrangement = Arrangement.spacedBy(1.dp)
-        ) {
-            items(JuzList.size) { index ->
-                val juzNumber = index + 1
-                JuzListItem(
-                    juzNumber = juzNumber,
-                    arabicName = JuzList[index].arabicName,
-                    englishName = JuzList[index].englishName,
-                    navController = navController,
-                    quranFont = quranFont
-                )
-            }
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFF9FAFB)),
+        contentPadding = PaddingValues(
+            start = 0.dp,
+            end = 0.dp,
+            top = 10.dp,
+            bottom = 10.dp
+        ),
+        verticalArrangement = Arrangement.spacedBy(0.dp)
+    ) {
+        items(JuzList.size) { index ->
+            val juzNumber = index + 1
+            JuzListItem(
+                juzNumber = juzNumber,
+                arabicName = JuzList[index].arabicName,
+                englishName = JuzList[index].englishName,
+                navController = navController,
+                quranFont = quranFont
+            )
         }
     }
 }

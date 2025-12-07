@@ -7,6 +7,7 @@ import com.islamicapp.domain.duas.prophetsduas.usecase.ProphetsDuasUseCase
 import com.islamicapp.domain.duas.quranicduas.usecase.QuranicDuasUseCase
 import com.islamicapp.domain.duas.rabbanaduas.usecase.RabbanaDuasUseCase
 import com.islamicapp.domain.hadith.usecase.HadithUseCase
+import com.islamicapp.domain.pilgrimage.usecase.PilgrimageUseCase
 import com.islamicapp.domain.prayertimes.usecase.PrayerTimesUseCase
 import com.islamicapp.domain.prophetsstories.usecase.ProphetsStoriesUseCase
 import com.islamicapp.domain.seerah.usecase.SeerahUseCase
@@ -31,5 +32,6 @@ val domainModule = module {
     factory { QuranicDuasUseCase(get()) }
     factory { MasnoonDuasUseCase(get()) }
     factory { SeerahUseCase(get()) }
+    factory { PilgrimageUseCase(get()) }
 
 }

@@ -71,14 +71,26 @@ fun HadithListScreen(
             }
 
             // 2. Loading State
-            uiState is UIState.Loading -> Box(Modifier.fillMaxSize(), Alignment.Center) { SpinKitLoader() }
+            uiState is UIState.Loading -> Box(
+                Modifier.fillMaxSize(),
+                Alignment.Center
+            ) { SpinKitLoader() }
 
             // 3. Success State
             uiState is UIState.Success -> {
                 val hadithList = (uiState as UIState.Success<List<Hadith>>).data
                     .filter { it.sectionId.isNotBlank() }
 
-                LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    contentPadding = PaddingValues(
+                        start = 0.dp,
+                        end = 0.dp,
+                        top = 10.dp,
+                        bottom = 60.dp
+                    ),
+                )
+                {
                     items(hadithList) { section ->
                         HadithListItem(
                             hadith = section,

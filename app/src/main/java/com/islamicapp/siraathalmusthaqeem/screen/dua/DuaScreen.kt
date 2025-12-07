@@ -3,6 +3,7 @@ package com.islamicapp.siraathalmusthaqeem.screen.dua
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -14,6 +15,8 @@ import com.islamicapp.siraathalmusthaqeem.screen.dua.quranicduas.QuranicDuasScre
 import com.islamicapp.siraathalmusthaqeem.screen.dua.rabbanaduas.RabbanaDuasScreen
 import com.islamicapp.siraathalmusthaqeem.utils.CommonActionBar
 import com.islamicapp.siraathalmusthaqeem.utils.CommonTabLayout
+import androidx.compose.material3.Scaffold
+import com.islamicapp.siraathalmusthaqeem.screen.home.components.HomeBottomBar
 
 @Composable
 fun DuaScreen(navController: NavHostController) {
@@ -25,20 +28,28 @@ fun DuaScreen(navController: NavHostController) {
         "Prophets Duas"
     )
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-    ) {
-        CommonActionBar(title = "Duas", navController = navController)
-
-        CommonTabLayout(tabTitles = duaTabs) { index, title ->
-            when (index) {
-                0 -> MasnoonDuasScreen()
-                1 -> EmotionsDuasScreen(navController = navController)
-                2 -> RabbanaDuasScreen()
-                3 -> QuranicDuasScreen(navController = navController)
-                4 -> ProphetsDuasScreen()
+    Scaffold(
+        topBar = {
+            CommonActionBar(title = "Duas", navController = navController)
+        },
+        bottomBar = {
+            HomeBottomBar(navController = navController)
+        }
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White)
+                .padding(padding)
+        ) {
+            CommonTabLayout(tabTitles = duaTabs) { index, title ->
+                when (index) {
+                    0 -> MasnoonDuasScreen()
+                    1 -> EmotionsDuasScreen(navController = navController)
+                    2 -> RabbanaDuasScreen()
+                    3 -> QuranicDuasScreen(navController = navController)
+                    4 -> ProphetsDuasScreen()
+                }
             }
         }
     }
