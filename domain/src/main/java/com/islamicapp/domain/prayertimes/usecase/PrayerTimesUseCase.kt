@@ -9,8 +9,10 @@ class PrayerTimesUseCase(
     suspend operator fun invoke(
         date: String,
         latitude: Double,
-        longitude: Double
+        longitude: Double,
+        method: Int,
+        school: Int
     ): PrayerTimes {
-        return repository.getPrayerTimes(date, latitude, longitude)
+        return repository.getPrayerTimes(date, latitude, longitude, method, school)
     }
 }

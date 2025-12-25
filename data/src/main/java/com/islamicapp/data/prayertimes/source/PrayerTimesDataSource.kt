@@ -6,6 +6,8 @@ interface PrayerTimesDataSource {
     suspend fun getPrayerTimes(
         date: String,
         latitude: Double,
-        longitude: Double
+        longitude: Double,
+        method: Int,
+        school: Int
     ): PrayerTimes
 }

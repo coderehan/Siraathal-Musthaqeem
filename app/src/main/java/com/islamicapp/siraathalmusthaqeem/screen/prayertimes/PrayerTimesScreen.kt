@@ -11,32 +11,45 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import com.google.android.gms.location.LocationServices
 import com.islamicapp.domain.prayertimes.model.PrayerTimes
 import com.islamicapp.siraathalmusthaqeem.screen.prayertimes.components.PrayerTimesItem
-import com.islamicapp.siraathalmusthaqeem.utils.CommonActionBar
 import com.islamicapp.siraathalmusthaqeem.utils.SpinKitLoader
 import com.islamicapp.siraathalmusthaqeem.utils.UIState
 import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 import com.islamicapp.siraathalmusthaqeem.utils.NoInternetScreen
 import com.islamicapp.core.utils.isNetworkAvailable
+import com.islamicapp.siraathalmusthaqeem.R
+import com.islamicapp.siraathalmusthaqeem.utils.AsrSchoolMapper
+import com.islamicapp.siraathalmusthaqeem.utils.LocationHelper
+import com.islamicapp.siraathalmusthaqeem.utils.PrayerMethodMapper
+import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
+import kotlinx.coroutines.runBlocking
+import org.koin.compose.koinInject
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("MissingPermission")
 @Composable
 fun PrayerTimesScreen(
     navController: NavController,
-    viewModel: PrayerTimesViewModel = koinViewModel()
+    viewModel: PrayerTimesViewModel = koinViewModel(),
+    preferencesManager: PreferencesManager = koinInject()
 ) {
     val context = LocalContext.current
     val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
@@ -46,21 +59,36 @@ fun PrayerTimesScreen(
 
     var hasLocationPermission by remember { mutableStateOf(false) }
     var locationEnabled by remember { mutableStateOf(false) }
-    // Initialize state using the core function
     var networkAvailable by remember { mutableStateOf(isNetworkAvailable(context)) }
     var locationFetched by remember { mutableStateOf(false) }
     var permissionRequested by remember { mutableStateOf(false) }
+
+    // Prayer settings state
+    var currentMethod by remember { mutableIntStateOf(3) }
+    var currentSchool by remember { mutableIntStateOf(0) }
+    var currentLatitude by remember { mutableDoubleStateOf(0.0) }
+    var currentLongitude by remember { mutableDoubleStateOf(0.0) }
+    var currentTimezone by remember { mutableStateOf("") }
 
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
         onResult = { granted ->
             hasLocationPermission = granted
             if (granted) {
-                // If permission granted, force re-check all statuses immediately
                 locationEnabled = isLocationEnabled(locationManager)
                 networkAvailable = isNetworkAvailable(context)
                 if (locationEnabled && networkAvailable) {
-                    fetchAndLoadPrayerTimes(fusedLocationClient, viewModel) {
+                    fetchAndLoadPrayerTimes(
+                        fusedLocationClient,
+                        viewModel,
+                        context,
+                        preferencesManager
+                    ) { method, school, lat, long, timezone ->
+                        currentMethod = method
+                        currentSchool = school
+                        currentLatitude = lat
+                        currentLongitude = long
+                        currentTimezone = timezone
                         locationFetched = true
                     }
                 }
@@ -68,9 +96,50 @@ fun PrayerTimesScreen(
         }
     )
 
-    // Combined Status Polling and Initial Check/Fetch Logic
+    // Listen for updates from Settings screen
+    LaunchedEffect(navController) {
+        val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
+
+        savedStateHandle?.getStateFlow<Int?>("updated_method", null)?.collect { method ->
+            method?.let {
+                currentMethod = it
+                savedStateHandle.remove<Int>("updated_method")
+                // Re-fetch prayer times with new settings
+                if (currentLatitude != 0.0) {
+                    viewModel.getPrayerTimes(
+                        "",
+                        currentLatitude,
+                        currentLongitude,
+                        currentMethod,
+                        currentSchool
+                    )
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(navController) {
+        val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
+
+        savedStateHandle?.getStateFlow<Int?>("updated_school", null)?.collect { school ->
+            school?.let {
+                currentSchool = it
+                savedStateHandle.remove<Int>("updated_school")
+                // Re-fetch prayer times with new settings
+                if (currentLatitude != 0.0) {
+                    viewModel.getPrayerTimes(
+                        "",
+                        currentLatitude,
+                        currentLongitude,
+                        currentMethod,
+                        currentSchool
+                    )
+                }
+            }
+        }
+    }
+
     LaunchedEffect(Unit) {
-        // Initial permission check
         hasLocationPermission =
             ActivityCompat.checkSelfPermission(
                 context, Manifest.permission.ACCESS_FINE_LOCATION
@@ -81,33 +150,70 @@ fun PrayerTimesScreen(
             permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
 
-        // Continuous polling loop for all statuses
         while (true) {
             val isNetworkOk = isNetworkAvailable(context)
             val isLocationOn = isLocationEnabled(locationManager)
 
-            // 1. Update states
             networkAvailable = isNetworkOk
             locationEnabled = isLocationOn
 
-            // 2. Attempt to fetch if ready and not fetched yet
             if (hasLocationPermission && isLocationOn && isNetworkOk) {
                 if (!locationFetched) {
-                    fetchAndLoadPrayerTimes(fusedLocationClient, viewModel) {
+                    fetchAndLoadPrayerTimes(
+                        fusedLocationClient,
+                        viewModel,
+                        context,
+                        preferencesManager
+                    ) { method, school, lat, long, timezone ->
+                        currentMethod = method
+                        currentSchool = school
+                        currentLatitude = lat
+                        currentLongitude = long
+                        currentTimezone = timezone
                         locationFetched = true
                     }
                 }
             } else {
-                locationFetched = false // Reset fetch status if any dependency is missing
+                locationFetched = false
             }
 
-            delay(2000) // Poll every 2 seconds
+            delay(2000)
         }
     }
 
-
     Scaffold(
-        topBar = { CommonActionBar(title = "Prayer Times", navController = navController) }
+        topBar = {
+            TopAppBar(
+                title = { Text("Prayer Times") },
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(Icons.Default.ArrowBack, "Back")
+                    }
+                },
+                actions = {
+                    // Settings Icon
+                    IconButton(
+                        onClick = {
+                            val encodedTimezone = URLEncoder.encode(currentTimezone, StandardCharsets.UTF_8.toString())
+                            navController.navigate(
+                                "prayer_settings/$currentMethod/$currentSchool/$currentLatitude/$currentLongitude/$encodedTimezone"
+                            )
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = "Settings",
+                            tint = Color.White
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = colorResource(id = R.color.green),
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White
+                )
+            )
+        }
     ) { paddingValues ->
         Box(
             modifier = Modifier
@@ -116,20 +222,15 @@ fun PrayerTimesScreen(
                 .padding(paddingValues)
         ) {
             when {
-                // 1. NO INTERNET (Highest Priority)
                 !networkAvailable -> {
-                    // Use NoInternetScreen, the button inside handles opening settings
                     NoInternetScreen(
                         modifier = Modifier.align(Alignment.Center),
                         onTryAgain = {
-                            // Manual trigger to check network status immediately
-                            // The LaunchedEffect loop will handle the status update shortly after
                             context.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
                         }
                     )
                 }
 
-                // 2. No permission
                 !hasLocationPermission -> {
                     Column(
                         modifier = Modifier.align(Alignment.Center),
@@ -152,7 +253,6 @@ fun PrayerTimesScreen(
                     }
                 }
 
-                // 3. GPS off
                 hasLocationPermission && !locationEnabled -> {
                     Column(
                         modifier = Modifier
@@ -179,7 +279,6 @@ fun PrayerTimesScreen(
                     }
                 }
 
-                // 4. Loading
                 uiState is UIState.Loading<*> -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
@@ -189,13 +288,11 @@ fun PrayerTimesScreen(
                     }
                 }
 
-                // 5. Success
                 uiState is UIState.Success<*> -> {
                     val prayerTimes = (uiState as UIState.Success<PrayerTimes>).data
                     PrayerTimesItem(prayerTimes)
                 }
 
-                // 6. Empty / Error
                 uiState is UIState.Empty<*> -> {
                     Text(
                         text = "No data available",
@@ -217,32 +314,56 @@ fun PrayerTimesScreen(
     }
 }
 
-// Check if GPS is ON (retains existing logic)
 private fun isLocationEnabled(locationManager: LocationManager): Boolean {
     return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
             locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 }
 
-// Fetch location + load timings (retains existing logic)
 @SuppressLint("MissingPermission")
 private fun fetchAndLoadPrayerTimes(
     fusedLocationClient: com.google.android.gms.location.FusedLocationProviderClient,
     viewModel: PrayerTimesViewModel,
-    onFetched: () -> Unit
+    context: Context,
+    preferencesManager: PreferencesManager,
+    onFetched: (method: Int, school: Int, lat: Double, long: Double, timezone: String) -> Unit
 ) {
     fusedLocationClient.lastLocation.addOnSuccessListener { location ->
         if (location != null) {
-            onFetched()
-            viewModel.getPrayerTimes("", location.latitude, location.longitude)
+            val countryCode = LocationHelper.getCountryFromLocation(
+                context,
+                location.latitude,
+                location.longitude
+            )
+
+            val method = runBlocking { preferencesManager.getCalculationMethod() }
+                ?: PrayerMethodMapper.getMethodForCountry(countryCode)
+
+            val school = runBlocking { preferencesManager.getAsrSchool() }
+                ?: AsrSchoolMapper.getDefaultSchoolForCountry(countryCode)
+
+            // Note: Timezone will come from API response, using placeholder for now
+            onFetched(method, school, location.latitude, location.longitude, "Asia/Kolkata")
+            viewModel.getPrayerTimes("", location.latitude, location.longitude, method, school)
         } else {
-            // fallback retry if GPS not yet warm
             fusedLocationClient.getCurrentLocation(
                 com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY,
                 null
             ).addOnSuccessListener { loc ->
                 if (loc != null) {
-                    onFetched()
-                    viewModel.getPrayerTimes("", loc.latitude, loc.longitude)
+                    val countryCode = LocationHelper.getCountryFromLocation(
+                        context,
+                        loc.latitude,
+                        loc.longitude
+                    )
+
+                    val method = runBlocking { preferencesManager.getCalculationMethod() }
+                        ?: PrayerMethodMapper.getMethodForCountry(countryCode)
+
+                    val school = runBlocking { preferencesManager.getAsrSchool() }
+                        ?: AsrSchoolMapper.getDefaultSchoolForCountry(countryCode)
+
+                    onFetched(method, school, loc.latitude, loc.longitude, "Asia/Kolkata")
+                    viewModel.getPrayerTimes("", loc.latitude, loc.longitude, method, school)
                 }
             }
         }

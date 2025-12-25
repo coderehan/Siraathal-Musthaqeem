@@ -13,17 +13,15 @@ class PrayerTimesNetworkDataSource(
     override suspend fun getPrayerTimes(
         date: String,
         latitude: Double,
-        longitude: Double
+        longitude: Double,
+        method: Int,
+        school: Int
     ): PrayerTimes {
-        // If empty, use today's date
         val finalDate = if (date.isBlank()) {
             SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
         } else date
 
-        // Call API
-        val response = api.getPrayerTimes(finalDate, latitude, longitude)
-
-        // Map to domain model
+        val response = api.getPrayerTimes(finalDate, latitude, longitude, method, school)
         return PrayerTimesMapper().map(response)
     }
 }

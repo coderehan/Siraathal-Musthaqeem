@@ -27,6 +27,7 @@ import com.islamicapp.data.hadith.source.network.HadithNetworkDataSource
 import com.islamicapp.data.pilgrimage.repository.PilgrimageRepositoryImpl
 import com.islamicapp.data.pilgrimage.source.local.PilgrimageDataSource
 import com.islamicapp.data.pilgrimage.source.local.PilgrimageDataSourceImpl
+import com.islamicapp.data.prayertimes.mapper.PrayerTimesMapper
 import com.islamicapp.data.prayertimes.source.PrayerTimesDataSource
 import com.islamicapp.data.prayertimes.source.PrayerTimesDataSourceImpl
 import com.islamicapp.data.prayertimes.source.network.PrayerTimesApi
@@ -103,6 +104,7 @@ val dataModule = module {
 
     // Register mapper
     factory { HadithMapper() }
+    factory { PrayerTimesMapper() }
 
     /**
      * Register Network Data Source (API → Mapper → Domain model).
