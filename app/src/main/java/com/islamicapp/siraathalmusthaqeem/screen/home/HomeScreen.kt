@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -175,83 +174,86 @@ fun HomeScreen(
                         val spacing = 16.dp
                         val itemWidth = (maxWidth - spacing * (columns - 1)) / columns
 
-                        FlowRow(
-                            maxItemsInEachRow = columns,
-                            horizontalArrangement = Arrangement.spacedBy(spacing),
+                        Column(
                             verticalArrangement = Arrangement.spacedBy(20.dp),
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            features.forEach { feature ->
-
-                                Column(
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    modifier = Modifier
-                                        .width(itemWidth)           // Forces EXACT width → ensures 3 items per row
-                                        .clickable {
-                                            when (feature.route) {
-                                                NavigationItem.MasjidNearMe.route -> {
-                                                    if (isLocationEnabled(context)) {
-                                                        val gmmIntentUri = Uri.parse("geo:0,0?q=masjid near me")
-                                                        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri).apply {
-                                                            setPackage("com.google.android.apps.maps")
-                                                        }
-                                                        runCatching { context.startActivity(mapIntent) }
-                                                            .onFailure {
-                                                                context.startActivity(
-                                                                    Intent(
-                                                                        Intent.ACTION_VIEW,
-                                                                        Uri.parse("https://www.google.com/maps/search/masjid+near+me")
-                                                                    )
-                                                                )
+                            features.chunked(columns).forEach { rowFeatures ->
+                                Row(
+                                    horizontalArrangement = Arrangement.spacedBy(spacing),
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    rowFeatures.forEach { feature ->
+                                        Column(
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                            modifier = Modifier
+                                                .width(itemWidth)
+                                                .clickable {
+                                                    when (feature.route) {
+                                                        NavigationItem.MasjidNearMe.route -> {
+                                                            if (isLocationEnabled(context)) {
+                                                                val gmmIntentUri = Uri.parse("geo:0,0?q=masjid near me")
+                                                                val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri).apply {
+                                                                    setPackage("com.google.android.apps.maps")
+                                                                }
+                                                                runCatching { context.startActivity(mapIntent) }
+                                                                    .onFailure {
+                                                                        context.startActivity(
+                                                                            Intent(
+                                                                                Intent.ACTION_VIEW,
+                                                                                Uri.parse("https://www.google.com/maps/search/masjid+near+me")
+                                                                            )
+                                                                        )
+                                                                    }
+                                                            } else {
+                                                                Toast.makeText(
+                                                                    context,
+                                                                    "Location is off. Please enable it.",
+                                                                    Toast.LENGTH_SHORT
+                                                                ).show()
+                                                                context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
                                                             }
-                                                    } else {
-                                                        Toast.makeText(
-                                                            context,
-                                                            "Location is off. Please enable it.",
-                                                            Toast.LENGTH_SHORT
-                                                        ).show()
-                                                        context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                                                        }
+                                                        else -> navController.navigate(feature.route)
                                                     }
                                                 }
-                                                else -> navController.navigate(feature.route)
-                                            }
-                                        }
-                                ) {
-
-                                    // This is card size height and width i.e. outer part
-                                    Surface(
-                                        tonalElevation = 1.dp,
-                                        shape = MaterialTheme.shapes.medium,
-                                        modifier = Modifier
-                                            .size(itemWidth * 0.8f)
-                                            .border(
-                                                width = 2.dp,
-                                                color = colorResource(id = R.color.green),
-                                                shape = MaterialTheme.shapes.medium
-                                            ),
-                                        color = Color.White
-                                    ) {
-                                        Box(
-                                            modifier = Modifier.fillMaxSize(),
-                                            contentAlignment = Alignment.Center
                                         ) {
-                                            // This is inner part i.e. image size
-                                            Image(
-                                                painter = painterResource(id = feature.imageRes),
-                                                contentDescription = feature.title,
-                                                modifier = Modifier.size(itemWidth * 0.9f)
+                                            // This is card size height and width i.e. outer part
+                                            Surface(
+                                                tonalElevation = 1.dp,
+                                                shape = MaterialTheme.shapes.medium,
+                                                modifier = Modifier
+                                                    .size(itemWidth * 0.8f)
+                                                    .border(
+                                                        width = 2.dp,
+                                                        color = colorResource(id = R.color.green),
+                                                        shape = MaterialTheme.shapes.medium
+                                                    ),
+                                                color = Color.White
+                                            ) {
+                                                Box(
+                                                    modifier = Modifier.fillMaxSize(),
+                                                    contentAlignment = Alignment.Center
+                                                ) {
+                                                    // This is inner part i.e. image size
+                                                    Image(
+                                                        painter = painterResource(id = feature.imageRes),
+                                                        contentDescription = feature.title,
+                                                        modifier = Modifier.size(itemWidth * 0.9f)
+                                                    )
+                                                }
+                                            }
+
+                                            Spacer(modifier = Modifier.height(8.dp))
+
+                                            Text(
+                                                text = feature.title,
+                                                style = MaterialTheme.typography.bodyMedium,
+                                                textAlign = TextAlign.Center,
+                                                modifier = Modifier.fillMaxWidth()
                                             )
                                         }
                                     }
-
-                                    Spacer(modifier = Modifier.height(8.dp))
-
-                                    Text(
-                                        text = feature.title,
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        textAlign = TextAlign.Center,
-                                        modifier = Modifier.fillMaxWidth()
-                                    )
                                 }
                             }
                         }

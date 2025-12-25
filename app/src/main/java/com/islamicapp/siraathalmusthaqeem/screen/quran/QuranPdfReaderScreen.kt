@@ -6,9 +6,10 @@ import android.os.ParcelFileDescriptor
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.calculatePan
+import androidx.compose.foundation.gestures.calculateZoom
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -21,7 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.pointer.positionChanged
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -34,6 +37,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.changedToDown
+import androidx.compose.ui.input.pointer.changedToUp
+import kotlin.math.abs
+import kotlin.math.sqrt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -57,6 +66,7 @@ fun QuranPdfReaderScreen(
             surahNumber != null -> {
                 QuranMetadataProvider.getSurahMetadata(surahNumber)?.name ?: "Surah $surahNumber"
             }
+
             juzNumber != null -> "Juz $juzNumber"
             else -> "Quran"
         }
@@ -94,11 +104,10 @@ fun QuranPdfReaderScreen(
                 totalPages = renderer.pageCount
                 Log.d("QuranPDF", "Total pages in PDF: $totalPages")
 
-                // NO OFFSET - Use metadata page numbers directly (already correct)
                 val startPage = when {
                     surahNumber != null -> {
                         val metadata = QuranMetadataProvider.getSurahMetadata(surahNumber)
-                        val page = (metadata?.startPage ?: 1) - 1 // Convert to 0-indexed
+                        val page = (metadata?.startPage ?: 1) - 1
                         Log.d(
                             "QuranPDF",
                             "Surah $surahNumber -> Page ${metadata?.startPage} (0-indexed: $page)"
@@ -208,7 +217,6 @@ fun QuranPdfReaderScreen(
                         pageCount = { totalPages }
                     )
 
-                    // Ensure this HorizontalPager block is correctly implemented:
                     HorizontalPager(
                         state = pagerState,
                         modifier = Modifier.fillMaxSize(),
@@ -232,13 +240,12 @@ fun PdfPageRenderer(
 ) {
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
     var isRendering by remember { mutableStateOf(false) }
-    var scale by remember { mutableStateOf(1f) }
-    var offsetX by remember { mutableStateOf(0f) }
-    var offsetY by remember { mutableStateOf(0f) }
+    var scale by remember { mutableFloatStateOf(1f) }
+    var offsetX by remember { mutableFloatStateOf(0f) }
+    var offsetY by remember { mutableFloatStateOf(0f) }
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(pageIndex) {
-        // Reset zoom/pan when page changes
         scale = 1f
         offsetX = 0f
         offsetY = 0f
@@ -254,11 +261,16 @@ fun PdfPageRenderer(
                         val originalHeight = page.height
 
                         pageBitmap = Bitmap.createBitmap(
-                            originalWidth * 2,
-                            originalHeight * 2,
+                            originalWidth * 3,
+                            originalHeight * 3,
                             Bitmap.Config.ARGB_8888
                         )
-                        page.render(pageBitmap!!, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
+                        page.render(
+                            pageBitmap!!,
+                            null,
+                            null,
+                            PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY
+                        )
                         page.close()
                     }
                     withContext(Dispatchers.Main) {
@@ -278,7 +290,7 @@ fun PdfPageRenderer(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF5F5F5)),
+            .background(Color.White),
         contentAlignment = Alignment.Center
     ) {
         bitmap?.let { bmp ->
@@ -286,30 +298,77 @@ fun PdfPageRenderer(
                 bitmap = bmp.asImageBitmap(),
                 contentDescription = "Page ${pageIndex + 1}",
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(0.707f)
+                    .fillMaxSize()
                     .graphicsLayer(
                         scaleX = scale,
                         scaleY = scale,
                         translationX = offsetX,
                         translationY = offsetY
                     )
-                    // ZOOM gesture - always available for pinch zoom
-                    .pointerInput(pageIndex) {
-                        detectTransformGestures { _, pan, zoom, _ ->
-                            if (zoom != 1f) {
-                                val newScale = (scale * zoom).coerceIn(1f, 4f)
-                                val maxOffsetX = (size.width * (newScale - 1) / 2f)
-                                val maxOffsetY = (size.height * (newScale - 1) / 2f)
+                    // Custom zoom/pan handler that allows pager swipes
+                    .pointerInput(Unit) {
+                        awaitPointerEventScope {
+                            while (true) {
+                                // Wait for first pointer down
+                                awaitFirstDown(requireUnconsumed = false)
 
-                                offsetX = (offsetX + pan.x).coerceIn(-maxOffsetX, maxOffsetX)
-                                offsetY = (offsetY + pan.y).coerceIn(-maxOffsetY, maxOffsetY)
-                                scale = newScale
+                                do {
+                                    val event = awaitPointerEvent()
+                                    val canceled = event.changes.any { it.isConsumed }
+
+                                    if (!canceled) {
+                                        val zoomChange = event.calculateZoom()
+                                        val panChange = event.calculatePan()
+
+                                        // Only handle if we have 2+ fingers (zoom gesture)
+                                        if (event.changes.size >= 2) {
+                                            // This is a zoom gesture - consume it
+                                            event.changes.forEach { it.consume() }
+
+                                            // Apply zoom change directly (no accumulation)
+                                            val newScale = (scale * zoomChange).coerceIn(1f, 5f)
+                                            scale = newScale
+
+                                            if (scale > 1f) {
+                                                val maxOffsetX = (size.width * (scale - 1) / 2f)
+                                                val maxOffsetY = (size.height * (scale - 1) / 2f)
+
+                                                offsetX = (offsetX + panChange.x).coerceIn(
+                                                    -maxOffsetX,
+                                                    maxOffsetX
+                                                )
+                                                offsetY = (offsetY + panChange.y).coerceIn(
+                                                    -maxOffsetY,
+                                                    maxOffsetY
+                                                )
+                                            } else {
+                                                offsetX = 0f
+                                                offsetY = 0f
+                                            }
+                                        } else if (scale > 1f && event.changes.size == 1) {
+                                            // Single finger pan when zoomed - consume it
+                                            event.changes.forEach { it.consume() }
+
+                                            val maxOffsetX = (size.width * (scale - 1) / 2f)
+                                            val maxOffsetY = (size.height * (scale - 1) / 2f)
+
+                                            offsetX = (offsetX + panChange.x).coerceIn(
+                                                -maxOffsetX,
+                                                maxOffsetX
+                                            )
+                                            offsetY = (offsetY + panChange.y).coerceIn(
+                                                -maxOffsetY,
+                                                maxOffsetY
+                                            )
+                                        }
+                                        // else: single finger when not zoomed = don't consume = pager handles it!
+                                    }
+                                } while (!canceled && event.changes.any { it.pressed })
                             }
                         }
                     }
-                    // DOUBLE TAP to zoom
-                    .pointerInput(pageIndex) {
+                    // Double tap to zoom
+                    .pointerInput(Unit) {
                         detectTapGestures(
                             onDoubleTap = {
                                 if (scale > 1f) {
@@ -317,38 +376,20 @@ fun PdfPageRenderer(
                                     offsetX = 0f
                                     offsetY = 0f
                                 } else {
-                                    scale = 2f
+                                    scale = 2.5f
                                 }
                             }
                         )
-                    }
-                    // DRAG gesture - ONLY add when zoomed in
-                    .then(
-                        if (scale > 1f) {
-                            Modifier.pointerInput(pageIndex, scale) {
-                                detectDragGestures { change, dragAmount ->
-                                    change.consume()
-
-                                    val maxOffsetX = (size.width * (scale - 1) / 2f)
-                                    val maxOffsetY = (size.height * (scale - 1) / 2f)
-
-                                    offsetX = (offsetX + dragAmount.x).coerceIn(-maxOffsetX, maxOffsetX)
-                                    offsetY = (offsetY + dragAmount.y).coerceIn(-maxOffsetY, maxOffsetY)
-                                }
-                            }
-                        } else {
-                            Modifier // Empty modifier when not zoomed - allows HorizontalPager to work
-                        }
-                    ),
+                    },
                 contentScale = ContentScale.Fit
             )
-        } ?: if (isRendering) {
+        }
+
+        if (bitmap == null && isRendering) {
             CircularProgressIndicator(
                 modifier = Modifier.size(48.dp),
                 color = colorResource(id = R.color.green)
             )
-        } else {
-
         }
     }
 }
