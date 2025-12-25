@@ -19,11 +19,17 @@ class PrayerTimesViewModel(
     private val _uiState = MutableStateFlow<UIState<PrayerTimes>>(UIState.Loading())
     val uiState: StateFlow<UIState<PrayerTimes>> get() = _uiState
 
-    fun getPrayerTimes(date: String = "", latitude: Double, longitude: Double) {
+    fun getPrayerTimes(
+        date: String = "",
+        latitude: Double,
+        longitude: Double,
+        method: Int,
+        school: Int
+    ) {
         viewModelScope.launch {
             _uiState.value = UIState.Loading()
             try {
-                val result = getPrayerTimesUseCase(date, latitude, longitude)
+                val result = getPrayerTimesUseCase(date, latitude, longitude, method, school)
                 _uiState.value = UIState.Success(result)
             } catch (e: HttpException) {
                 val errorMessage = parseError(e)

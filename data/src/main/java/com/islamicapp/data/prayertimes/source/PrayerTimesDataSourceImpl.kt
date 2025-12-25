@@ -10,8 +10,10 @@ class PrayerTimesDataSourceImpl(
     override suspend fun getPrayerTimes(
         date: String,
         latitude: Double,
-        longitude: Double
+        longitude: Double,
+        method: Int,
+        school: Int
     ): PrayerTimes {
-        return dataSource.getPrayerTimes(date, latitude, longitude)
+        return dataSource.getPrayerTimes(date, latitude, longitude, method, school)
     }
 }

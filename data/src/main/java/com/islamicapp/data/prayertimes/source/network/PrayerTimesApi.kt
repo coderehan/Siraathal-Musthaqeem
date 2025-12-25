@@ -12,6 +12,8 @@ interface PrayerTimesApi {
         @Path("date") date: String,
         @Query("latitude") latitude: Double,
         @Query("longitude") longitude: Double,
+        @Query("method") method: Int,
+        @Query("school") school: Int
     ): PrayerTimesResponse
 
 }

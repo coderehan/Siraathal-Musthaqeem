@@ -22,6 +22,16 @@ class PreferencesManager(private val context: Context) {
     private val USER_NAME_KEY = stringPreferencesKey("user_name")
     private val IS_DARK_THEME_KEY = booleanPreferencesKey("is_dark_theme")
 
+    // Tasbeeh Keys
+    private val TASBEEH_COUNT_KEY = intPreferencesKey("tasbeeh_count")
+    private val TASBEEH_TARGET_KEY = intPreferencesKey("tasbeeh_target")
+    private val TASBEEH_SOUND_KEY = booleanPreferencesKey("tasbeeh_sound")
+    private val TASBEEH_VIBRATION_KEY = booleanPreferencesKey("tasbeeh_vibration")
+
+    // PRAYER TIME KEYS
+    private val CALCULATION_METHOD_KEY = intPreferencesKey("calculation_method")
+    private val ASR_SCHOOL_KEY = intPreferencesKey("asr_school")
+
     // ----- Onboarding -----
     suspend fun setOnboardingCompleted(completed: Boolean) {
         context.dataStore.edit { prefs ->
@@ -71,17 +81,11 @@ class PreferencesManager(private val context: Context) {
         prefs[IS_DARK_THEME_KEY] ?: false
     }
 
-    // Tasbeeh Preferences
-    private val TASBEEH_COUNT_KEY = intPreferencesKey("tasbeeh_count")
-    private val TASBEEH_TARGET_KEY = intPreferencesKey("tasbeeh_target")
-    private val TASBEEH_SOUND_KEY = booleanPreferencesKey("tasbeeh_sound")
-    private val TASBEEH_VIBRATION_KEY = booleanPreferencesKey("tasbeeh_vibration")
-
     // TASBEEH STORAGE
     val tasbeehDataFlow: Flow<TasbeehData> = context.dataStore.data.map { prefs ->
         TasbeehData(
             count = prefs[TASBEEH_COUNT_KEY] ?: 0,
-            target = prefs[TASBEEH_TARGET_KEY] ?: 33, // default value; user can change dynamically
+            target = prefs[TASBEEH_TARGET_KEY] ?: 33,
             soundEnabled = prefs[TASBEEH_SOUND_KEY] ?: true,
             vibrationEnabled = prefs[TASBEEH_VIBRATION_KEY] ?: true
         )
@@ -102,4 +106,43 @@ class PreferencesManager(private val context: Context) {
         }
     }
 
+    // PRAYER TIME PREFERENCES
+
+    // Save calculation method
+    suspend fun saveCalculationMethod(methodId: Int) {
+        context.dataStore.edit { prefs ->
+            prefs[CALCULATION_METHOD_KEY] = methodId
+        }
+    }
+
+    // Get calculation method as Flow
+    val calculationMethodFlow: Flow<Int?> = context.dataStore.data.map { prefs ->
+        prefs[CALCULATION_METHOD_KEY]
+    }
+
+    // Get calculation method (suspend)
+    suspend fun getCalculationMethod(): Int? {
+        return context.dataStore.data.map { prefs ->
+            prefs[CALCULATION_METHOD_KEY]
+        }.first()
+    }
+
+    // Save Asr school
+    suspend fun saveAsrSchool(schoolId: Int) {
+        context.dataStore.edit { prefs ->
+            prefs[ASR_SCHOOL_KEY] = schoolId
+        }
+    }
+
+    // Get Asr school as Flow
+    val asrSchoolFlow: Flow<Int?> = context.dataStore.data.map { prefs ->
+        prefs[ASR_SCHOOL_KEY]
+    }
+
+    // Get Asr school (suspend)
+    suspend fun getAsrSchool(): Int? {
+        return context.dataStore.data.map { prefs ->
+            prefs[ASR_SCHOOL_KEY]
+        }.first()
+    }
 }

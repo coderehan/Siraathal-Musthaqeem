@@ -17,6 +17,7 @@ import com.islamicapp.siraathalmusthaqeem.screen.tasbeeh.TasbeehViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.theme.ThemeViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.zakath.ZakathViewModel
 import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import org.koin.core.module.dsl.viewModel
 
@@ -42,7 +43,7 @@ val appModule = module {
     viewModel { MasnoonDuasViewModel(get()) }
     viewModel { ZakathViewModel() }
     viewModel { PilgrimageViewModel(get()) }
-    single { PreferencesManager(get()) }
+    single { PreferencesManager(androidContext()) }
     single { CalculateHijriDateUseCase() }
 
 

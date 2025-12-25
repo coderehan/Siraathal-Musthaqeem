@@ -20,6 +20,7 @@ import com.islamicapp.siraathalmusthaqeem.screen.home.HomeScreen
 import com.islamicapp.siraathalmusthaqeem.screen.splash.SplashScreen
 import com.islamicapp.siraathalmusthaqeem.screen.onboarding.OnboardingScreen
 import com.islamicapp.siraathalmusthaqeem.screen.pilgrimage.PilgrimageScreen
+import com.islamicapp.siraathalmusthaqeem.screen.prayertimes.PrayerSettingsScreen
 import com.islamicapp.siraathalmusthaqeem.screen.prayertimes.PrayerTimesScreen
 import com.islamicapp.siraathalmusthaqeem.screen.profile.ProfileScreen
 import com.islamicapp.siraathalmusthaqeem.screen.prophetsstories.ProphetsStoriesDetailScreen
@@ -33,6 +34,8 @@ import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
 import com.islamicapp.siraathalmusthaqeem.screen.qibla.QiblaScreen
 import com.islamicapp.siraathalmusthaqeem.screen.quran.QuranPdfReaderScreen
 import com.islamicapp.siraathalmusthaqeem.screen.theme.ThemeSelectorWrapper
+import java.net.URLDecoder
+import java.nio.charset.StandardCharsets
 
 @Composable
 fun Navigation(preferencesManager: PreferencesManager) {
@@ -69,9 +72,32 @@ fun Navigation(preferencesManager: PreferencesManager) {
             HomeScreen(navController = navController, preferencesManager = preferencesManager)
         }
 
-        // Prayer Times
+        // Prayer Times Screen
         composable(NavigationItem.PrayerTimes.route) {
             PrayerTimesScreen(navController = navController)
+        }
+
+        // Prayer Settings Screen
+        composable(
+            route = "prayer_settings/{method}/{school}/{lat}/{long}/{timezone}",
+            arguments = listOf(
+                navArgument("method") { type = NavType.IntType },
+                navArgument("school") { type = NavType.IntType },
+                navArgument("lat") { type = NavType.FloatType },
+                navArgument("long") { type = NavType.FloatType },
+                navArgument("timezone") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val encodedTimezone = backStackEntry.arguments?.getString("timezone") ?: ""
+            val decodedTimezone = URLDecoder.decode(encodedTimezone, StandardCharsets.UTF_8.toString())
+
+            PrayerSettingsScreen(
+                navController = navController,
+                currentMethod = backStackEntry.arguments?.getInt("method") ?: 3,
+                currentSchool = backStackEntry.arguments?.getInt("school") ?: 0,
+                latitude = backStackEntry.arguments?.getFloat("lat")?.toDouble() ?: 0.0,
+                longitude = backStackEntry.arguments?.getFloat("long")?.toDouble() ?: 0.0,
+            )
         }
 
         // Qibla

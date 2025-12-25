@@ -87,7 +87,7 @@ data class PrayerTimesResponse(
         val location: Location
     )
 
-    data class Params(val Fajr: Int, val Isha: Int)
+    data class Params(val Fajr: Any?, val Isha: Any?)
 
     data class Location(val latitude: Double, val longitude: Double)
 
