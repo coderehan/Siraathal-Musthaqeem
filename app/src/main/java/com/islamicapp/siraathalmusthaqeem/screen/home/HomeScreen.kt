@@ -149,17 +149,24 @@ fun HomeScreen(
                             HijriCalendarScreen()
                         }
 
-                        // Azaan Icon
-                        IconButton(
-                            onClick = {
+                        // Azaan Icon with Label
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier.clickable {
                                 navController.navigate("azaan")
-                            },
-                            modifier = Modifier.size(48.dp)
+                            }
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.adhan),
                                 contentDescription = "Play Azaan",
                                 modifier = Modifier.size(40.dp)
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = "Adhan",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = colorResource(id = R.color.green),
+                                textAlign = TextAlign.Center
                             )
                         }
                     }

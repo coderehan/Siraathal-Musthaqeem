@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -121,6 +122,22 @@ fun ZakathScreen(
                 )
             }
 
+            // Validation Error
+            if (state.validationError != null) {
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFFEE2E2)),
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Text(
+                        text = state.validationError ?: "",
+                        color = Color(0xFFDC2626),
+                        modifier = Modifier.padding(12.dp),
+                        fontSize = 14.sp
+                    )
+                }
+            }
+
             // Calculate Button
             Button(
                 onClick = { viewModel.calculateZakat() },
@@ -166,6 +183,22 @@ fun ZakathScreen(
                         ResultRow(label = "Total Net Worth", value = state.totalNetWorth)
                         ResultRow(label = "Nisab Threshold", value = state.nisabThreshold)
 
+                        // Show both nisab values for transparency
+                        if (state.goldNisabValue < Double.MAX_VALUE) {
+                            ResultRow(
+                                label = "Gold Nisab (87.48g)",
+                                value = state.goldNisabValue,
+                                isSubItem = true
+                            )
+                        }
+                        if (state.silverNisabValue < Double.MAX_VALUE) {
+                            ResultRow(
+                                label = "Silver Nisab (612.36g)",
+                                value = state.silverNisabValue,
+                                isSubItem = true
+                            )
+                        }
+
                         Spacer(modifier = Modifier.height(16.dp))
 
                         if (state.isEligible) {
@@ -186,8 +219,22 @@ fun ZakathScreen(
                 }
             }
 
+            // Disclaimer - MOVED HERE (appears once at the bottom)
+            Text(
+                text = "Note: This calculator provides basic Zakat estimation. For complex situations, please consult a qualified Islamic scholar.",
+                style = MaterialTheme.typography.bodySmall.copy(
+                    color = Color.Gray,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Normal
+                ),
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+
             // Add extra space at bottom
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(20.dp))
         }
     }
 }
@@ -227,15 +274,15 @@ fun ZakatInputField(
     OutlinedTextField(
         value = value,
         onValueChange = { input ->
-            // Only allow numeric input (decimal)
-            if (input.all { it.isDigit() || it == '.' }) {
+            // Only allow numeric input with one decimal point
+            if (input.isEmpty() || input.matches(Regex("^\\d*\\.?\\d*$"))) {
                 onValueChange(input)
             }
         },
         label = { Text(label, fontSize = 14.sp) },
         modifier = modifier.fillMaxWidth(),
         singleLine = true,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
         shape = RoundedCornerShape(8.dp),
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = colorResource(id = R.color.green),
@@ -247,16 +294,23 @@ fun ZakatInputField(
 }
 
 @Composable
-fun ResultRow(label: String, value: Double) {
+fun ResultRow(label: String, value: Double, isSubItem: Boolean = false) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = if (isSubItem) 16.dp else 0.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = label, color = Color(0xFF6B7280), fontSize = 14.sp)
+        Text(
+            text = label,
+            color = if (isSubItem) Color(0xFF9CA3AF) else Color(0xFF6B7280),
+            fontSize = if (isSubItem) 12.sp else 14.sp
+        )
         Text(
             text = String.format("%.2f", value),
-            fontWeight = FontWeight.SemiBold,
-            color = Color(0xFF1F2937)
+            fontWeight = if (isSubItem) FontWeight.Normal else FontWeight.SemiBold,
+            color = Color(0xFF1F2937),
+            fontSize = if (isSubItem) 12.sp else 14.sp
         )
     }
 }

@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,12 +24,12 @@ fun SeerahListScreen(
 ) {
     // The list of chapters as you requested
     val seerahChapters = listOf(
-        Seerah("Chapter 1: A Brief Biography Of Prophet Muhammad SAW", "chapter_1.json"),
-        Seerah("Chapter 2: Sublime Qualities Of The Prophet Muhammad SAW", "chapter_2.json"),
-        Seerah("Chapter 3: Policies Of The Prophet At Times Of Conflict", "chapter_3.json"),
-        Seerah("Chapter 4: Social Policies Of Prophet Muhammad SAW", "chapter_4.json"),
-        Seerah("Chapter 5: Selected Sayings Of The Prophet Muhammad SAW", "chapter_5.json"),
-        Seerah("Chapter 6: Prophet Muhammad SAW As Seen By Western Thinkers", "chapter_6.json")
+        Seerah("A Brief Biography Of Prophet Muhammad SAW", "chapter_1.json"),
+        Seerah("Sublime Qualities Of The Prophet Muhammad SAW", "chapter_2.json"),
+        Seerah("Policies Of The Prophet At Times Of Conflict", "chapter_3.json"),
+        Seerah("Social Policies Of Prophet Muhammad SAW", "chapter_4.json"),
+        Seerah("Selected Sayings Of The Prophet Muhammad SAW", "chapter_5.json"),
+        Seerah("Prophet Muhammad SAW As Seen By Western Thinkers", "chapter_6.json")
     )
 
     Column(
@@ -41,12 +41,13 @@ fun SeerahListScreen(
 
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
             contentPadding = PaddingValues(vertical = 12.dp)
         ) {
-            items(seerahChapters) { chapter ->
+            itemsIndexed(seerahChapters) { index, chapter ->
                 SeerahListItem(
                     chapter = chapter,
+                    chapterNumber = index + 1,
                     onClick = {
                         // URL-encode the title to safely pass it as a nav argument
                         val encodedTitle =
