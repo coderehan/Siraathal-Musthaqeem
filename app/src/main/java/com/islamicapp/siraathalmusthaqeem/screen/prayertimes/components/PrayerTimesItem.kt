@@ -200,6 +200,13 @@ fun PrayerTimesItem(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        RamadanTimesRow(
+            suhoorEnd = prayerTimes.suhoorEnd,
+            iftar = prayerTimes.iftar
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
         // Prayer cards (highlight current)
         Column(
             modifier = Modifier
@@ -220,7 +227,7 @@ fun PrayerTimesItem(
             Text(
                 text = "Note: The above timings denote the starting time of the Prayer (Azaan time).",
                 style = MaterialTheme.typography.bodySmall.copy(
-                    color =  colorResource(id = R.color.black),
+                    color = colorResource(id = R.color.black),
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Medium
                 ),
@@ -289,6 +296,97 @@ fun PrayerTimeCard(name: String, time: String, isHighlighted: Boolean) {
                     fontWeight = FontWeight.SemiBold,
                     color = if (isHighlighted) Color(0xFF065F46) else Color(0xFF1F2937)
                 )
+            )
+        }
+    }
+}
+
+@Composable
+fun RamadanTimesRow(
+    suhoorEnd: String,
+    iftar: String
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 0.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        // Suhoor Card (Light Green Theme)
+        RamadanTimeCard(
+            title = "Suhoor Ends",
+            time = formatTo12Hour(suhoorEnd),
+            icon = "🌙",
+            backgroundColor = Color(0xFFDCEEFB),
+            borderColor = Color(0xFF2563EB),
+            modifier = Modifier.weight(1f)
+        )
+
+        // Iftar Card (Light Orange Theme)
+        RamadanTimeCard(
+            title = "Iftar",
+            time = formatTo12Hour(iftar),
+            icon = "🌅",
+            backgroundColor = Color(0xFFFFEDD5),
+            borderColor = Color(0xFFF97316),
+            modifier = Modifier.weight(1f)
+        )
+    }
+}
+
+@Composable
+fun RamadanTimeCard(
+    title: String,
+    time: String,
+    icon: String,
+    backgroundColor: Color,
+    borderColor: Color,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier
+            .height(100.dp)
+            .border(2.dp, borderColor, RoundedCornerShape(12.dp)),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(containerColor = backgroundColor),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            // Icon
+            Text(
+                text = icon,
+                style = MaterialTheme.typography.headlineSmall
+            )
+
+            Spacer(modifier = Modifier.height(2.dp))
+
+            // Title
+            Text(
+                text = title,
+                style = MaterialTheme.typography.bodySmall.copy(
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color(0xFF374151)
+                ),
+                textAlign = TextAlign.Center,
+                maxLines = 1
+            )
+
+            Spacer(modifier = Modifier.height(2.dp))
+
+            // Time
+            Text(
+                text = time,
+                style = MaterialTheme.typography.titleMedium.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF111827)
+                ),
+                maxLines = 1
             )
         }
     }
