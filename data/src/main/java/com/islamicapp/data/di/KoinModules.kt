@@ -4,6 +4,9 @@ import com.islamicapp.core.utils.Constants
 import com.islamicapp.data.allah99names.repository.Allah99NamesRepositoryImpl
 import com.islamicapp.data.allah99names.source.local.Allah99NamesDataSource
 import com.islamicapp.data.allah99names.source.local.Allah99NamesDataSourceImpl
+import com.islamicapp.data.dailycontent.local.DailyContentDataSource
+import com.islamicapp.data.dailycontent.local.DailyContentDataSourceImpl
+import com.islamicapp.data.dailycontent.repository.DailyContentRepositoryImpl
 import com.islamicapp.data.duas.emotionsduas.local.EmotionsDuasDataSource
 import com.islamicapp.data.duas.emotionsduas.local.EmotionsDuasDataSourceImpl
 import com.islamicapp.data.duas.emotionsduas.repository.EmotionsDuasRepositoryImpl
@@ -39,6 +42,7 @@ import com.islamicapp.data.seerah.repository.SeerahRepositoryImpl
 import com.islamicapp.data.seerah.source.local.SeerahDataSource
 import com.islamicapp.data.seerah.source.local.SeerahDataSourceImpl
 import com.islamicapp.domain.allah99names.repository.Allah99NamesRepository
+import com.islamicapp.domain.dailycontent.repository.DailyContentRepository
 import com.islamicapp.domain.duas.emotionsduas.repository.EmotionsDuasRepository
 import com.islamicapp.domain.duas.masnoonduas.repository.MasnoonDuasRepository
 import com.islamicapp.domain.duas.prophetsduas.repository.ProphetsDuasRepository
@@ -143,6 +147,9 @@ val dataModule = module {
     factory<PilgrimageDataSource> {
         PilgrimageDataSourceImpl(get())
     }
+    factory<DailyContentDataSource> {
+        DailyContentDataSourceImpl(get())
+    }
 
 
     /**
@@ -182,6 +189,9 @@ val dataModule = module {
     }
     factory<PilgrimageRepository> {
         PilgrimageRepositoryImpl(get())
+    }
+    factory<DailyContentRepository> {
+        DailyContentRepositoryImpl(get())
     }
 
 }

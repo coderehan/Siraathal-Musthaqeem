@@ -60,9 +60,6 @@ accompanistPagerIndicators = "0.36.0"
 # SpinKit - Progressbar
 spinkit = "1.4.0"
 
-# Daily Slider
-quranVerses = "2.0"
-
 appcompat = "1.7.1"
 
 # Firebase Bom
@@ -161,9 +158,6 @@ coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coi
 
 # Spinkit for Progressbar
 spinkit = { module = "com.github.ybq:Android-SpinKit", version.ref = "spinkit" }
-
-# Daily Slider
-quranVerses = { module = "com.github.mosamabinomar:quranVerses", version.ref = "quranVerses" }
 
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 

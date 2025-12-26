@@ -33,7 +33,6 @@ import androidx.navigation.NavHostController
 import com.islamicapp.siraathalmusthaqeem.R
 import com.islamicapp.siraathalmusthaqeem.utils.PreferencesManager
 import com.islamicapp.siraathalmusthaqeem.screen.hijricalendar.HijriCalendarScreen
-import com.islamicapp.siraathalmusthaqeem.screen.home.components.dailyslider.DailySlider
 import kotlinx.coroutines.launch
 import com.islamicapp.siraathalmusthaqeem.screen.navigation.NavigationItem
 import android.provider.Settings
@@ -44,6 +43,7 @@ import com.islamicapp.siraathalmusthaqeem.screen.quran.pdfmetadata.QuranPdfManag
 import kotlinx.coroutines.Dispatchers
 import com.islamicapp.siraathalmusthaqeem.screen.home.components.HomeDrawerContent
 import com.islamicapp.siraathalmusthaqeem.screen.home.components.HomeBottomBar
+import com.islamicapp.siraathalmusthaqeem.screen.home.components.dailycontent.DailySlider
 
 
 @OptIn(ExperimentalMaterial3Api::class)
