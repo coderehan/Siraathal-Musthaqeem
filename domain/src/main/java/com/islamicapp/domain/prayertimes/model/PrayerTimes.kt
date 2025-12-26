@@ -12,5 +12,7 @@ data class PrayerTimes(
     val gregorianDate: String,
     val hijriDay: String,
     val hijriMonth: String,
-    val hijriYear: String
+    val hijriYear: String,
+    val suhoorEnd: String,
+    val iftar: String
 )
