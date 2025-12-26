@@ -9,6 +9,7 @@ import com.islamicapp.siraathalmusthaqeem.screen.dua.rabbanaduas.RabbanaDuasView
 import com.islamicapp.siraathalmusthaqeem.screen.hadith.HadithViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.hijricalendar.CalculateHijriDateUseCase
 import com.islamicapp.siraathalmusthaqeem.screen.hijricalendar.HijriCalendarViewModel
+import com.islamicapp.siraathalmusthaqeem.screen.home.components.dailycontent.DailyContentViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.pilgrimage.PilgrimageViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.prayertimes.PrayerTimesViewModel
 import com.islamicapp.siraathalmusthaqeem.screen.prophetsstories.ProphetsStoriesViewModel
@@ -43,6 +44,7 @@ val appModule = module {
     viewModel { MasnoonDuasViewModel(get()) }
     viewModel { ZakathViewModel() }
     viewModel { PilgrimageViewModel(get()) }
+    viewModel { DailyContentViewModel(get(), get()) }
     single { PreferencesManager(androidContext()) }
     single { CalculateHijriDateUseCase() }
 

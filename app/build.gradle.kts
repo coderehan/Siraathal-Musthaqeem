@@ -173,9 +173,6 @@ dependencies {
     // Spinkit Progressbar
     implementation(libs.spinkit)
 
-    // Daily Slider
-    implementation(libs.quranVerses)
-
     // Firebase BOM
     implementation(platform(libs.firebase.bom))
 
