@@ -9,13 +9,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import com.islamicapp.siraathalmusthaqeem.screen.dua.emotionsduas.EmotionsDuasScreen
-import com.islamicapp.siraathalmusthaqeem.screen.dua.masnoonduas.MasnoonDuasScreen
 import com.islamicapp.siraathalmusthaqeem.screen.dua.prophetsduas.ProphetsDuasScreen
 import com.islamicapp.siraathalmusthaqeem.screen.dua.quranicduas.QuranicDuasScreen
 import com.islamicapp.siraathalmusthaqeem.screen.dua.rabbanaduas.RabbanaDuasScreen
 import com.islamicapp.siraathalmusthaqeem.utils.CommonActionBar
 import com.islamicapp.siraathalmusthaqeem.utils.CommonTabLayout
 import androidx.compose.material3.Scaffold
+import com.islamicapp.siraathalmusthaqeem.screen.dua.masnoonduas.MasnoonDuasListScreen
 import com.islamicapp.siraathalmusthaqeem.screen.home.components.HomeBottomBar
 
 @Composable
@@ -44,7 +44,7 @@ fun DuaScreen(navController: NavHostController) {
         ) {
             CommonTabLayout(tabTitles = duaTabs) { index, title ->
                 when (index) {
-                    0 -> MasnoonDuasScreen()
+                    0 -> MasnoonDuasListScreen(navController = navController)
                     1 -> EmotionsDuasScreen(navController = navController)
                     2 -> RabbanaDuasScreen()
                     3 -> QuranicDuasScreen(navController = navController)
