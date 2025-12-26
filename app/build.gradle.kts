@@ -126,11 +126,6 @@ dependencies {
     // Gson for JSON parsing
     implementation(libs.gson)
 
-    // Room Database (migrated to KSP)
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
-
     // Retrofit & OkHttp for networking
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
@@ -158,9 +153,6 @@ dependencies {
 
     // Jetpack DataStore (SharedPreferences replacement)
     implementation(libs.datastore.preferences)
-
-    // Coil for loading images in Compose
-    implementation(libs.coil.compose)
 
     // ExoPlayer for video and audio playback
     implementation(libs.exoplayer.core)
