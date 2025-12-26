@@ -54,7 +54,7 @@ fun HomeDrawerContent(
             scope.launch { drawerState.close() }
             val intent = Intent(Intent.ACTION_SENDTO).apply {
                 data = Uri.parse("mailto:")
-                putExtra(Intent.EXTRA_EMAIL, arrayOf("mohammedrehanm1137@gmail.com"))
+                putExtra(Intent.EXTRA_EMAIL, arrayOf("siraathalmusthaqeemapp@gmail.com"))
                 putExtra(
                     Intent.EXTRA_SUBJECT,
                     "Feature Request - Siraathal Musthaqeem App"
@@ -68,7 +68,7 @@ fun HomeDrawerContent(
             scope.launch { drawerState.close() }
             val intent = Intent(Intent.ACTION_SENDTO).apply {
                 data = Uri.parse("mailto:")
-                putExtra(Intent.EXTRA_EMAIL, arrayOf("mohammedrehanm1137@gmail.com"))
+                putExtra(Intent.EXTRA_EMAIL, arrayOf("siraathalmusthaqeemapp@gmail.com"))
                 putExtra(Intent.EXTRA_SUBJECT, "Bug Report - Siraathal Musthaqeem App")
             }
             runCatching { context.startActivity(Intent.createChooser(intent, "Send email")) }

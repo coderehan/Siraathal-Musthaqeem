@@ -13,6 +13,8 @@ import com.islamicapp.siraathalmusthaqeem.screen.allah99names.Allah99NamesScreen
 import com.islamicapp.siraathalmusthaqeem.screen.azaan.AzaanScreen
 import com.islamicapp.siraathalmusthaqeem.screen.dua.DuaScreen
 import com.islamicapp.siraathalmusthaqeem.screen.dua.emotionsduas.EmotionsDuasDetailScreen
+import com.islamicapp.siraathalmusthaqeem.screen.dua.masnoonduas.MasnoonDuasDetailScreen
+import com.islamicapp.siraathalmusthaqeem.screen.dua.masnoonduas.MasnoonDuasListScreen
 import com.islamicapp.siraathalmusthaqeem.screen.dua.quranicduas.QuranicDuasDetailScreen
 import com.islamicapp.siraathalmusthaqeem.screen.hadith.HadithScreen
 import com.islamicapp.siraathalmusthaqeem.screen.hadithdetail.HadithDetailScreen
@@ -222,6 +224,29 @@ fun Navigation(preferencesManager: PreferencesManager) {
         // Dua
         composable(NavigationItem.Dua.route) {
             DuaScreen(navController = navController)
+        }
+
+        // Masnoon Duas List Screen
+        composable("masnoon_duas_list") {
+            MasnoonDuasListScreen(navController = navController)
+        }
+
+        // Masnoon Duas Detail Screen
+        composable(
+            route = "masnoon_detail/{topicName}/{topicIndex}",
+            arguments = listOf(
+                navArgument("topicName") { type = NavType.StringType },
+                navArgument("topicIndex") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val topicName = backStackEntry.arguments?.getString("topicName") ?: ""
+            val topicIndex = backStackEntry.arguments?.getInt("topicIndex") ?: 0
+
+            MasnoonDuasDetailScreen(
+                navController = navController,
+                topicName = topicName,
+                topicIndex = topicIndex
+            )
         }
 
         // Emotions Duas Detail

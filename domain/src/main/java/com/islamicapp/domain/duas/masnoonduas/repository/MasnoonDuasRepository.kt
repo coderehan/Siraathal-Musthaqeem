@@ -1,10 +1,10 @@
 package com.islamicapp.domain.duas.masnoonduas.repository
 
-import com.islamicapp.domain.duas.masnoonduas.model.MasnoonDuas
+import com.islamicapp.domain.duas.masnoonduas.model.MasnoonDuasTopic
 
 interface MasnoonDuasRepository {
     /**
-     * Fetches the complete list of Masnoon Duas.
+     * Fetches all Masnoon Duas topics from local assets
      */
-    suspend fun getMasnoonDuas(): List<MasnoonDuas>?
+    suspend fun getMasnoonDuasTopics(): List<MasnoonDuasTopic>?
 }

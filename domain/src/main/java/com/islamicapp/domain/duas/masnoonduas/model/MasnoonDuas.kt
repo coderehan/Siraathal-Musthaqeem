@@ -6,9 +6,6 @@ package com.islamicapp.domain.duas.masnoonduas.model
 data class MasnoonDuas(
     val title: String,
     val arabic: String,
-    val translation: String,
-    val virtue: String? = null,
-    val reference: String? = null,
-    // NEW FIELD to store the syllabus category (e.g., "GRADE 1")
-    val syllabusCategory: String? = null
+    val transliteration: String,
+    val translation: String
 )

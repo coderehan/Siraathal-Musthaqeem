@@ -138,7 +138,7 @@ fun AboutAppScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(
-                text = "mohammedrehanm1137@gmail.com",
+                text = "siraathalmusthaqeemapp@gmail.com",
                 style = MaterialTheme.typography.bodyMedium.copy(
                     color = colorResource(id = R.color.black),
                     fontWeight = FontWeight.SemiBold

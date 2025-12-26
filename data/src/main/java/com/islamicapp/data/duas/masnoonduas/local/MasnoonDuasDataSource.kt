@@ -1,10 +1,11 @@
 package com.islamicapp.data.duas.masnoonduas.local
 
-import com.islamicapp.domain.duas.masnoonduas.model.MasnoonDuas
+import com.islamicapp.domain.duas.masnoonduas.model.MasnoonDuasTopic
+
 
 interface MasnoonDuasDataSource {
     /**
-     * Retrieves the list of Masnoon Duas from the local assets.
+     * Retrieves Masnoon Duas topics from local JSON file
      */
-    suspend fun getMasnoonDuasFromAssets(): List<MasnoonDuas>?
+    suspend fun getMasnoonDuasTopicsFromAssets(): List<MasnoonDuasTopic>?
 }
