@@ -89,19 +89,4 @@ class QuranReminderWorkScheduler(private val context: Context) {
         return targetTime.timeInMillis - currentTime.timeInMillis
     }
 
-    /**
-     * Cancel a specific reminder
-     */
-    fun cancelReminder(reminderId: Int) {
-        workManager.cancelUniqueWork("${QuranReminderWorker.WORK_NAME_PREFIX}$reminderId")
-        Log.d("QuranReminderWorkScheduler", "Cancelled WorkManager reminder ID: $reminderId")
-    }
-
-    /**
-     * Cancel all reminders
-     */
-    fun cancelAllReminders() {
-        workManager.cancelAllWorkByTag("quran_reminder")
-        Log.d("QuranReminderWorkScheduler", "All WorkManager reminders cancelled")
-    }
 }
