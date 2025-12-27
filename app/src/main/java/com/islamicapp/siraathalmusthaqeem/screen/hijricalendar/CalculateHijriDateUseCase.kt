@@ -9,6 +9,8 @@ class CalculateHijriDateUseCase {
         val islamicCalendar = IslamicCalendar()
         val gregorianCal = Calendar.getInstance()
 
+        islamicCalendar.add(Calendar.DAY_OF_MONTH, -1)
+
         val hijriDay = islamicCalendar.get(Calendar.DAY_OF_MONTH)
         val hijriMonthIndex = islamicCalendar.get(Calendar.MONTH) // 0–11
         val hijriYear = islamicCalendar.get(Calendar.YEAR)
